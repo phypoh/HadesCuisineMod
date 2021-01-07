@@ -1,0 +1,24 @@
+{
+  Weapons = [
+	"_append"
+    {
+      Name = "StrudyChef"
+      InheritFrom = "LoadAmmoApplicator"
+      Projectile = "null"
+      Effects = [
+        {
+          Name = "AspectHyperArmor"
+          Type = "DAMAGE_TAKEN"
+          Duration = 0.22
+          Modifier = 0.7
+          FrontFx = "HyperArmorLoop"
+          BackFx = "null"
+          Active = true
+          FlashFrontFxWhenExpiring = true
+          FlashBackFxWhenExpiring = true
+          ImmuneToForce = true
+          ClearOnAttack = false
+        }]
+    }
+	]    
+}

@@ -322,7 +322,11 @@ OnAnyLoad{ function()
 		else
 			elapsedTime = elapsedTime + 0.2
 		end
-            wait(.2)
+		if elapsedTime >= 1.5 then
+		
+		ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "StrudyChef", EffectName = "AspectHyperArmor" , AutoEquip = true})
+		end
+            wait(0.2)
         end
     end)
 end}
