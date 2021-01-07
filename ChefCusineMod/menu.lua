@@ -1,11 +1,31 @@
 SelectableMeals = {}
+ThisRunFish = {}
 hasBeenUsed = false
 SelectedFish = nil
-MealText ={}
+SaveIgnores["SelectableMeals"] = true
 SaveIgnores["MealText"] = true
 OnAnyLoad{ "DeathArea",
 function( triggerArgs )
-SelectableMeals = 	{
+
+		DeathLoopData["DeathArea"]["ObstacleData"][423399]["OnUsedFunctionName"] = "ShowCuisineScreen"
+		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupFunctions"] =
+		{
+			{
+			Name = "PlayStatusAnimation",
+			Args = { Animation = "StatusIconWantsToTalk", },
+			GameStateRequirements =
+			{
+				RequiredFalseFlags = { "InFlashback", },
+			},
+			},
+		}
+		DeathLoopData["DeathArea"]["ObstacleData"][423399]["DestroyIfNotSetup"] = true
+		if hasBeenUsed then
+		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
+			AreIdsNotAlive = {40000}
+		}
+		else
+		SelectableMeals = 	{
 		--"Fish_Chaos_Common_01", 
 		--"Fish_Chaos_Rare_01", 
 		--"Fish_Chaos_Legendary_01", 
@@ -25,38 +45,10 @@ SelectableMeals = 	{
 		--"Fish_Surface_Rare_01", 
 		--"Fish_Surface_Legendary_01"
 	}
-MealText = {
-["Fish_Surface_Common_01"] = {
-Name = "Trout Soup",
-Description = "A soup favored by the gods and old sailors. When eaten increases the chance of a rare fish being caught."
-},
-["Fish_Elysium_Common_01"] = {
-Name = "Steamed Chlams",
-Description = "A dish inspired by the guards of Elysium and their tireless effort to keep the schorcing heat of Asphodel out. Increases the amount of defense gained."
-},
-["Fish_Tartarus_Common_01"] = {
-Name = "Hellfish Scoop",
-Description = "The Hellfish shell is perfect for storing frozen foods, and for hiding. When standing still for 3 seconds, become protected."
-}
-}
-		DeathLoopData["DeathArea"]["ObstacleData"][423399]["OnUsedFunctionName"] = "ShowCuisineScreen"
-		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupFunctions"] =
-		{
-			{
-			Name = "PlayStatusAnimation",
-			Args = { Animation = "StatusIconWantsToTalk", },
-			GameStateRequirements =
-			{
-				RequiredFalseFlags = { "InFlashback", },
-			},
-			},
-		}
-		DeathLoopData["DeathArea"]["ObstacleData"][423399]["DestroyIfNotSetup"] = true
-		if hasBeenUsed then
-		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
-			AreIdsNotAlive = {40000}
-		}
-		else
+		ThisRunFish = {}
+		for i = 1, 3 do
+		table.insert(ThisRunFish, RemoveRandomValue(SelectableMeals))
+		end
 		SelectedFish = nil
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
 		}
@@ -152,7 +144,6 @@ function CloseCuisineScreen( screen, button )
 
 end
 function CreateCuisineButtons(screen, usee)
-	local availableMeals = SelectableMeals
 	
 	local itemLocationStartY = 340
 	local itemLocationYSpacer = 220
@@ -179,7 +170,7 @@ function CreateCuisineButtons(screen, usee)
 
 	local firstUseable = false
 	for itemIndex = 1, numButtons do
-		local curFish = RemoveRandomValue(availableMeals)
+		local curFish = ThisRunFish[itemIndex]
 		local purchaseButtonKey = "PurchaseButton"..itemIndex
 		components[purchaseButtonKey] = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu", Scale = 1, X = itemLocationX, Y = itemLocationY })
 		SetInteractProperty({ DestinationId = components[purchaseButtonKey].Id, Property = "TooltipOffsetX", Value = 665 })
@@ -198,21 +189,21 @@ function CreateCuisineButtons(screen, usee)
 
 		local purchaseButtonTitleKey = "PurchaseButtonTitle"..itemIndex
 		components[purchaseButtonTitleKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1, X = itemLocationX, Y = itemLocationY })
-		CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id,
-			Text =GetTraitTooltip("TemporaryPreloadSuperGenerationTrait"),
-			OffsetX = -245,
-			OffsetY = -23,
-			Format = "BaseFormat",
-			UseDescription = true,
-			VariableAutoFormat = "BoldFormatGraft",
-			LuaKey = "TooltipData",
-			LuaValue = "TemporaryPreloadSuperGenerationTrait",
-			Justification = "Left",
-			VerticalJustification = "Top",
-			LineSpacingBottom = 8,
-			Width = "665" },LocalizationData.SellTraitScripts.ShopButton))
+				CreateTextBoxWithFormat(MergeTables({
+					Id = curFish .. "_Trait",
+					OffsetX = -260,
+					OffsetY = 0,
+					Width = 665,
+					Justification = "Left",
+					VerticalJustification = "Top",
+					LineSpacingBottom = 8,
+					UseDescription = true,
+					Format = "BaseFormat",
+					VariableAutoFormat = "BoldFormatGraft",
+					TextSymbolScale = 0.8,
+				}, LocalizationData.TraitTrayScripts.DetailsBacking ))
 
-		CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = MealText[curFish].Name,
+		CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = curFish .. "_Trait",
 			FontSize = 25,
 			OffsetX = -275, OffsetY = -50,
 			Width = 720,
@@ -229,13 +220,14 @@ function CreateCuisineButtons(screen, usee)
 		
 		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
 		SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
-				CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id, Text = MealText[curFish].Description,
+				CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
 					FontSize = 20,
 					OffsetX = -300, OffsetY = 0,
 					Width = 650,
 					Color = Color.White,
 					Justification = "Left",
 					VerticalJustification = "Top",
+					UseDescription = true,
 					Format = "MarketScreenDescriptionFormat",
 				})
 		itemLocationX = itemLocationX + itemLocationXSpacer

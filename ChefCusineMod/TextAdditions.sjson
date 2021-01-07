@@ -1,0 +1,22 @@
+{
+  Texts = [
+	"_append"
+    {
+		Id = "Fish_Surface_Common_01_Trait"
+		DisplayName = "Trout Soup"
+		Description= "Gain a chance to upgrade any fish to the next rarity. \n {#PropertyFormat}Upgrade Chance: \Column 380 {#UpgradeFormat}+25%"
+    }
+	{
+		Id = "Fish_Elysium_Common_01_Trait"
+		DisplayName = "Steamed Chlams"
+		Description = "All Boons decreasing the amount of damage taken, decrease by more (multiplied). \n {#PropertyFormat}Multiplied Decrease Amount: \Column 380 {#UpgradeFormat}2x"
+		Lore= "A dish inspired by the guards of Elysium and their tireless effort to keep the schorcing heat of Asphodel out. Increases the amount of defense gained."
+	}
+	{
+		Id = "Fish_Tartarus_Common_01_Trait"
+		DisplayName = "Hellfish Scoop"
+		Description = "After standing still for 1.5 seconds, gain Sturdy. \n {#PropertyFormat}Damage Taken: \Column 380 {#UpgradeFormat}70%"
+		Lore= "The Hellfish shell is perfect for storing frozen foods, and for hiding. When standing still for 3 seconds, become protected."
+	}
+	]    
+}
