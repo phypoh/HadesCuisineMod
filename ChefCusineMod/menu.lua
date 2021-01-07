@@ -1,28 +1,44 @@
 SelectableMeals = {}
 hasBeenUsed = false
-SaveIgnores["hasBeenUsed"] = true
+SelectedFish = nil
+MealText ={}
+SaveIgnores["MealText"] = true
 OnAnyLoad{ "DeathArea",
 function( triggerArgs )
 SelectableMeals = 	{
-		"Fish_Chaos_Common_01", 
-		"Fish_Chaos_Rare_01", 
-		"Fish_Chaos_Legendary_01", 
+		--"Fish_Chaos_Common_01", 
+		--"Fish_Chaos_Rare_01", 
+		--"Fish_Chaos_Legendary_01", 
 		"Fish_Tartarus_Common_01", 
-		"Fish_Tartarus_Rare_01", 
-		"Fish_Tartarus_Legendary_01", 
-		"Fish_Asphodel_Common_01", 
-		"Fish_Asphodel_Rare_01", 
-		"Fish_Asphodel_Legendary_01", 
+		--"Fish_Tartarus_Rare_01", 
+		--"Fish_Tartarus_Legendary_01", 
+		--"Fish_Asphodel_Common_01", 
+		--"Fish_Asphodel_Rare_01", 
+		--"Fish_Asphodel_Legendary_01", 
 		"Fish_Elysium_Common_01", 
-		"Fish_Elysium_Rare_01", 
-		"Fish_Elysium_Legendary_01", 
-		"Fish_Styx_Common_01", 
-		"Fish_Styx_Rare_01", 
-		"Fish_Styx_Legendary_01", 
+		--"Fish_Elysium_Rare_01", 
+		--"Fish_Elysium_Legendary_01", 
+		--"Fish_Styx_Common_01", 
+		--"Fish_Styx_Rare_01", 
+		--"Fish_Styx_Legendary_01", 
 		"Fish_Surface_Common_01", 
-		"Fish_Surface_Rare_01", 
-		"Fish_Surface_Legendary_01"
+		--"Fish_Surface_Rare_01", 
+		--"Fish_Surface_Legendary_01"
 	}
+MealText = {
+["Fish_Surface_Common_01"] = {
+Name = "Trout Soup",
+Description = "A soup favored by the gods and old sailors. When eaten increases the chance of a rare fish being caught."
+},
+["Fish_Elysium_Common_01"] = {
+Name = "Steamed Chlams",
+Description = "A dish inspired by the guards of Elysium and their tireless effort to keep the schorcing heat of Asphodel out. Increases the amount of defense gained."
+},
+["Fish_Tartarus_Common_01"] = {
+Name = "Hellfish Scoop",
+Description = "The Hellfish shell is perfect for storing frozen foods, and for hiding. When standing still for 3 seconds, become protected."
+}
+}
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["OnUsedFunctionName"] = "ShowCuisineScreen"
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupFunctions"] =
 		{
@@ -41,6 +57,7 @@ SelectableMeals = 	{
 			AreIdsNotAlive = {40000}
 		}
 		else
+		SelectedFish = nil
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
 		}
 		end
@@ -65,17 +82,19 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 
 	PlaySound({ Name = "/SFX/Menu Sounds/ContractorMenuOpen" })
 	local components = screen.Components
-
-	components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_UI_World" })
+	
+	components.ShopBackgroundDim2 = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_UI_World" })
 	components.ShopBackground = CreateScreenComponent({ Name = "WellShopBackground", Group = "Combat_UI_World" })
+	components.ShopBackgroundDim = CreateScreenComponent({ Name = "rectangle01", Group = "Combat_UI_World" })
 	
 	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Group = "Combat_UI_Backing", Scale = 0.7 })
 	Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0, OffsetY = 440 })
 	components.CloseButton.OnPressedFunctionName = "CloseCuisineScreen"
 	components.CloseButton.ControlHotkey = "Cancel"
 	
+	SetAlpha({ Id = components.ShopBackground.Id, Fraction = 1, Duration = 0 })
 	SetScale({ Id = components.ShopBackgroundDim.Id, Fraction = 4 })
-	SetColor({ Id = components.ShopBackgroundDim.Id, Color = {0.195, 0.201, 0.002, 0} })
+	SetColor({ Id = components.ShopBackgroundDim.Id, Color = {1, 1, 0, 0} })
 	
 	components.fishingTurnInButton = 
 		CreateScreenComponent({ 
@@ -160,10 +179,11 @@ function CreateCuisineButtons(screen, usee)
 
 	local firstUseable = false
 	for itemIndex = 1, numButtons do
-		local curFish = "Fish_Surface_Common_01"--RemoveRandomValue(availableMeals)
+		local curFish = RemoveRandomValue(availableMeals)
 		local purchaseButtonKey = "PurchaseButton"..itemIndex
 		components[purchaseButtonKey] = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu", Scale = 1, X = itemLocationX, Y = itemLocationY })
 		SetInteractProperty({ DestinationId = components[purchaseButtonKey].Id, Property = "TooltipOffsetX", Value = 665 })
+		
 		SetScaleY({ Id = components[purchaseButtonKey].Id , Fraction = 2 })
 		SetScaleX({ Id = components[purchaseButtonKey].Id , Fraction = 1.05 })
 		components[purchaseButtonKey].usee = usee
@@ -178,8 +198,21 @@ function CreateCuisineButtons(screen, usee)
 
 		local purchaseButtonTitleKey = "PurchaseButtonTitle"..itemIndex
 		components[purchaseButtonTitleKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1, X = itemLocationX, Y = itemLocationY })
+		CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id,
+			Text =GetTraitTooltip("TemporaryPreloadSuperGenerationTrait"),
+			OffsetX = -245,
+			OffsetY = -23,
+			Format = "BaseFormat",
+			UseDescription = true,
+			VariableAutoFormat = "BoldFormatGraft",
+			LuaKey = "TooltipData",
+			LuaValue = "TemporaryPreloadSuperGenerationTrait",
+			Justification = "Left",
+			VerticalJustification = "Top",
+			LineSpacingBottom = 8,
+			Width = "665" },LocalizationData.SellTraitScripts.ShopButton))
 
-		CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = curFish,
+		CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = MealText[curFish].Name,
 			FontSize = 25,
 			OffsetX = -275, OffsetY = -50,
 			Width = 720,
@@ -196,10 +229,15 @@ function CreateCuisineButtons(screen, usee)
 		
 		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
 		SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
-		
-		components[purchaseButtonTitleKey .. "SellText"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
-		Attach({ Id = components[purchaseButtonTitleKey .. "SellText"].Id, DestinationId = components[purchaseButtonTitleKey].Id, OffsetX = 0, OffsetY = 0 })
-		
+				CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id, Text = MealText[curFish].Description,
+					FontSize = 20,
+					OffsetX = -300, OffsetY = 0,
+					Width = 650,
+					Color = Color.White,
+					Justification = "Left",
+					VerticalJustification = "Top",
+					Format = "MarketScreenDescriptionFormat",
+				})
 		itemLocationX = itemLocationX + itemLocationXSpacer
 		if itemLocationX >= itemLocationMaxX then
 			itemLocationX = itemLocationStartX
@@ -210,6 +248,7 @@ function CreateCuisineButtons(screen, usee)
 	end
 end
 function GiveFishBoon(screen, button)
+SelectedFish = button.Boon
 hasBeenUsed = true
 if not HeroHasTrait(button.Boon) then
 	local isLegendary = false
@@ -218,8 +257,7 @@ if not HeroHasTrait(button.Boon) then
 	if IsWeaponTrait(button.Boon) then
 		RemoveSameSlotWeapon(button.Boon)
 	end
-	DebugPrint({Text=button.Boon.."_Trait"})
-	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Surface_Common_01_Trait", Rarity = "Common" }) })
+	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
 end
 local partner = button.usee
 partner.NextInteractLines = nil
