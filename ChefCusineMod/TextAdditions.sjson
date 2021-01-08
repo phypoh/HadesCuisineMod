@@ -19,7 +19,12 @@
 	{
 		Id = "StackUpgrade_Trait"
 		DisplayName = "Pom Seed Salad"
-		Description = "For every few boons every boon that can gain a level, gains a level. \n {#PropertyFormat}Boons Per Level: \Column 380 {#UpgradeFormat}5"
+		Description = "For every few boons gained, every boon that can gain a level, gains a level. \n {#PropertyFormat}Boons Per Level: \Column 380 {#UpgradeFormat}5"
+	}
+	{
+		Id = "RoomRewardHealDrop_Trait"
+		DisplayName = "Kids Meal"
+		Description = "Gain damage for every boon that belongs to the god you have the highest amount of boons of. \n {#PropertyFormat}Bonus Damage Per Boon: \Column 380 {#UpgradeFormat}5%"
 	}
 	]    
 }

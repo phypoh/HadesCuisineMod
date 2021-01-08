@@ -1,0 +1,85 @@
+{
+    Animations = [
+        "_append"
+   {
+      Name = "KidsMealIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.75
+    }
+    {
+      Name = "KidsMealIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.75
+    }
+    {
+      Name = "TroutSoupIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Surface_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "TroutSoupIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Surface_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "SteamedChlamsIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Elysium_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "SteamedChlamsIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Elysium_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "HellfishScoopIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Tartarus_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "HellfishScoopIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Tartarus_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "PomSaladIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_StackUpgrade_01"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "PomSaladIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_StackUpgrade_01"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.8
+    }   
+    ]
+}

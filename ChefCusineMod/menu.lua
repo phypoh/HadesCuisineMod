@@ -25,25 +25,11 @@ function( triggerArgs )
 		}
 		else
 		SelectableMeals = 	{
-		--"Fish_Chaos_Common_01", 
-		--"Fish_Chaos_Rare_01", 
-		--"Fish_Chaos_Legendary_01", 
 		"Fish_Tartarus_Common_01", 
-		--"Fish_Tartarus_Rare_01", 
-		--"Fish_Tartarus_Legendary_01", 
-		--"Fish_Asphodel_Common_01", 
-		--"Fish_Asphodel_Rare_01", 
-		--"Fish_Asphodel_Legendary_01", 
 		"Fish_Elysium_Common_01", 
-		--"Fish_Elysium_Rare_01", 
-		--"Fish_Elysium_Legendary_01", 
-		--"Fish_Styx_Common_01", 
-		--"Fish_Styx_Rare_01", 
-		--"Fish_Styx_Legendary_01", 
 		"Fish_Surface_Common_01", 
-		--"Fish_Surface_Rare_01", 
-		--"Fish_Surface_Legendary_01"
-		--"StackUpgrade",
+		"StackUpgrade",
+		"RoomRewardHealDrop",
 	}
 		ThisRunFish = {}
 		for i = 1, 3 do
@@ -215,10 +201,12 @@ function CreateCuisineButtons(screen, usee)
 
 		
 		components[purchaseButtonTitleKey .. "Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
-		if curFish ~= "StackUpgrade" then
-		SetAnimation({ Name = curFish, DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.2 })
-		else
+		if curFish == "StackUpgrade" then
 		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_StackUpgrade_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
+		elseif curFish == "RoomRewardHealDrop" then
+		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_HealthItem_02", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
+		else
+		SetAnimation({ Name = curFish, DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.2 })
 		end
 		Attach({ Id = components[purchaseButtonTitleKey .. "Icon"].Id, DestinationId = components[purchaseButtonTitleKey].Id, OffsetX = -375, OffsetY = 0})
 		

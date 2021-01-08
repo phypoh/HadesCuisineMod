@@ -1,4 +1,8 @@
 ModUtil.RegisterMod("ChefCuisineMod")
+GodBoonAmount = {}
+BoonsThisLevel = 0
+CompletedLevels = 0
+SaveIgnores["GodBoonArrays"] = true
 ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
 hasBeenUsed = false
 return baseFunc(currentRun, killer, killingUnitWeapon)
@@ -8,6 +12,9 @@ local returnVal = baseFunc(currentRun, prevRun, args)
 if SelectedFish ~= nil then
 AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
 end
+BoonsThisLevel = 0
+CompletedLevels = 0
+GodBoonAmount = {}
 return returnVal
 end,ChefCuisineMod) 
 ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
@@ -322,3 +329,143 @@ OnAnyLoad{ function()
         end
     end)
 end}
+
+ModUtil.BaseOverride("AddTraitToHero", function (args)
+	local traitData = args.TraitData
+	if traitData == nil then
+		traitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = args.TraitName, Rarity = args.Rarity })
+	end
+
+	GameState.LastPickedTraitName = traitData.Name
+
+	if not args.PreProcessedForDisplay then
+		ExtractValues(CurrentRun.Hero, traitData, traitData)
+	end
+
+	if traitData.Slot and CurrentRun.CurrentRoom then
+		CurrentRun.CurrentRoom.AcquiredSlot = traitData.Slot
+	end
+	-- traits may have information that acts on weapons, so we must first equip all associated weapons to the player
+	EquipReferencedWeapons( traitData )
+	AddTraitData( CurrentRun.Hero, traitData, args )
+
+	EquipSpecialWeapons( CurrentRun.Hero, traitData )
+	AddAssistWeapons( CurrentRun.Hero, traitData )
+	for weaponName, v in pairs( CurrentRun.Hero.Weapons ) do
+		AddWallSlamWeapons( CurrentRun.Hero, traitData )
+		AddOnDamageWeapons(CurrentRun.Hero, weaponName, traitData)
+		AddOnFireWeapons(CurrentRun.Hero, weaponName, traitData)
+		if traitData.UpgradeHeroWeapon ~= nil and Contains(traitData.UpgradeHeroWeapon.WeaponNames, weaponName) then
+			AddHeroWeaponUpgrade(weaponName, traitData.UpgradeHeroWeapon.UpgradeName)
+		end
+	end
+
+	if ( traitData.EnemyPropertyChanges or traitData.AddEnemyOnDeathWeapons ) and ActiveEnemies ~= nil then
+		for enemyId, enemy in pairs( ActiveEnemies ) do
+			EquipReferencedEnemyWeapons( currentRun, traitData, enemy )
+			ApplyEnemyTrait( CurrentRun, traitData, enemy )
+		end
+	end
+
+	if traitData.AddShout then
+		if traitData.AddShout.Cost then
+			CurrentRun.Hero.SuperCost = traitData.AddShout.Cost
+		else
+			CurrentRun.Hero.SuperCost = 25
+		end
+		ShowSuperMeter()
+	end
+	if BoonsThisLevel == nil then
+		BoonsThisLevel = 0
+	end
+	if SelectedFish == "StackUpgrade" then
+		if IsGodTrait(traitData.Name) and GetTraitNameCount(CurrentRun.Hero, traitData.Name) == 1 then
+			BoonsThisLevel = BoonsThisLevel + 1
+		end
+	if BoonsThisLevel ~= nil and BoonsThisLevel == 5 then
+			local leveledBoons = {}
+			for k, currentTrait in pairs( CurrentRun.Hero.Traits ) do 
+				if not Contains(leveledBoons, currentTrait.Name) then
+				table.insert(leveledBoons, currentTrait.Name)
+				if IsGameStateEligible(CurrentRun, TraitData[currentTrait.Name]) and IsGodTrait(currentTrait.Name) then
+					AddTraitToHeroChef({TraitData = currentTrait})
+				end
+				end
+			end
+			BoonsThisLevel = 0
+			CompletedLevels = CompletedLevels + 1
+		end
+
+	end
+	if SelectedFish == "RoomRewardHealDrop" then
+		for i, god in pairs(LootData) do
+			if ( god.GodLoot or ( args.ForShop and god.TreatAsGodLootByShops )) and not god.DebugOnly and god.TraitIndex[traitData.Name] then
+				if GodBoonAmount[god.Name] ~= nil then
+					GodBoonAmount[god.Name] = GodBoonAmount[god.Name] + 1
+				else
+					GodBoonAmount[god.Name] = 1
+				end
+				local highest = 0
+				for k,v in pairs(GodBoonAmount) do
+					if v > highest then
+						highest = v
+					end
+				end
+				for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+					if traitData.Name == "RoomRewardHealDrop_Trait" then
+						traitData.AccumulatedDamageBonusFood = 1 + (highest * 0.05)
+						break
+					end
+				end
+			end
+		end
+	end
+end, ChefCuisineMod)
+function AddTraitToHeroChef(args)
+	local traitData = args.TraitData
+	if traitData == nil then
+		traitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = args.TraitName, Rarity = args.Rarity })
+	end
+
+	GameState.LastPickedTraitName = traitData.Name
+
+	if not args.PreProcessedForDisplay then
+		ExtractValues(CurrentRun.Hero, traitData, traitData)
+	end
+
+	if traitData.Slot and CurrentRun.CurrentRoom then
+		CurrentRun.CurrentRoom.AcquiredSlot = traitData.Slot
+	end
+	-- traits may have information that acts on weapons, so we must first equip all associated weapons to the player
+	EquipReferencedWeapons( traitData )
+	AddTraitData( CurrentRun.Hero, traitData, args )
+
+	EquipSpecialWeapons( CurrentRun.Hero, traitData )
+	AddAssistWeapons( CurrentRun.Hero, traitData )
+	for weaponName, v in pairs( CurrentRun.Hero.Weapons ) do
+		AddWallSlamWeapons( CurrentRun.Hero, traitData )
+		AddOnDamageWeapons(CurrentRun.Hero, weaponName, traitData)
+		AddOnFireWeapons(CurrentRun.Hero, weaponName, traitData)
+		if traitData.UpgradeHeroWeapon ~= nil and Contains(traitData.UpgradeHeroWeapon.WeaponNames, weaponName) then
+			AddHeroWeaponUpgrade(weaponName, traitData.UpgradeHeroWeapon.UpgradeName)
+		end
+	end
+
+	if ( traitData.EnemyPropertyChanges or traitData.AddEnemyOnDeathWeapons ) and ActiveEnemies ~= nil then
+		for enemyId, enemy in pairs( ActiveEnemies ) do
+			EquipReferencedEnemyWeapons( currentRun, traitData, enemy )
+			ApplyEnemyTrait( CurrentRun, traitData, enemy )
+		end
+	end
+
+	if traitData.AddShout then
+		if traitData.AddShout.Cost then
+			CurrentRun.Hero.SuperCost = traitData.AddShout.Cost
+		else
+			CurrentRun.Hero.SuperCost = 25
+		end
+		ShowSuperMeter()
+	end
+end
+
+
