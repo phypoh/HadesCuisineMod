@@ -22,17 +22,9 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 	local addDamageMultiplier = function( data, multiplier )
 		if multiplier >= 1.0 then
 			if data.Multiplicative then
-				if GetTotalHeroTraitValue("DefenseBoostMultiplier") > 0 then
-				damageReductionMultipliers = damageReductionMultipliers * (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier"))
-				else
 				damageReductionMultipliers = damageReductionMultipliers * multiplier
-				end
 			else
-				if GetTotalHeroTraitValue("DefenseBoostMultiplier") > 0 then
-				damageReductionMultipliers = damageReductionMultipliers + (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier")) - 1
-				else
 				damageMultipliers = damageMultipliers + multiplier - 1
-				end
 			end
 			if ConfigOptionCache.LogCombatMultipliers then
 				lastAddedMultiplierName = data.Name or "Unknown"

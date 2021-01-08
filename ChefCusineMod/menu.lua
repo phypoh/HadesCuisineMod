@@ -19,7 +19,6 @@ function( triggerArgs )
 			},
 			},
 		}
-		DeathLoopData["DeathArea"]["ObstacleData"][423399]["DestroyIfNotSetup"] = true
 		if hasBeenUsed then
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
 			AreIdsNotAlive = {40000}
@@ -44,6 +43,7 @@ function( triggerArgs )
 		"Fish_Surface_Common_01", 
 		--"Fish_Surface_Rare_01", 
 		--"Fish_Surface_Legendary_01"
+		--"StackUpgrade",
 	}
 		ThisRunFish = {}
 		for i = 1, 3 do
@@ -215,15 +215,19 @@ function CreateCuisineButtons(screen, usee)
 
 		
 		components[purchaseButtonTitleKey .. "Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
+		if curFish ~= "StackUpgrade" then
 		SetAnimation({ Name = curFish, DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.2 })
+		else
+		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_StackUpgrade_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
+		end
 		Attach({ Id = components[purchaseButtonTitleKey .. "Icon"].Id, DestinationId = components[purchaseButtonTitleKey].Id, OffsetX = -375, OffsetY = 0})
 		
 		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
 		SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
 				CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
 					FontSize = 20,
-					OffsetX = -300, OffsetY = 0,
-					Width = 650,
+					OffsetX = -275, OffsetY = -25,
+					Width = 720,
 					Color = Color.White,
 					Justification = "Left",
 					VerticalJustification = "Top",
