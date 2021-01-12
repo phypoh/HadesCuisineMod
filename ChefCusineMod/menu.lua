@@ -30,6 +30,7 @@ function( triggerArgs )
 		"Fish_Surface_Common_01", 
 		"StackUpgrade",
 		"RoomRewardHealDrop",
+		"GemDrop",
 	}
 		ThisRunFish = {}
 		for i = 1, 3 do
@@ -205,6 +206,8 @@ function CreateCuisineButtons(screen, usee)
 		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_StackUpgrade_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
 		elseif curFish == "RoomRewardHealDrop" then
 		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_HealthItem_02", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
+		elseif curFish == "GemDrop" then
+		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_Gemstones_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
 		else
 		SetAnimation({ Name = curFish, DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.2 })
 		end

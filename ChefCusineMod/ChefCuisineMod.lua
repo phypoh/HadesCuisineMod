@@ -3,10 +3,13 @@ GodBoonAmount = {}
 BoonsThisLevel = 0
 CompletedLevels = 0
 SaveIgnores["GodBoonArrays"] = true
+
 ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
 hasBeenUsed = false
 return baseFunc(currentRun, killer, killingUnitWeapon)
-end,ChefCuisineMod) 
+end,ChefCuisineMod)
+
+
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 local returnVal = baseFunc(currentRun, prevRun, args)
 if SelectedFish ~= nil then
@@ -17,6 +20,8 @@ CompletedLevels = 0
 GodBoonAmount = {}
 return returnVal
 end,ChefCuisineMod) 
+
+
 ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
 	local damageReductionMultipliers = 1
 	local damageMultipliers = 1.0
@@ -310,6 +315,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 	return damageMultipliers * damageReductionMultipliers
 end, ChefCuisineMod)
 
+
 OnAnyLoad{ function()
     if SelectedFish == nil or SelectedFish ~= "Fish_Tartarus_Common_01" then return end
     thread( function()
@@ -329,6 +335,7 @@ OnAnyLoad{ function()
         end
     end)
 end}
+
 
 ModUtil.BaseOverride("AddTraitToHero", function (args)
 	local traitData = args.TraitData
@@ -400,27 +407,26 @@ ModUtil.BaseOverride("AddTraitToHero", function (args)
 	if SelectedFish == "RoomRewardHealDrop" then
 		for i, god in pairs(LootData) do
 			if ( god.GodLoot or ( args.ForShop and god.TreatAsGodLootByShops )) and not god.DebugOnly and god.TraitIndex[traitData.Name] then
-				if GodBoonAmount[god.Name] ~= nil then
-					GodBoonAmount[god.Name] = GodBoonAmount[god.Name] + 1
-				else
-					GodBoonAmount[god.Name] = 1
-				end
-				local highest = 0
-				for k,v in pairs(GodBoonAmount) do
-					if v > highest then
-						highest = v
-					end
-				end
-				for i, traitData in pairs( CurrentRun.Hero.Traits ) do
-					if traitData.Name == "RoomRewardHealDrop_Trait" then
-						traitData.AccumulatedDamageBonusFood = 1 + (highest * 0.05)
-						break
-					end
-				end
+				GodBoonAmount[god.Name] = ( GodBoonAmount[god.Name] or 0 ) + 1
+			end
+			break
+		end
+		local highest = 0
+		for k,v in pairs(GodBoonAmount) do
+			if v > highest then
+				highest = v
+			end
+		end
+		for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+			if traitData.Name == "RoomRewardHealDrop_Trait" then
+				traitData.AccumulatedDamageBonusFood = 1 + (highest * 0.05)
+				break
 			end
 		end
 	end
 end, ChefCuisineMod)
+
+
 function AddTraitToHeroChef(args)
 	local traitData = args.TraitData
 	if traitData == nil then
@@ -469,3 +475,81 @@ function AddTraitToHeroChef(args)
 end
 
 
+OnProjectileDeath{
+	function( triggerArgs)
+		if SelectedFish == "GemDrop" then
+			local victimId = triggerArgs.triggeredById
+			local victim = triggerArgs.TriggeredByTable
+			local attacker = triggerArgs.AttackerTable
+			local weaponData = GetWeaponData( attacker, triggerArgs.WeaponName)
+			local projectileData = ProjectileData[triggerArgs.name]
+			TryUnloadAmmo( triggerArgs.WeaponName, victim, attacker, triggerArgs )
+
+			if weaponData ~= nil then
+				local storeInUnit = victim
+				local storeInUnitId = victimId
+				if storeInUnit == nil and projectileData ~= nil and projectileData.StoreAmmoInLastHit and triggerArgs.LastHitUnitTable ~= nil then
+					storeInUnit = triggerArgs.LastHitUnitTable
+					storeInUnitId = storeInUnit.ObjectId
+				end
+				if storeInUnit ~= nil and storeInUnit.ObjectId == nil then
+					storeInUnit.ObjectId = storeInUnitId
+				end
+			if weaponData.StoreAmmoOnHit ~= nil and weaponData.StoreAmmoOnHit > 0 and not triggerArgs.IsDeflected then
+				if projectileData == nil or ( not projectileData.NeverStore and ( not projectileData.StoreInFirstHit and triggerArgs.FireIndex == 0 ) or ( projectileData.StoreInFirstHit and triggerArgs.LastProjectileDeath )) then
+					if projectileData ~= nil and projectileData.StoreInFirstHit then
+						storeInUnit = triggerArgs.FirstUnitInVolley
+					end
+					if storeInUnit ~= nil then
+						if not storeInUnit.IsDead and (storeInUnit.CanStoreAmmo and not triggerArgs.InvulnerableImpact) and not ( weaponData.Name == "RangedWeapon" and HeroHasTrait("ShieldLoadAmmoTrait")) then
+							if storeInUnit.ObjectId ~= CurrentRun.Hero.ObjectId then
+								thread(function (desId)
+								local offsetX = 0
+								if CoinFlip() then
+									offsetX = offsetX * -1
+								end
+								local offsetY = 0
+								if CoinFlip() then
+									offsetY = offsetY * -1
+								end
+							
+								local obstacleName = "TartarusRubble02"
+								local obstacleId = SpawnObstacle({ Name = obstacleName, DestinationId = desId, OffsetX = offsetX, OffsetY = offsetY, ForceToValidLocation = true, SkipIfBlocked = true, Group = "Standing", })
+								AddToGroup({ Id = obstacleId, Name = "DestructibleGeo"})
+							
+								local obstacleData = ObstacleData[obstacleName] or {}
+								local spawnScale = RandomFloat( 0.2, 0.4 )
+								SetScale({ Id = obstacleId, Fraction = spawnScale })
+							
+								if CoinFlip() then
+									FlipHorizontal({ Id = obstacleId })
+								end
+								AdjustZLocation({ Id = obstacleId, Distance = 1000 })
+								ApplyUpwardForce({ Id = obstacleId, Speed = -3000 })
+								wait(3)
+								Destroy({id = obstacleId})
+								end, victimId)
+							end
+						end
+					end
+				end
+			end
+		end
+		end	
+	end
+}
+OnAnyLoad{"A_PostBoss01", function ()
+	if SelectedFish == "GemDrop" then
+		AddTraitToHero({TraitName="GemDrop_Trait"})
+	end
+end}
+OnAnyLoad{"B_PostBoss01", function ()
+	if SelectedFish == "GemDrop" then
+		AddTraitToHero({TraitName="GemDrop_Trait"})
+	end
+end}
+OnAnyLoad{"C_PostBoss01", function ()
+	if SelectedFish == "GemDrop" then
+		AddTraitToHero({TraitName="GemDrop_Trait"})
+	end
+end}

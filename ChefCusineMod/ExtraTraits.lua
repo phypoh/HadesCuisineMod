@@ -43,3 +43,22 @@ TraitData["RoomRewardHealDrop_Trait"] =
 		},
 		AccumulatedDamageBonusFood = 1,
 }
+TraitData["GemDrop_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "RoomRewardHealDrop_Trait",
+		Icon = "RockCandyIcon",
+		PropertyChanges =
+		{
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "MaxAmmo",
+				ChangeValue = 1,
+				ChangeType = "Add",
+				ExtractValue =
+				{
+					ExtractAs = "TooltipAmmo",
+				}
+			},
+		}
+}
