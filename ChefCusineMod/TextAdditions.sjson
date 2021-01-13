@@ -26,8 +26,13 @@
 		DisplayName = "Kids Meal"
 		Description = "Gain damage for every boon that belongs to the god you have the highest amount of boons of. \n {#PropertyFormat}Bonus Damage Per Boon: \Column 380 {#UpgradeFormat}5%"
 	}
-		{
+	{
 		Id = "GemDrop_Trait"
+		DisplayName = "Rock Candy"
+		Description = "When your cast hits a enemy, a rock falls on them. You also have more casts for each floor you clear(including this one). \n {#PropertyFormat}Bonus Casts Per Floor: \Column 380 {#UpgradeFormat}1"
+	}
+	{
+		Id = "BetterChaosGates_Trait"
 		DisplayName = "Rock Candy"
 		Description = "When your cast hits a enemy, a rock falls on them. You also have more casts for each floor you clear(including this one). \n {#PropertyFormat}Bonus Casts Per Floor: \Column 380 {#UpgradeFormat}1"
 	}
