@@ -9,17 +9,15 @@ hasBeenUsed = false
 return baseFunc(currentRun, killer, killingUnitWeapon)
 end,ChefCuisineMod)
 
-
+OnAnyLoad{function ()
+	if CurrentRun.CurrentRoom ~= nil and SelectedFish == "BetterShrinePoints" then
+		CurrentRun.CurrentRoom.ShrinePointDoorCost = 1
+	end
+end}
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	local returnVal = baseFunc(currentRun, prevRun, args)
 	if SelectedFish ~= nil then
 		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
-	end
-	if SelectedFish == "BetterShrinePoints" then
-		RoomSetData.Tartarus.BaseTartarus.ShrinePointDoorCost = 1
-		RoomSetData.Asphodel.BaseAsphodel.ShrinePointDoorCost = 1
-		RoomSetData.Elysium.BaseElysium.ShrinePointDoorCost = 1
-		RoomSetData.Styx.BaseStyx.ShrinePointDoorCost = 1
 	end
 	BoonsThisLevel = 0
 	CompletedLevels = 0
@@ -605,10 +603,15 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	end
 	if HeroHasTrait("BetterChaosGates_Trait") then
 		secretChance = secretChance + 0.5
+		
 	end
 	room.SecretChanceSuccess =  RandomChance( secretChance )
 
 	local shrinePointDoorChance = room.ShrinePointDoorSpawnChance or RoomData.BaseRoom.ShrinePointDoorSpawnChance
+	if HeroHasTrait("BetterShrinePoints_Trait") then
+		shrinePointDoorChance = shrinePointDoorChance + 1
+		DebugPrint({Text = shrinePointDoorChance})
+	end
 	room.ShrinePointDoorChanceSuccess =  RandomChance( shrinePointDoorChance )
 
 	local challengeChance = room.ChallengeSpawnChance or RoomData.BaseRoom.ChallengeSpawnChance
@@ -617,9 +620,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 			challengeChance = challengeChance * mutator.ChallengeSpawnChanceMultiplier
 		end
 	end
-	if HeroHasTrait("BetterShrinePoints_Trait") then
-		challengeChance = challengeChance + 0.5
-	end
+
 	room.ChallengeChanceSuccess = RandomChance( challengeChance )
 
 	local wellShopChance = room.WellShopSpawnChance or RoomData.BaseRoom.WellShopSpawnChance
@@ -653,18 +654,160 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	return room
 end, ChefCuisineMod)
 
-ModUtil.BaseOverride("GetSecretDoorCost", function ()
-	local multiplier = 1
-	local traitEffects = GetHeroTraitValues("SecretDoorCostMultiplier")
-	for i, value in pairs(traitEffects) do
-		multiplier = multiplier * value
+ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
+
+	local currentRoom = currentRun.CurrentRoom
+
+	RandomSynchronize( 13 )
+
+	local secretPointIds = GetIdsByType({ Name = "SecretPoint" })
+
+	-- Secret Door
+	if not IsEmpty( secretPointIds ) and IsSecretDoorEligible( currentRun, currentRoom ) then
+		currentRoom.ForceSecretDoor = true
+		UseHeroTraitsWithValue("ForceSecretDoor", true)
+		local secretRoomData = ChooseNextRoomData( currentRun, { RoomDataSet = RoomSetData.Secrets } )
+		if secretRoomData ~= nil then
+			local secretPointId = RemoveRandomValue( secretPointIds )
+			local secretDoor = DeepCopyTable( ObstacleData.SecretDoor )
+			secretDoor.ObjectId = SpawnObstacle({ Name = "SecretDoor", Group = "FX_Terrain", DestinationId = secretPointId, AttachedTable = secretDoor })
+			SetupObstacle( secretDoor )
+			if HeroHasTrait("BetterChaosGates_Trait") then
+				secretDoor.HealthCost = 1
+			else
+				secretDoor.HealthCost = GetSecretDoorCost()
+			end
+			
+			local secretRoom = CreateRoom( secretRoomData )
+			AssignRoomToExitDoor( secretDoor, secretRoom )
+			secretDoor.OnUsedPresentationFunctionName = "SecretDoorUsedPresentation"
+			currentRun.LastSecretDepth = GetRunDepth( currentRun )
+		end
 	end
-	local costBase = CurrentRun.Hero.SecretDoorCostBase or 10
-	local costScalar = CurrentRun.Hero.SecretDoorCostDepthScalar or 0.5
-	local costRamp = GetRunDepth( CurrentRun ) * costScalar
-	if not GetHeroTraitValues("BetterChaosGates_Trait") then
-		return math.ceil( multiplier * ( costBase + costRamp ) )
-	else
-		return 1
+	if not IsEmpty( secretPointIds ) and IsShrinePointDoorEligible( currentRun, currentRoom ) then
+		currentRoom.ForceShrinePointDoor = true
+		local shrinePointRoomOptions = currentRoom.ShrinePointRoomOptions or RoomSetData.Base.BaseRoom.ShrinePointRoomOptions
+		local shrinePointRoomName = GetRandomValue(shrinePointRoomOptions)
+		local shrinePointRoomData = RoomSetData.Base[shrinePointRoomName]
+		if shrinePointRoomData ~= nil then
+			local secretPointId = RemoveRandomValue( secretPointIds )
+			local shrinePointDoor = DeepCopyTable( ObstacleData.ShrinePointDoor )
+			shrinePointDoor.ObjectId = SpawnObstacle({ Name = "ShrinePointDoor", Group = "FX_Terrain", DestinationId = secretPointId, AttachedTable = shrinePointDoor })
+			SetupObstacle( shrinePointDoor )
+			if HeroHasTrait("BetterShrinePoints_Trait") then
+				shrinePointDoor.ShrinePointReq = 1
+			else
+				shrinePointDoor.ShrinePointReq = currentRoom.ShrinePointDoorCost or ( shrinePointDoor.CostBase + ( shrinePointDoor.CostPerDepth * (currentRun.RunDepthCache - 1) ) )
+			end
+			local activeShrinePoints = GetTotalSpentShrinePoints()
+			local costFontColor = Color.CostAffordable
+			if shrinePointDoor.ShrinePointReq > activeShrinePoints then
+				costFontColor = Color.CostUnaffordable
+			end
+			local shrinePointRoom = CreateRoom( shrinePointRoomData, { SkipChooseReward = true } )
+			shrinePointRoom.NeedsReward = true
+			AssignRoomToExitDoor( shrinePointDoor, shrinePointRoom )
+			shrinePointDoor.OnUsedPresentationFunctionName = "ShrinePointDoorUsedPresentation"
+			currentRun.LastShrinePointDoorDepth = GetRunDepth( currentRun )
+		end
 	end
+
+	local challengeBaseIds = GetIdsByType({ Name = "ChallengeSwitchBase" })
+
+	-- Challenge Switch
+	if not IsEmpty( challengeBaseIds ) and IsChallengeSwitchEligible( currentRun, TableLength( challengeBaseIds )) then
+		local hasForceTrait = HasHeroTraitValue("ForceChallengeSwitch")
+		currentRoom.ForceChallengeSwitch = true
+		UseHeroTraitsWithValue("ForceChallengeSwitch", true)
+		local challengeBaseId = RemoveRandomValue( challengeBaseIds )
+		local challengeOptions = {}
+		for k, challengeName in pairs( EncounterSets.ChallengeOptions ) do
+			local challengeData = ObstacleData[challengeName]
+			if challengeData.Requirements == nil or IsGameStateEligible( CurrentRun, challengeData, challengeData.Requirements ) then
+				table.insert( challengeOptions, challengeName )
+			end
+		end
+		if not IsEmpty( challengeOptions ) then
+			local challengeType = GetRandomValue( challengeOptions )
+			local challengeSwitch = DeepCopyTable( ObstacleData[challengeType] )
+			currentRoom.ChallengeSwitch = challengeSwitch
+			challengeSwitch.ObjectId = challengeBaseId
+			local offsetX = challengeSwitch.TextAnchorIdOffsetX
+			if IsHorizontallyFlipped({ Id = challengeSwitch.ObjectId }) then
+				offsetX = offsetX * -1
+			end
+			challengeSwitch.TextAnchorId = SpawnObstacle({ Name = "BlankObstacle", Group = "Standing", DestinationId = challengeBaseId })
+			Attach({ Id = challengeSwitch.TextAnchorId, DestinationId = challengeBaseId, OffsetX = offsetX, OffsetY = challengeSwitch.TextAnchorIdOffsetY, OffsetZ = challengeSwitch.TextAnchorIdOffsetZ })
+			SetThingProperty({ Property = "SortMode", Value = "FromParent", DestinationId = challengeSwitch.TextAnchorId })
+
+			local challengeEncounter = ChooseChallengeEncounter(currentRoom)
+			currentRoom.ChallengeEncounter = challengeEncounter
+			challengeEncounter.Switch = challengeSwitch
+			challengeEncounter.SpawnNearId = challengeSwitch.ObjectId
+
+			local rewardMultiplier = challengeSwitch.RewardMultiplier or 1
+			local startingValue = rewardMultiplier * challengeEncounter.StartingValue * (1 + challengeEncounter.ValueDepthRamp * GetRunDepth(CurrentRun)) * GetTotalHeroTraitValue("ChallengeRewardIncrease", {IsMultiplier = true})
+			challengeSwitch.StartingValue = round( startingValue )
+			challengeSwitch.ValueTextAnchor = SpawnObstacle({ Name = "BlankObstacle", DestinationId = challengeSwitch.ObjectId })
+			Attach({ Id = challengeSwitch.ValueTextAnchor, DestinationId = challengeSwitch.ObjectId })
+			CreateTextBox({ Id = challengeSwitch.ValueTextAnchor, Text = challengeSwitch.ChallengeText, LuaKey = "Amount", OffsetX = -40 , OffsetY = -220, LuaValue = startingValue, Font = "FellType", FontSize = 40, Color = Color.White, OutlineThickness = 1, OutlineColor = {0.0, 0.0, 0.0,1}, TextSymbolScale = 0.5, })
+			ModifyTextBox({ Id = challengeSwitch.ValueTextAnchor, FadeTarget = 0, FadeDuration = 0 })
+
+			if challengeSwitch.KeyCost == nil and challengeSwitch.KeyCostMin ~= nil and challengeSwitch.KeyCostMax ~= nil then
+				challengeSwitch.KeyCost = RandomInt(challengeSwitch.KeyCostMin, challengeSwitch.KeyCostMax)
+			end
+			SetupObstacle( challengeSwitch )
+			SetAnimation({ DestinationId = challengeSwitch.ObjectId, Name = challengeSwitch.LockedAnimationName })
+			UseableOn({ Id = challengeSwitch.ObjectId })
+			if challengeSwitch.SpawnPropertyChanges ~= nil then
+				ApplyUnitPropertyChanges( challengeSwitch, challengeSwitch.SpawnPropertyChanges, true )
+			end
+			currentRun.LastChallengeDepth = currentRun.RunDepthCache
+			challengeBaseId = nil
+		end
+	end
+
+	-- Well Shop
+	if not IsEmpty( challengeBaseIds ) and IsWellShopEligible( currentRun, currentRoom ) then
+		currentRoom.ForceWellShop = true
+		local challengeBaseId = RemoveRandomValue( challengeBaseIds )
+		currentRoom.WellShop = DeepCopyTable( ObstacleData.WellShop )
+		currentRoom.WellShop.ObjectId = challengeBaseId
+		SetupObstacle( currentRoom.WellShop )
+		SetAnimation({ DestinationId = currentRoom.WellShop.ObjectId, Name = "WellShopLocked" })
+		UseableOn({ Id = currentRoom.WellShop.ObjectId })
+		if currentRoom.WellShop.SpawnPropertyChanges ~= nil then
+			ApplyUnitPropertyChanges( currentRoom.WellShop, currentRoom.WellShop.SpawnPropertyChanges, true )
+		end
+		currentRun.LastWellShopDepth = currentRun.RunDepthCache
+		challengeBaseId = nil
+	end
+
+	-- Sell Trait Shop
+	if not IsEmpty( challengeBaseIds ) and IsSellTraitShopEligible( currentRun, currentRoom ) then
+		currentRoom.ForceSellTraitShop = true
+		local challengeBaseId = RemoveRandomValue( challengeBaseIds )
+		currentRoom.SellTraitShop = DeepCopyTable( ObstacleData.SellTraitShop )
+		currentRoom.SellTraitShop.ObjectId = challengeBaseId
+		SetupObstacle( currentRoom.SellTraitShop)
+		SetAnimation({ DestinationId = currentRoom.SellTraitShop.ObjectId, Name = "SellTraitShopLocked" })
+		UseableOn({ Id = currentRoom.SellTraitShop.ObjectId })
+		if currentRoom.SellTraitShop.SpawnPropertyChanges ~= nil then
+			ApplyUnitPropertyChanges( currentRoom.SellTraitShop, currentRoom.SellTraitShop.SpawnPropertyChanges, true )
+		end
+		currentRun.LastSellTraitShopDepth = currentRun.RunDepthCache
+		challengeBaseId = nil
+		GenerateSellTraitShop( currentRun, currentRoom )
+	end
+
+	-- Fishing
+	local fishingPoints = GetInactiveIdsByType({ Name = "FishingPoint" })
+	if not IsEmpty( fishingPoints ) and IsFishingEligible( currentRun, currentRoom ) then
+		currentRoom.ForceFishing = true
+		UseHeroTraitsWithValue("ForceFishingPoint", true)
+		CurrentRun.CurrentRoom.FishingPointId = GetRandomValue(fishingPoints)
+		Activate({ Id = CurrentRun.CurrentRoom.FishingPointId })
+		currentRun.LastFishingPointDepth = GetRunDepth( currentRun )
+	end
+
 end, ChefCuisineMod)

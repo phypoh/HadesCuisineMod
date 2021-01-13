@@ -39,6 +39,7 @@ function( triggerArgs )
 		SelectedFish = nil
 		DeathLoopData["DeathArea"]["ObstacleData"][423399]["SetupGameStateRequirements"] ={
 		}
+		CurrentlySelectedMealFish = {}
 		end
 	end
 }
@@ -505,6 +506,7 @@ end
 CurrentlySelectedMealFish = {}
 CreatedCheckMarksIds = {}
 SaveIgnores["CreatedCheckMarksIds"] = true
+SaveIgnores["CurrentlySelectedMealFish"] = true
 function ChefFishSelected(screen, button)
 	local components = screen.Components
 	local FishName = button.FishName
@@ -616,7 +618,6 @@ function ChefCreateRecipeChecks(screen)
 		Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon"].Id, DestinationId = components[itemBackingKeyBaseItem].Id, OffsetX = 150, OffsetY = -20 })
 	end
 end
-
 function CuisineCookMealButton(screen,button)
 	MealData = FishCombinations[CurrentlySelectedMealFish[1]][CurrentlySelectedMealFish[2]]
 	if CurrentlySelectedMealFish ~= nil and #CurrentlySelectedMealFish == 2 and GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] >= MealData.ParentAmount and GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] >= MealData.Amount then
@@ -625,7 +626,7 @@ function CuisineCookMealButton(screen,button)
 		SelectedFish = MealData.Boon:gsub("_Trait", "")
 		GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.ParentAmount
 		GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.Amount
-		thread( InCombatText, CurrentRun.Hero.ObjectId, "BetterChaosGates", 1.8, { ShadowScale = 0.8 } )
+		thread( InCombatText, CurrentRun.Hero.ObjectId, MealData.Boon, 1.8, { ShadowScale = 0.8 } )
 		hasBeenUsed = true
 		local partner = button.usee
 		partner.NextInteractLines = nil
