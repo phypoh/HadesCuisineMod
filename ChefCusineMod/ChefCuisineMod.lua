@@ -11,14 +11,20 @@ end,ChefCuisineMod)
 
 
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
-local returnVal = baseFunc(currentRun, prevRun, args)
-if SelectedFish ~= nil then
-AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
-end
-BoonsThisLevel = 0
-CompletedLevels = 0
-GodBoonAmount = {}
-return returnVal
+	local returnVal = baseFunc(currentRun, prevRun, args)
+	if SelectedFish ~= nil then
+		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
+	end
+	if SelectedFish == "BetterShrinePoints" then
+		RoomSetData.Tartarus.BaseTartarus.ShrinePointDoorCost = 1
+		RoomSetData.Asphodel.BaseAsphodel.ShrinePointDoorCost = 1
+		RoomSetData.Elysium.BaseElysium.ShrinePointDoorCost = 1
+		RoomSetData.Styx.BaseStyx.ShrinePointDoorCost = 1
+	end
+	BoonsThisLevel = 0
+	CompletedLevels = 0
+	GodBoonAmount = {}
+	return returnVal
 end,ChefCuisineMod) 
 
 
@@ -553,3 +559,112 @@ OnAnyLoad{"C_PostBoss01", function ()
 		AddTraitToHero({TraitName="GemDrop_Trait"})
 	end
 end}
+
+ModUtil.BaseOverride("CreateRoom", function( roomData, args )
+	if args == nil then
+		args = {}
+	end
+
+	local room = DeepCopyTable( roomData )
+	room.SpawnPoints = {}
+	room.SpawnPointsUsed = {}
+	room.EliteAttributes = {}
+	room.VoiceLinesPlayed = {}
+	room.TextLinesRecord = {}
+	if args.RoomOverrides ~= nil then
+		for key, value in pairs( args.RoomOverrides ) do
+			room[key] = value
+		end
+	end
+	if not args.SkipChooseEncounter then
+		room.Encounter = ChooseEncounter( CurrentRun, room )
+		RecordEncounter( CurrentRun, room.Encounter )
+	end
+
+	if args.RewardStoreName == nil then
+
+		local roomName = room.GenusName or room.Name
+		if room.FirstClearRewardStore ~= nil and IsRoomFirstClearOverShrinePointThreshold( GetEquippedWeapon(), CurrentRun, roomName ) then
+			args.RewardStoreName  = room.FirstClearRewardStore
+		else
+			args.RewardStoreName = room.ForcedRewardStore or "RunProgress"
+		end
+	end
+	if not args.SkipChooseReward then
+		room.RewardStoreName = args.RewardStoreName
+		room.ChosenRewardType = ChooseRoomReward( CurrentRun, room, args.RewardStoreName, args.PreviouslyChosenRewards )
+		SetupRoomReward( CurrentRun, room, args.PreviouslyChosenRewards )
+	end
+
+	local secretChance = room.SecretSpawnChance or RoomData.BaseRoom.SecretSpawnChance
+
+	for k, mutator in pairs( GameState.ActiveMutators ) do
+		if mutator.SecretSpawnChanceMultiplier ~= nil then
+			secretChance = secretChance * mutator.SecretSpawnChanceMultiplier
+		end
+	end
+	if HeroHasTrait("BetterChaosGates_Trait") then
+		secretChance = secretChance + 0.5
+	end
+	room.SecretChanceSuccess =  RandomChance( secretChance )
+
+	local shrinePointDoorChance = room.ShrinePointDoorSpawnChance or RoomData.BaseRoom.ShrinePointDoorSpawnChance
+	room.ShrinePointDoorChanceSuccess =  RandomChance( shrinePointDoorChance )
+
+	local challengeChance = room.ChallengeSpawnChance or RoomData.BaseRoom.ChallengeSpawnChance
+	for k, mutator in pairs( GameState.ActiveMutators ) do
+		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
+			challengeChance = challengeChance * mutator.ChallengeSpawnChanceMultiplier
+		end
+	end
+	if HeroHasTrait("BetterShrinePoints_Trait") then
+		challengeChance = challengeChance + 0.5
+	end
+	room.ChallengeChanceSuccess = RandomChance( challengeChance )
+
+	local wellShopChance = room.WellShopSpawnChance or RoomData.BaseRoom.WellShopSpawnChance
+	for k, mutator in pairs( GameState.ActiveMutators ) do
+		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
+			wellShopChance = wellShopChance * mutator.WellShopSpawnChanceMultiplier
+		end
+	end
+	room.WellShopChanceSuccess = RandomChance( wellShopChance )
+
+	local sellTraitShopChance = room.SellTraitShopChance or RoomData.BaseRoom.SellTraitShopChance
+	for k, mutator in pairs( GameState.ActiveMutators ) do
+		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
+			sellTraitShopChance = sellTraitShopChance * mutator.SellTraitShopChanceMultiplier
+		end
+	end
+	room.SellTraitShopChanceSuccess = RandomChance( sellTraitShopChance )
+
+	local fishingPointChance = room.FishingPointChance or RoomData.BaseRoom.FishingPointChance
+	for k, mutator in pairs( GameState.ActiveMutators ) do
+		if mutator.FishingPointChanceMultiplier ~= nil then
+			fishingPointChance = fishingPointChance * mutator.FishingPointChanceMultiplier
+		end
+	end
+	room.FishingPointChanceSuccess =  RandomChance( fishingPointChance + GetTotalHeroTraitValue("FishingPointChanceBonus") )
+	if CurrentRun.RoomCreations[room.Name] == nil then
+		CurrentRun.RoomCreations[room.Name] = 0
+	end
+	CurrentRun.RoomCreations[room.Name] = CurrentRun.RoomCreations[room.Name] + 1
+
+	return room
+end, ChefCuisineMod)
+
+ModUtil.BaseOverride("GetSecretDoorCost", function ()
+	local multiplier = 1
+	local traitEffects = GetHeroTraitValues("SecretDoorCostMultiplier")
+	for i, value in pairs(traitEffects) do
+		multiplier = multiplier * value
+	end
+	local costBase = CurrentRun.Hero.SecretDoorCostBase or 10
+	local costScalar = CurrentRun.Hero.SecretDoorCostDepthScalar or 0.5
+	local costRamp = GetRunDepth( CurrentRun ) * costScalar
+	if not GetHeroTraitValues("BetterChaosGates_Trait") then
+		return math.ceil( multiplier * ( costBase + costRamp ) )
+	else
+		return 1
+	end
+end, ChefCuisineMod)

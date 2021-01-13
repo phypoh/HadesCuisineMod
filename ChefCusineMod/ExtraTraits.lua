@@ -62,3 +62,15 @@ TraitData["GemDrop_Trait"] =
 			},
 		}
 }
+TraitData["BetterChaosGates_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "BetterChaosGates_Trait",
+		Icon = "BetterChaosGatesIcon",
+}
+TraitData["BetterShrinePoints_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "BetterChaosGates_Trait",
+		Icon = "BetterShrinePointsIcon",
+}

@@ -81,7 +81,7 @@
       StartFrame = 1
       Scale = 0.8
     }  
-        {
+    {
       Name = "RockCandyIcon_Small"
       InheritFrom = "BoonTrayIcon"
       FilePath = "Tilesets\Gameplay\Gameplay_Gemstones_01"
@@ -96,6 +96,38 @@
       EndFrame = 1
       StartFrame = 1
       Scale = 0.8
-    }   
+    }  
+    {
+      Name = "BetterChaosGatesIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\LockIconRelease\LockIconRelease0008"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "BetterChaosGatesIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\LockIconRelease\LockIconRelease0008"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.8
+    }
+        {
+      Name = "BetterShrinePointsIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_GiftDrop_02"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "BetterShrinePointsIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "Tilesets\Gameplay\Gameplay_GiftDrop_02"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.8
+    } 
     ]
 }

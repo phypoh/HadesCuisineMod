@@ -31,5 +31,15 @@
 		DisplayName = "Rock Candy"
 		Description = "When your cast hits a enemy, a rock falls on them. You also have more casts for each floor you clear(including this one). \n {#PropertyFormat}Bonus Casts Per Floor: \Column 380 {#UpgradeFormat}1"
 	}
+	{
+		Id = "BetterChaosGates_Trait"
+		DisplayName = "Cthulu Buffet"
+		Description = "Gain a higher chance of finding Chaos Gates and entrance only costs 1 health. \n {#PropertyFormat}Increased Chance: \Column 380 {#UpgradeFormat}+50%"
+	}
+	{
+		Id = "BetterShrinePoints_Trait"
+		DisplayName = "King's Yellow Shake"
+		Description = "Gain a higher chance of finding Erebus Gates and entrance only costs 1 heat. \n {#PropertyFormat}Increased Chance: \Column 380 {#UpgradeFormat}+50%"
+	}
 	]    
 }
