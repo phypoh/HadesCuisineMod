@@ -24,13 +24,21 @@ function( triggerArgs )
 			AreIdsNotAlive = {40000}
 		}
 		else
-		SelectableMeals = 	{
+		SelectableMeals = {
 		"Fish_Tartarus_Common_01", 
 		"Fish_Elysium_Common_01", 
 		"Fish_Surface_Common_01", 
 		"StackUpgrade",
 		"RoomRewardHealDrop",
 		"GemDrop",
+		"Fish_Asphodel_Legendary_01",
+		"Fish_Elysium_Rare_01",
+		"Fish_Asphodel_Rare_01",
+		"Fish_Chaos_Common_01",
+		"Fish_Styx_Rare_01",
+		"Fish_Tartarus_Legendary_01",
+		"Fish_Chaos_Rare_01",
+		"Fish_Tartarus_Rare_01"
 	}
 		ThisRunFish = {}
 		for i = 1, 3 do

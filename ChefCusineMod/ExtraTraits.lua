@@ -71,6 +71,119 @@ TraitData["BetterChaosGates_Trait"] =
 TraitData["BetterShrinePoints_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
-		RequiredFalseTrait = "BetterChaosGates_Trait",
+		RequiredFalseTrait = "BetterShrinePoints_Trait",
 		Icon = "BetterShrinePointsIcon",
+}
+
+TraitData["Fish_Asphodel_Legendary_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Asphodel_Legendary_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "ZuesUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "ZeusUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Elysium_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Elysium_Rare_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "AphroditeUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "AphroditeUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Asphodel_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Asphodel_Rare_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "DemeterUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "DemeterUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Chaos_Common_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Chaos_Common_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "AresUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "AresUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Styx_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Styx_Rare_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "AthenaUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "AthenaUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Tartarus_Legendary_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Tartarus_Legendary_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "ArtemisUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "ArtemisUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Chaos_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Chaos_Rare_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "PoseidonUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "PoseidonUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
+}
+TraitData["Fish_Tartarus_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Tartarus_Rare_01_Trait",
+		Icon = "BetterShrinePointsIcon",
+		ChefGodToForce = "DionysusUpgrade",
+		RarityBonus =
+		{
+			RequiredGod = "DionysusUpgrade",
+			RareBonus = { BaseValue = 0.15},
+			EpicBonus = 0.15,
+			LegendaryBonus = 0.15,
+		},
 }

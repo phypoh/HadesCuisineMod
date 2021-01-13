@@ -811,3 +811,25 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 	end
 
 end, ChefCuisineMod)
+
+ModUtil.BaseOverride("ChooseLoot", function ( excludeLootNames, forceLootName )
+
+	local newLootName = nil
+	if forceLootName ~= nil then
+		newLootName = forceLootName
+	else
+		local eligibleLootNames = GetEligibleLootNames( excludeLootNames )
+		newLootName = GetRandomValue( eligibleLootNames )
+	end
+
+	local newlootData = LootData[newLootName]
+	for k, trait in pairs( CurrentRun.Hero.Traits ) do
+		if trait.ChefGodToForce ~= nil then
+			if RandomChance(0.25) then
+				newlootData = LootData[trait.ChefGodToForce]
+			end
+		end
+	end
+	return newlootData
+
+end, ChefCuisineMod)

@@ -41,5 +41,55 @@
 		DisplayName = "King's Yellow Shake"
 		Description = "Gain a higher chance of finding Erebus Gates and entrance only costs 1 heat. \n {#PropertyFormat}Increased Chance: \Column 380 {#UpgradeFormat}+50%"
 	}
+	{
+		Id = "Fish_Asphodel_Legendary_01_Trait"
+		DisplayName = "Hellfire Energy Ribs"
+		Description = "Increased Chance of running into Zeus, and Zeus Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Zues: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "An strangely delightful rib snack made from an Hellfire. Zeus himself has a peculiar fondness of this recipe"
+	}
+	{
+		Id = "Fish_Elysium_Rare_01_Trait"
+		DisplayName = "Lover's Koi"
+		Description = "Increased Chance of running into Aphrodite, and Aphrodite Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Aphrodite: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Less an well known recipe, and more what could be made from the Charp. Despite it's appearance, Aphrodite is head over heels for it."
+	}
+	{
+		Id = "Fish_Asphodel_Rare_01_Trait"
+		DisplayName = "Forgiveness Claws"
+		Description = "Increased Chance of running into Demeter, and Demeter Boons have 15% Increased chance to be Rare or better. \n {#PropertyFormat}Increased Chance to Find Demeter: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Much as she would hate to admit it, Demeter does fancy a bit of irony. This recipe was meant to represent that irony."
+	}
+	{
+		Id = "Fish_Chaos_Common_01_Trait"
+		DisplayName = "Snake-Eye Shake"
+		Description = "Increased Chance of running into Ares, and Ares Boons have 15% Increased chance to be Rare or better. \n {#PropertyFormat}Increased Chance to Find Ares: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of War watches all whom are willing to fight. Ares has a preference for those whom watch back, much like this recipe"
+	}
+	{
+		Id = "Fish_Styx_Rare_01_Trait"
+		DisplayName = "Barricade Puffer"
+		Description = "Increased Chance of running into Athena, and Athena Boons have 15% Increased chance to be Rare or better. \n {#PropertyFormat}Increased Chance to Find Athena: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Seldom does Athena bother eating the rewards of the sea, but much like the gods themselves, even she fails to resist the challenge of consuming this."
+	}
+	{
+		Id = "Fish_Tartarus_Legendary_01_Trait"
+		DisplayName = "10-Arrow Sushi"
+		Description = "Increased Chance of running into Artemis, and Artemis Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Artemis: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Artemis was always an sucker for this recipe, and often hunt down many an Scyllascion...much to Poseidon's dismay."
+	}
+	{
+		Id = "Fish_Chaos_Rare_01_Trait"
+		DisplayName = "Curious Elixir"
+		Description = "Increased Chance of running into Poseidon, and Poseidon Boons have 15% Increased chance to be Rare or better. \n {#PropertyFormat}Increased Chance to Find Poseidon: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of the Sea rules over many of the fish, but there are those whom he prefers more than others."
+	}
+	{
+		Id = "Fish_Tartarus_Rare_01_Trait"
+		DisplayName = "Dazing Knuckledrink"
+		Description = "Increased Chance of running into Dionysus, and Dionysus Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Dionysus: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of Wine knew of some unknown drinks, and knew his way around fishing for Knuckleheads. Caution is advised when drinking"
+	}
+
+
 	]    
 }
