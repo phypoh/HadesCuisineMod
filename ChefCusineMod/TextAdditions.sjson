@@ -31,10 +31,5 @@
 		DisplayName = "Rock Candy"
 		Description = "When your cast hits a enemy, a rock falls on them. You also have more casts for each floor you clear(including this one). \n {#PropertyFormat}Bonus Casts Per Floor: \Column 380 {#UpgradeFormat}1"
 	}
-	{
-		Id = "BetterChaosGates_Trait"
-		DisplayName = "Rock Candy"
-		Description = "When your cast hits a enemy, a rock falls on them. You also have more casts for each floor you clear(including this one). \n {#PropertyFormat}Bonus Casts Per Floor: \Column 380 {#UpgradeFormat}1"
-	}
 	]    
 }
