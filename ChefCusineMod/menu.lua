@@ -24,22 +24,38 @@ function( triggerArgs )
 			AreIdsNotAlive = {40000}
 		}
 		else
+		--[[TODO: Add more fish:
+			Fish_Asphodel_Common_01,
+			Fish_Elysium_Legendary_01,
+			Fish_Styx_Common_01,
+			Fish_Styx_Legendary_01,
+			Fish_Surface_Rare_01,
+			Fish_Surface_Legendary_01,
+			,
+		]]--
 		SelectableMeals = {
-		"Fish_Tartarus_Common_01", 
-		"Fish_Elysium_Common_01", 
-		"Fish_Surface_Common_01", 
-		"StackUpgrade",
-		"RoomRewardHealDrop",
-		"GemDrop",
-		"Fish_Asphodel_Legendary_01",
-		"Fish_Elysium_Rare_01",
-		"Fish_Asphodel_Rare_01",
-		"Fish_Chaos_Common_01",
-		"Fish_Styx_Rare_01",
-		"Fish_Tartarus_Legendary_01",
-		"Fish_Chaos_Rare_01",
-		"Fish_Tartarus_Rare_01"
-	}
+				--Tartarus
+			"Fish_Tartarus_Common_01",
+			"Fish_Tartarus_Rare_01",
+			"Fish_Tartarus_Legendary_01",
+				--Asphodel
+			"Fish_Asphodel_Rare_01",
+			"Fish_Asphodel_Legendary_01",
+				--Elysium
+			"Fish_Elysium_Common_01",
+			"Fish_Elysium_Rare_01",
+				--Styx
+			"Fish_Styx_Rare_01",
+				--Surface
+			"Fish_Surface_Common_01", 
+				--Chaos
+			"Fish_Chaos_Common_01",
+			"Fish_Chaos_Rare_01",
+				--Other
+			"StackUpgrade",
+			"RoomRewardHealDrop",
+			"GemDrop",
+		}
 		ThisRunFish = {}
 		for i = 1, 3 do
 		table.insert(ThisRunFish, RemoveRandomValue(SelectableMeals))
@@ -262,15 +278,7 @@ end
 function GiveFishBoon(screen, button)
 SelectedFish = button.Boon
 hasBeenUsed = true
-if not HeroHasTrait(button.Boon) then
-	local isLegendary = false
-	local isDuo = false
-	local isConsumable = false
-	if IsWeaponTrait(button.Boon) then
-		RemoveSameSlotWeapon(button.Boon)
-	end
 	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
-end
 local partner = button.usee
 partner.NextInteractLines = nil
 StopStatusAnimation( partner, StatusAnimations.WantsToTalk )

@@ -89,7 +89,11 @@
 		Description = "Increased Chance of running into Dionysus, and Dionysus Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Dionysus: \Column 380 {#UpgradeFormat}+25%"
 		Lore = "The God of Wine knew of some unknown drinks, and knew his way around fishing for Knuckleheads. Caution is advised when drinking"
 	}
-
+	{
+		Id = "Fish_Chaos_Legendary_01"
+		DisplayName = "Mystery Jan's"
+		Description = "Gain a random boon. Every few stages it becomes another random boon.\n {#PropertyFormat}Stages to Change Boon: \Column 380 {#UpgradeFormat}3"
+	}
 
 	]    
 }
