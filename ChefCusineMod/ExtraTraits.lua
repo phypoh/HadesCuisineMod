@@ -187,9 +187,3 @@ TraitData["Fish_Tartarus_Rare_01_Trait"] =
 			LegendaryBonus = 0.15,
 		},
 }
-TraitData["Fish_Chaos_Legendary_01"] =
-{
-		InheritFrom = { "ShopTier3Trait" },
-		RequiredFalseTrait = "Fish_Chaos_Legendary_01",
-		Icon = "MysteryJansIcon",
-}

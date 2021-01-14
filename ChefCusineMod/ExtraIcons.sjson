@@ -129,21 +129,5 @@
       StartFrame = 1
       Scale = 0.8
     }
-            {
-      Name = "MysteryJansIcon_Small"
-      InheritFrom = "BoonTrayIcon"
-      FilePath = "Tilesets\Gameplay\Chaos_Legendary"
-      EndFrame = 1
-      StartFrame = 1
-      Scale = 0.5
-    }
-    {
-      Name = "MysteryJansIcon_Large"
-      InheritFrom = "BoonIcon"
-      FilePath = "Tilesets\Gameplay\Chaos_Legendary"
-      EndFrame = 1
-      StartFrame = 1
-      Scale = 0.8
-    } 
     ]
 }
