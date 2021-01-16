@@ -35,7 +35,7 @@ function( triggerArgs )
 		]]--
 		SelectableMeals = {
 				--Tartarus
-			"Fish_Tartarus_Common_01",
+			--[["Fish_Tartarus_Common_01",
 			"Fish_Tartarus_Rare_01",
 			"Fish_Tartarus_Legendary_01",
 				--Asphodel
@@ -50,9 +50,10 @@ function( triggerArgs )
 			"Fish_Surface_Common_01", 
 				--Chaos
 			"Fish_Chaos_Common_01",
-			"Fish_Chaos_Rare_01",
+			"Fish_Chaos_Rare_01",]]--
+			"Fish_Chaos_Legendary_01",
 				--Other
-			"StackUpgrade",
+			--"StackUpgrade",
 			"RoomRewardHealDrop",
 			"GemDrop",
 		}

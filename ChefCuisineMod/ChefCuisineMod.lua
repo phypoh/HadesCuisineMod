@@ -2,7 +2,9 @@ ModUtil.RegisterMod("ChefCuisineMod")
 GodBoonAmount = {}
 BoonsThisLevel = 0
 CompletedLevels = 0
-SaveIgnores["GodBoonArrays"] = true
+local ChefJanTraitData = {}
+local currentJanTrait = nil
+SaveIgnores["GodBoonAmount"] = true
 
 ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
 hasBeenUsed = false
@@ -15,9 +17,26 @@ OnAnyLoad{function ()
 	end
 end}
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
-	local returnVal = baseFunc(currentRun, prevRun, args)
+	local returnVal = baseFunc(prevRun, args)
 	if SelectedFish ~= nil then
 		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
+	end
+	if SelectedFish == "Fish_Chaos_Legendary_01" then
+		local traitData = CollapseTable( TraitData ) -- no mutation
+		for i, trait in ipairs( traitData ) do
+  			if trait.Slot ~= nil or not IsGodTrait(trait.Name) or (trait.RarityLevels == nil or trait.RarityLevels.Common == nil) or RequiredWeapon ~= nil then
+    			traitData[ i ] = nil
+  			end
+		end
+		traitData = CollapseTable( traitData)
+		ChefJanTraitData = traitData
+		local n = #ChefJanTraitData
+		local janTraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Chaos_Legendary_01_Trait", Rarity = "Legendary" })
+		
+		local currentTrait = ChefJanTraitData[RandomInt(1,n)]
+		currentJanTrait = currentTrait.Name
+		AddTraitToHero({TraitName = currentTrait.Name})
+		
 	end
 	BoonsThisLevel = 0
 	CompletedLevels = 0
@@ -832,4 +851,35 @@ ModUtil.BaseOverride("ChooseLoot", function ( excludeLootNames, forceLootName )
 	end
 	return newlootData
 
+end, ChefCuisineMod)
+
+function ChefChangeJanBoon()
+	local janTraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Chaos_Legendary_01_Trait", Rarity = "Legendary" })
+
+	janTraitData.CurrentRoom = janTraitData.CurrentRoom + 1
+	if janTraitData.CurrentRoom < janTraitData.RoomsPerUpgrade then
+		return
+	else
+		janTraitData.CurrentRoom = 0
+	end
+	local numOldTrait = GetTraitNameCount( CurrentRun.Hero, currentJanTrait )
+
+	RemoveTrait( CurrentRun.Hero, currentJanTrait )
+	
+	local n = #ChefJanTraitData
+	local currentTrait = ChefJanTraitData[RandomInt(1,n)]
+	DebugPrint({Text = currentTrait.Name or "Nil"})
+	local processedData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = currentTrait.Name, Rarity ="Common" }) 
+	AddTraitToHero({ TraitData = processedData })
+	currentJanTrait = processedData.Name
+	for i=1, numOldTrait-1 do
+		AddTraitToHero({ TraitName = currentTrait.Name })
+	end
+end
+ModUtil.WrapBaseFunction("EndEncounterEffects", function(baseFunc, currentRun, currentRoom, currentEncounter)
+	local returnValue = baseFunc(currentRun, currentRoom, currentEncounter)
+	if SelectedFish == "Fish_Chaos_Legendary_01" then
+		ChefChangeJanBoon()
+	end
+	return returnValue
 end, ChefCuisineMod)

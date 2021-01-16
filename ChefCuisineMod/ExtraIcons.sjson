@@ -129,5 +129,21 @@
       StartFrame = 1
       Scale = 0.8
     }
+            {
+      Name = "MysteryJansIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Chaos_Legendary"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.15
+    }
+    {
+      Name = "MysteryJansIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Chaos_Legendary"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    } 
     ]
 }

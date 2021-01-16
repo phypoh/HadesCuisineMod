@@ -187,3 +187,11 @@ TraitData["Fish_Tartarus_Rare_01_Trait"] =
 			LegendaryBonus = 0.15,
 		},
 }
+TraitData["Fish_Chaos_Legendary_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Chaos_Legendary_01_Trait",
+		Icon = "MysteryJansIcon",
+		RoomsPerUpgrade = 3,
+		CurrentRoom = 0,
+}
