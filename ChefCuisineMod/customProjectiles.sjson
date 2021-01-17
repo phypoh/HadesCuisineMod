@@ -1,0 +1,38 @@
+{
+  Projectiles = [
+      "_append"
+    {
+      Name = "ChefProjectile"
+      InheritFrom = "AphroditeProjectile"
+      Speed = 1000
+      Range = 600
+      DamageRange = 600
+      NumPenetrations = 999
+      MultiDetonate = true
+      MultipleUnitCollisions = false
+      Thing = 
+      {
+        Graphic = "WaveFistFx"
+        OffsetZ = 0
+        AttachedAnim = "RadialNova-Vacuum-Dark"
+        Grip = 999999
+        RotateGeometry = true
+        SortBoundsScale = 0.33
+        Points = [
+          {
+            X = 0
+            Y = -100
+          }
+          {
+            X = 105
+            Y = 0
+          }
+          {
+            X = 0
+            Y = 100
+          }]
+      }
+      Effects = []
+    }
+  ]
+}

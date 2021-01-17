@@ -28,14 +28,12 @@ function( triggerArgs )
 			Fish_Asphodel_Common_01,
 			Fish_Elysium_Legendary_01,
 			Fish_Styx_Common_01,
-			Fish_Styx_Legendary_01,
-			Fish_Surface_Rare_01,
 			Fish_Surface_Legendary_01,
 			,
 		]]--
 		SelectableMeals = {
 				--Tartarus
-			--[["Fish_Tartarus_Common_01",
+			"Fish_Tartarus_Common_01",
 			"Fish_Tartarus_Rare_01",
 			"Fish_Tartarus_Legendary_01",
 				--Asphodel
@@ -46,11 +44,13 @@ function( triggerArgs )
 			"Fish_Elysium_Rare_01",
 				--Styx
 			"Fish_Styx_Rare_01",
+			"Fish_Styx_Legendary_01",
 				--Surface
-			"Fish_Surface_Common_01", 
+			"Fish_Surface_Common_01",
+			"Fish_Surface_Rare_01",
 				--Chaos
 			"Fish_Chaos_Common_01",
-			"Fish_Chaos_Rare_01",]]--
+			"Fish_Chaos_Rare_01",
 			"Fish_Chaos_Legendary_01",
 				--Other
 			--"StackUpgrade",

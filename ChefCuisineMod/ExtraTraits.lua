@@ -195,3 +195,101 @@ TraitData["Fish_Chaos_Legendary_01_Trait"] =
 		RoomsPerUpgrade = 3,
 		CurrentRoom = 0,
 }
+TraitData["Fish_Styx_Legendary_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Styx_Legendary_01_Trait",
+		Icon = "StabsintheIcon",
+}
+TraitData["Fish_Surface_Rare_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Surface_Rare_01_Trait",
+		Icon = "SlurghIcon",
+		Slot = "Ranged",
+		PropertyChanges =
+		{
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "MaxAmmo",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+			},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "BarrelLength",
+					ChangeValue = 128,
+					ChangeType = "Absolute",
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "Projectile",
+					ChangeValue = "AphroditeProjectile",
+					ChangeType = "Absolute",
+				},
+		
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "ProjectileSpacing",
+					ChangeValue = 0,
+					ChangeType = "Absolute",
+				},
+				-- For adjusting aimline collisions -- @alice
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					ProjectileProperty = "Scale",
+					ChangeValue = 1,
+					ChangeType = "Absolute",
+				},
+				--[[
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					ProjectileProperty = "AimLineAnimation",
+					ChangeValue = "AimLineExtraDamageCap",
+					ChangeType = "Absolute",
+				},
+				]]
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "ProjectileAngleOffset",
+					ChangeValue = 25,
+					ChangeType = "Absolute",
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					EffectName = "ReduceDamageOutput",
+					EffectProperty = "Active",
+					ChangeValue = true,
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "AutoLockRange",
+					ChangeValue = 440,
+					ChangeType = "Absolute",
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					ProjectileProperty = "DetonateChildGraphics",
+					ChangeValue = "Cone180Athena",
+					ChangeType = "Absolute",
+				},
+		
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					WeaponProperty = "FireFx",
+					ChangeValue = "ProjectileFireRing-Aphrodite",
+					ChangeType = "Absolute",
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					ProjectileProperty = "DamageLow",
+					BaseMin = 100,
+					BaseMax = 100,
+				},
+				{
+					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+					ProjectileProperty = "DamageHigh",
+					DeriveValueFrom = "DamageLow"
+				},
+			},
+		}

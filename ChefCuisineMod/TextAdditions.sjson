@@ -94,6 +94,15 @@
 		DisplayName = "Mystery Jan's"
 		Description = "Gain a random boon. Every few stages it becomes another random boon.\n {#PropertyFormat}Stages to Change Boon: \Column 380 {#UpgradeFormat}3"
 	}
-
+	{
+		Id = "Fish_Styx_Legendary_01_Trait"
+		DisplayName = "Stabsinthe Spirit"
+		Description = "All your revenge traits are more effective .\n {#PropertyFormat}Revenge damage percent: \Column 380 {#UpgradeFormat}150%"
+	}
+	{
+		Id = "Fish_Surface_Rare_01_Trait"
+		DisplayName = "Fillet of Slurgh"
+		Description = "Your cast becomes throws an aura. You only have one cast but it deals a large amount of damage and perices enemies.\n {#PropertyFormat}Cast damage: \Column 380 {#UpgradeFormat}200%"
+	}
 	]    
 }

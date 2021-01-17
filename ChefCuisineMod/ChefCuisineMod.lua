@@ -8,6 +8,7 @@ SaveIgnores["GodBoonAmount"] = true
 
 ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
 hasBeenUsed = false
+ChefRetaliateBufRevert()
 return baseFunc(currentRun, killer, killingUnitWeapon)
 end,ChefCuisineMod)
 
@@ -37,6 +38,8 @@ ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 		currentJanTrait = currentTrait.Name
 		AddTraitToHero({TraitName = currentTrait.Name})
 		
+	elseif SelectedFish == "Fish_Styx_Legendary_01" then
+		ChefRetaliateBuffSetup()
 	end
 	BoonsThisLevel = 0
 	CompletedLevels = 0
@@ -500,24 +503,23 @@ end
 
 OnProjectileDeath{
 	function( triggerArgs)
-		if SelectedFish == "GemDrop" then
-			local victimId = triggerArgs.triggeredById
-			local victim = triggerArgs.TriggeredByTable
-			local attacker = triggerArgs.AttackerTable
-			local weaponData = GetWeaponData( attacker, triggerArgs.WeaponName)
-			local projectileData = ProjectileData[triggerArgs.name]
-			TryUnloadAmmo( triggerArgs.WeaponName, victim, attacker, triggerArgs )
+		local victimId = triggerArgs.triggeredById
+		local victim = triggerArgs.TriggeredByTable
+		local attacker = triggerArgs.AttackerTable
+		local weaponData = GetWeaponData( attacker, triggerArgs.WeaponName)
+		local projectileData = ProjectileData[triggerArgs.name]
+		TryUnloadAmmo( triggerArgs.WeaponName, victim, attacker, triggerArgs )
 
-			if weaponData ~= nil then
-				local storeInUnit = victim
-				local storeInUnitId = victimId
-				if storeInUnit == nil and projectileData ~= nil and projectileData.StoreAmmoInLastHit and triggerArgs.LastHitUnitTable ~= nil then
-					storeInUnit = triggerArgs.LastHitUnitTable
-					storeInUnitId = storeInUnit.ObjectId
-				end
-				if storeInUnit ~= nil and storeInUnit.ObjectId == nil then
-					storeInUnit.ObjectId = storeInUnitId
-				end
+		if weaponData ~= nil then
+			local storeInUnit = victim
+			local storeInUnitId = victimId
+			if storeInUnit == nil and projectileData ~= nil and projectileData.StoreAmmoInLastHit and triggerArgs.LastHitUnitTable ~= nil then
+				storeInUnit = triggerArgs.LastHitUnitTable
+				storeInUnitId = storeInUnit.ObjectId
+			end
+			if storeInUnit ~= nil and storeInUnit.ObjectId == nil then
+				storeInUnit.ObjectId = storeInUnitId
+			end
 			if weaponData.StoreAmmoOnHit ~= nil and weaponData.StoreAmmoOnHit > 0 and not triggerArgs.IsDeflected then
 				if projectileData == nil or ( not projectileData.NeverStore and ( not projectileData.StoreInFirstHit and triggerArgs.FireIndex == 0 ) or ( projectileData.StoreInFirstHit and triggerArgs.LastProjectileDeath )) then
 					if projectileData ~= nil and projectileData.StoreInFirstHit then
@@ -526,38 +528,39 @@ OnProjectileDeath{
 					if storeInUnit ~= nil then
 						if not storeInUnit.IsDead and (storeInUnit.CanStoreAmmo and not triggerArgs.InvulnerableImpact) and not ( weaponData.Name == "RangedWeapon" and HeroHasTrait("ShieldLoadAmmoTrait")) then
 							if storeInUnit.ObjectId ~= CurrentRun.Hero.ObjectId then
-								thread(function (desId)
-								local offsetX = 0
-								if CoinFlip() then
-									offsetX = offsetX * -1
+								if SelectedFish == "GemDrop" then
+									thread(function (desId)
+									local offsetX = 0
+									if CoinFlip() then
+										offsetX = offsetX * -1
+									end
+									local offsetY = 0
+									if CoinFlip() then
+										offsetY = offsetY * -1
+									end
+								
+									local obstacleName = "TartarusRubble02"
+									local obstacleId = SpawnObstacle({ Name = obstacleName, DestinationId = desId, OffsetX = offsetX, OffsetY = offsetY, ForceToValidLocation = true, SkipIfBlocked = true, Group = "Standing", })
+									AddToGroup({ Id = obstacleId, Name = "DestructibleGeo"})
+								
+									local obstacleData = ObstacleData[obstacleName] or {}
+									local spawnScale = RandomFloat( 0.2, 0.4 )
+									SetScale({ Id = obstacleId, Fraction = spawnScale })
+								
+									if CoinFlip() then
+										FlipHorizontal({ Id = obstacleId })
+									end
+									AdjustZLocation({ Id = obstacleId, Distance = 1000 })
+									ApplyUpwardForce({ Id = obstacleId, Speed = -3000 })
+									wait(3)
+									Destroy({id = obstacleId})
+									end, victimId)
 								end
-								local offsetY = 0
-								if CoinFlip() then
-									offsetY = offsetY * -1
-								end
-							
-								local obstacleName = "TartarusRubble02"
-								local obstacleId = SpawnObstacle({ Name = obstacleName, DestinationId = desId, OffsetX = offsetX, OffsetY = offsetY, ForceToValidLocation = true, SkipIfBlocked = true, Group = "Standing", })
-								AddToGroup({ Id = obstacleId, Name = "DestructibleGeo"})
-							
-								local obstacleData = ObstacleData[obstacleName] or {}
-								local spawnScale = RandomFloat( 0.2, 0.4 )
-								SetScale({ Id = obstacleId, Fraction = spawnScale })
-							
-								if CoinFlip() then
-									FlipHorizontal({ Id = obstacleId })
-								end
-								AdjustZLocation({ Id = obstacleId, Distance = 1000 })
-								ApplyUpwardForce({ Id = obstacleId, Speed = -3000 })
-								wait(3)
-								Destroy({id = obstacleId})
-								end, victimId)
 							end
 						end
 					end
 				end
 			end
-		end
 		end	
 	end
 }
@@ -883,3 +886,38 @@ ModUtil.WrapBaseFunction("EndEncounterEffects", function(baseFunc, currentRun, c
 	end
 	return returnValue
 end, ChefCuisineMod)
+
+function ChefRetaliateBuffSetup()
+	thread(function()
+		local mult = 1.5
+	for k,v in pairs({"Aphrodite","Demeter","Athena"}) do
+		local curValue = TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin
+		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin = curValue * mult
+		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMax = curValue * mult
+	end
+	local curValue = TraitData["RetaliateWeaponTrait"].PropertyChanges[1].BaseMin
+	TraitData["RetaliateWeaponTrait"].PropertyChanges[1].BaseMin = curValue * mult
+	TraitData["RetaliateWeaponTrait"].PropertyChanges[1].BaseMax = curValue * mult
+	curValue = TraitData["AresRetaliateTrait"].PropertyChanges[2].BaseMin
+	TraitData["AresRetaliateTrait"].PropertyChanges[2].BaseMin = curValue * mult
+	TraitData["AresRetaliateTrait"].PropertyChanges[2].BaseMax = curValue * mult
+	end)
+end
+function ChefRetaliateBufRevert()
+	thread(function()
+	TraitData["AthenaRetaliateTrait"].PropertyChanges[1].BaseMin = 30
+	TraitData["AthenaRetaliateTrait"].PropertyChanges[1].BaseMax = 30
+
+	TraitData["RetaliateWeaponTrait"].PropertyChanges[1].BaseMin = 80
+	TraitData["RetaliateWeaponTrait"].PropertyChanges[1].BaseMax = 80
+
+	TraitData["AphroditeRetaliateTrait"].PropertyChanges[1].BaseMin = 50
+	TraitData["AphroditeRetaliateTrait"].PropertyChanges[1].BaseMax = 50
+
+	TraitData["AresRetaliateTrait"].PropertyChanges[2].BaseMin = 100
+	TraitData["AresRetaliateTrait"].PropertyChanges[2].BaseMax = 100
+
+	TraitData["DemeterRetaliateTrait"].PropertyChanges[1].BaseMin = 10
+	TraitData["DemeterRetaliateTrait"].PropertyChanges[1].BaseMax = 10
+	end)
+end
