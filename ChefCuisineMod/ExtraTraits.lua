@@ -215,81 +215,124 @@ TraitData["Fish_Surface_Rare_01_Trait"] =
 				ChangeValue = 1,
 				ChangeType = "Absolute",
 			},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "BarrelLength",
-					ChangeValue = 128,
-					ChangeType = "Absolute",
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "Projectile",
-					ChangeValue = "AphroditeProjectile",
-					ChangeType = "Absolute",
-				},
-		
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "ProjectileSpacing",
-					ChangeValue = 0,
-					ChangeType = "Absolute",
-				},
-				-- For adjusting aimline collisions -- @alice
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					ProjectileProperty = "Scale",
-					ChangeValue = 1,
-					ChangeType = "Absolute",
-				},
-				--[[
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					ProjectileProperty = "AimLineAnimation",
-					ChangeValue = "AimLineExtraDamageCap",
-					ChangeType = "Absolute",
-				},
-				]]
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "ProjectileAngleOffset",
-					ChangeValue = 25,
-					ChangeType = "Absolute",
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					EffectName = "ReduceDamageOutput",
-					EffectProperty = "Active",
-					ChangeValue = true,
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "AutoLockRange",
-					ChangeValue = 440,
-					ChangeType = "Absolute",
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					ProjectileProperty = "DetonateChildGraphics",
-					ChangeValue = "Cone180Athena",
-					ChangeType = "Absolute",
-				},
-		
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					WeaponProperty = "FireFx",
-					ChangeValue = "ProjectileFireRing-Aphrodite",
-					ChangeType = "Absolute",
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					ProjectileProperty = "DamageLow",
-					BaseMin = 100,
-					BaseMax = 100,
-				},
-				{
-					WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-					ProjectileProperty = "DamageHigh",
-					DeriveValueFrom = "DamageLow"
-				},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "BarrelLength",
+				ChangeValue = 128,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "Projectile",
+				ChangeValue = "ChefProjectile",
+				ChangeType = "Absolute",
+			},
+
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "ProjectileSpacing",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+			-- For adjusting aimline collisions -- @alice
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileProperty = "Scale",
+				ChangeValue = 1,
+				ChangeType = "Absolute",
+			},
+			--[[
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileProperty = "AimLineAnimation",
+				ChangeValue = "AimLineExtraDamageCap",
+				ChangeType = "Absolute",
+			},
+			]]
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "ProjectileAngleOffset",
+				ChangeValue = 25,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				EffectName = "ReduceDamageOutput",
+				EffectProperty = "Active",
+				ChangeValue = true,
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "AutoLockRange",
+				ChangeValue = 440,
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileProperty = "DetonateChildGraphics",
+				ChangeValue = "Cone180Athena",
+				ChangeType = "Absolute",
+			},
+
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "FireFx",
+				ChangeValue = "ProjectileFireRing-Aphrodite",
+				ChangeType = "Absolute",
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileProperty = "DamageLow",
+				BaseMin = 100,
+				BaseMax = 100,
+			},
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				ProjectileProperty = "DamageHigh",
+				DeriveValueFrom = "DamageLow"
+			},
+		},
+}
+TraitData["Fish_Surface_Legendary_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Surface_Legendary_01_Trait",
+		Icon = "EatingMealIcon",
+		PropertyChanges = {
+			{
+				LuaProperty = "MaxHealth",
+				ChangeValue = 30,
+				AsInt = true,
+				ChangeType = "Add",
+				MaintainDelta = true,
 			},
 		}
+}
+TraitData["Fish_Asphodel_Common_01_Trait_Base"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Asphodel_Common_01_Trait_Base",
+		Icon = "SlavugEscargotIcon",
+		PropertyChanges = {
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "MaxAmmo",
+				ChangeValue = 0,
+				ChangeType = "Absolute",
+			},
+		}
+}
+TraitData["Fish_Asphodel_Common_01_Trait_Add"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Asphodel_Common_01_Trait_Add",
+		Icon = "SlavugEscargotIcon",
+		PropertyChanges = {
+			{
+				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
+				WeaponProperty = "MaxAmmo",
+				ChangeValue = 1,
+				ChangeType = "Add",
+			},
+		}
+}

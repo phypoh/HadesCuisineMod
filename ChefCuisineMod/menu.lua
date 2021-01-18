@@ -25,11 +25,10 @@ function( triggerArgs )
 		}
 		else
 		--[[TODO: Add more fish:
-			Fish_Asphodel_Common_01,
+			,
 			Fish_Elysium_Legendary_01,
 			Fish_Styx_Common_01,
-			Fish_Surface_Legendary_01,
-			,
+
 		]]--
 		SelectableMeals = {
 				--Tartarus
@@ -37,6 +36,7 @@ function( triggerArgs )
 			"Fish_Tartarus_Rare_01",
 			"Fish_Tartarus_Legendary_01",
 				--Asphodel
+			"Fish_Asphodel_Common_01",
 			"Fish_Asphodel_Rare_01",
 			"Fish_Asphodel_Legendary_01",
 				--Elysium
@@ -48,6 +48,7 @@ function( triggerArgs )
 				--Surface
 			"Fish_Surface_Common_01",
 			"Fish_Surface_Rare_01",
+			"Fish_Surface_Legendary_01",
 				--Chaos
 			"Fish_Chaos_Common_01",
 			"Fish_Chaos_Rare_01",
@@ -277,15 +278,22 @@ function CreateCuisineButtons(screen, usee)
 	end
 end
 function GiveFishBoon(screen, button)
-SelectedFish = button.Boon
-hasBeenUsed = true
-	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
-local partner = button.usee
-partner.NextInteractLines = nil
-StopStatusAnimation( partner, StatusAnimations.WantsToTalk )
-RefreshUseButton( partner.ObjectId, partner )
-UseableOff({ Id = partner.ObjectId })
-CuisineTurnInFish(screen, button)
+	SelectedFish = button.Boon
+	hasBeenUsed = true
+	if SelectedFish ~= "Fish_Asphodel_Common_01" then
+		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
+	else
+		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait_Base", Rarity = "Legendary" }) })
+		for i = 1, 100 do
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait_Add", Rarity = "Legendary" }) })
+		end
+	end
+	local partner = button.usee
+	partner.NextInteractLines = nil
+	StopStatusAnimation( partner, StatusAnimations.WantsToTalk )
+	RefreshUseButton( partner.ObjectId, partner )
+	UseableOff({ Id = partner.ObjectId })
+	CuisineTurnInFish(screen, button)
 end
 function CuisineTurnInFish( screen, button )
 	local usee = button.usee

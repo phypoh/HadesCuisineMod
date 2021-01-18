@@ -176,6 +176,38 @@
       EndFrame = 1
       StartFrame = 1
       Scale = 0.25
+    }
+    {
+      Name = "EatingMealIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Surface_Legendary"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.15
+    }
+    {
+      Name = "EatingMealIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Surface_Legendary"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "SlavugEscargotIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Asphodel_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.15
+    }
+    {
+      Name = "SlavugEscargotIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Asphodel_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
     } 
     ]
 }

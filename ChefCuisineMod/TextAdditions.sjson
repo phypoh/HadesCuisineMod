@@ -100,9 +100,24 @@
 		Description = "All your revenge traits are more effective .\n {#PropertyFormat}Revenge damage percent: \Column 380 {#UpgradeFormat}150%"
 	}
 	{
-		Id = "Fish_Surface_Rare_01_Trait"
-		DisplayName = "Fillet of Slurgh"
-		Description = "Your cast becomes throws an aura. You only have one cast but it deals a large amount of damage and perices enemies.\n {#PropertyFormat}Cast damage: \Column 380 {#UpgradeFormat}200%"
+		Id = "Fish_Surface_Legendary_01_Trait"
+		DisplayName = "Mashenomak Stew"
+		Description = "When you get a new boon, you may eat it instead of gaining it. If you eat a boon this gains a level. This meal gives extra {!Icons.Health_Small_Tooltip} per level.\n {#PropertyFormat}Extra Health: \Column 380 {#UpgradeFormat}{!Icons.Health_Small_Tooltip}+30"
+	}
+	{
+		Id = "Fish_Asphodel_Common_01_Trait"
+		DisplayName = "Slavug Escargot"
+		Description = "You have more casts, but you dont get them back.\n {#PropertyFormat}Extra Casts: \Column 380 {#UpgradeFormat}100"
+	}
+	{
+		Id = "Fish_Asphodel_Common_01_Trait_Base"
+		DisplayName = "Slavug Escargot"
+		Description = "A slavug has stolen all your casts! \n {#PropertyFormat}Casts: \Column 380 {#UpgradeFormat}0"
+	}
+	{
+		Id = "Fish_Asphodel_Common_01_Trait_Add"
+		DisplayName = "Slavug Escargot"
+		Description = "You saved some casts in your room, but be careful not to run out. This boon gives extra casts per level.\n {#PropertyFormat}Extra Casts: \Column 380 {#UpgradeFormat}+1"
 	}
 	]    
 }
