@@ -26,13 +26,13 @@ function( triggerArgs )
 		else
 		--[[TODO: Add more fish:
 			,
-			Fish_Elysium_Legendary_01,
+			,
 			Fish_Styx_Common_01,
 
 		]]--
 		SelectableMeals = {
 				--Tartarus
-			"Fish_Tartarus_Common_01",
+			--[["Fish_Tartarus_Common_01",
 			"Fish_Tartarus_Rare_01",
 			"Fish_Tartarus_Legendary_01",
 				--Asphodel
@@ -54,7 +54,8 @@ function( triggerArgs )
 			"Fish_Chaos_Rare_01",
 			"Fish_Chaos_Legendary_01",
 				--Other
-			--"StackUpgrade",
+			"StackUpgrade",]]--
+			"Fish_Elysium_Legendary_01",
 			"RoomRewardHealDrop",
 			"GemDrop",
 		}
@@ -280,14 +281,7 @@ end
 function GiveFishBoon(screen, button)
 	SelectedFish = button.Boon
 	hasBeenUsed = true
-	if SelectedFish ~= "Fish_Asphodel_Common_01" then
-		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
-	else
-		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait_Base", Rarity = "Legendary" }) })
-		for i = 1, 100 do
-			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait_Add", Rarity = "Legendary" }) })
-		end
-	end
+	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = button.Boon .."_Trait", Rarity = "Legendary" }) })
 	local partner = button.usee
 	partner.NextInteractLines = nil
 	StopStatusAnimation( partner, StatusAnimations.WantsToTalk )

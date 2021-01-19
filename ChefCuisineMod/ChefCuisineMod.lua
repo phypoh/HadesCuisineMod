@@ -567,16 +567,22 @@ OnProjectileDeath{
 OnAnyLoad{"A_PostBoss01", function ()
 	if SelectedFish == "GemDrop" then
 		AddTraitToHero({TraitName="GemDrop_Trait"})
+	elseif SelectedFish == "Fish_Elysium_Legendary_01" then
+		ChefResetKeepsakes()
 	end
 end}
 OnAnyLoad{"B_PostBoss01", function ()
 	if SelectedFish == "GemDrop" then
 		AddTraitToHero({TraitName="GemDrop_Trait"})
+	elseif SelectedFish == "Fish_Elysium_Legendary_01" then
+		ChefResetKeepsakes()
 	end
 end}
 OnAnyLoad{"C_PostBoss01", function ()
 	if SelectedFish == "GemDrop" then
 		AddTraitToHero({TraitName="GemDrop_Trait"})
+	elseif SelectedFish == "Fish_Elysium_Legendary_01" then
+		ChefResetKeepsakes()
 	end
 end}
 
@@ -1455,7 +1461,95 @@ ModUtil.BaseOverride("CheckAmmoDrop", function ( currentRun, targetId, ammoDropD
 			thread( EscalateMagnetism, consumable )
 		end
 	else
-		RemoveTrait( CurrentRun.Hero, "Fish_Asphodel_Common_01_Trait_Add" )
+		for k,traitData in pairs(CurrentRun.Hero.Traits) do
+			if traitData.Name == "Fish_Asphodel_Common_01_Trait" then
+				traitData.PropertyChanges[1].ChangeValue = traitData.PropertyChanges[1].ChangeValue -1 
+			end
+		end
 		return
 	end
+end, ChefCuisineMod)
+
+local baseKeepsakeValues = {}
+
+function ChefBuffKeepsakes(args)
+	local keepsakeNames = {
+	"MaxHealthKeepsakeTrait", -- cerberus
+	"DirectionalArmorTrait", -- achilles
+	"BackstabAlphaStrikeTrait", -- nyx
+	"PerfectClearDamageBonusTrait", -- thanatos
+	"ShopDurationTrait", -- charon
+	"BonusMoneyTrait", -- hypnos
+	"LowHealthDamageTrait", -- megaera
+	"DistanceDamageTrait", -- orpheus
+	"LifeOnUrnTrait", -- dusa
+	"ReincarnationTrait", -- skelly
+	"ForceZeusBoonTrait", -- zeus
+	"ForcePoseidonBoonTrait", -- poseidon
+	"ForceAthenaBoonTrait", -- athena
+	"ForceAphroditeBoonTrait", -- aphrodite
+	"ForceAresBoonTrait", -- ares
+	"ForceArtemisBoonTrait", -- artemis
+	"ForceDionysusBoonTrait", -- dionysus
+	"FastClearDodgeBonusTrait", -- hermes
+	"ForceDemeterBoonTrait", -- demeter
+	"ChaosBoonTrait", -- primordial chaos
+	"VanillaTrait", -- sisyphus
+	"ShieldBossTrait", -- eurydice
+	"ShieldAfterHitTrait", -- patroclus
+	"ChamberStackTrait", -- persephone
+	"HadesShoutKeepsake", -- hades
+	}
+	for k,v in pairs(keepsakeNames) do
+		if baseKeepsakeValues == nil or baseKeepsakeValues[v] == nil then
+			baseKeepsakeValues[v] = TraitData[v]
+			for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
+				PropertyChangeData.Multiplier = PropertyChangeData.Multiplier * 2 
+			end
+		end
+	end
+end
+
+function ChefResetKeepsakes(args)
+	local keepsakeNames = {
+		"MaxHealthKeepsakeTrait", -- cerberus
+		"DirectionalArmorTrait", -- achilles
+		"BackstabAlphaStrikeTrait", -- nyx
+		"PerfectClearDamageBonusTrait", -- thanatos
+		"ShopDurationTrait", -- charon
+		"BonusMoneyTrait", -- hypnos
+		"LowHealthDamageTrait", -- megaera
+		"DistanceDamageTrait", -- orpheus
+		"LifeOnUrnTrait", -- dusa
+		"ReincarnationTrait", -- skelly
+		"ForceZeusBoonTrait", -- zeus
+		"ForcePoseidonBoonTrait", -- poseidon
+		"ForceAthenaBoonTrait", -- athena
+		"ForceAphroditeBoonTrait", -- aphrodite
+		"ForceAresBoonTrait", -- ares
+		"ForceArtemisBoonTrait", -- artemis
+		"ForceDionysusBoonTrait", -- dionysus
+		"FastClearDodgeBonusTrait", -- hermes
+		"ForceDemeterBoonTrait", -- demeter
+		"ChaosBoonTrait", -- primordial chaos
+		"VanillaTrait", -- sisyphus
+		"ShieldBossTrait", -- eurydice
+		"ShieldAfterHitTrait", -- patroclus
+		"ChamberStackTrait", -- persephone
+		"HadesShoutKeepsake", -- hades
+		}
+		for k,v in pairs(keepsakeNames) do
+			if baseKeepsakeValues[v] ~= nil then
+				baseKeepsakeValues[v] = nil
+				for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
+					PropertyChangeData.Multiplier = PropertyChangeData.Multiplier / 2
+				end
+			end
+		end
+end
+
+ModUtil.WrapBaseFunction("EquipKeepsake", function(baseFunc, heroUnit, traitName, args)
+local returnValue = baseFunc(heroUnit, traitName, args)
+ChefBuffKeepsakes()
+return returnValue
 end, ChefCuisineMod)

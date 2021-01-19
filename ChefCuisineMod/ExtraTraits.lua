@@ -308,31 +308,29 @@ TraitData["Fish_Surface_Legendary_01_Trait"] =
 			},
 		}
 }
-TraitData["Fish_Asphodel_Common_01_Trait_Base"] =
+TraitData["Fish_Asphodel_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
-		RequiredFalseTrait = "Fish_Asphodel_Common_01_Trait_Base",
+		RequiredFalseTrait = "Fish_Asphodel_Common_01_Trait",
 		Icon = "SlavugEscargotIcon",
 		PropertyChanges = {
 			{
 				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
 				WeaponProperty = "MaxAmmo",
-				ChangeValue = 0,
-				ChangeType = "Absolute",
+				ChangeValue = 100,
+				ChangeType = "Absolute"
 			},
 		}
 }
-TraitData["Fish_Asphodel_Common_01_Trait_Add"] =
+TraitData["Fish_Elysium_Legendary_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
-		RequiredFalseTrait = "Fish_Asphodel_Common_01_Trait_Add",
-		Icon = "SlavugEscargotIcon",
-		PropertyChanges = {
-			{
-				WeaponNames = WeaponSets.HeroNonPhysicalWeapons,
-				WeaponProperty = "MaxAmmo",
-				ChangeValue = 1,
-				ChangeType = "Add",
-			},
-		}
+		RequiredFalseTrait = "Fish_Elysium_Legendary_01_Trait",
+		Icon = "DriedSeamareIcon",
+		SetupFunction =
+		{
+			Name = "ChefBuffKeepsakes",
+			Args ={},
+			RunOnce = true,
+		},
 }

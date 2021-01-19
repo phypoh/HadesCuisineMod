@@ -107,17 +107,12 @@
 	{
 		Id = "Fish_Asphodel_Common_01_Trait"
 		DisplayName = "Slavug Escargot"
-		Description = "You have more casts, but you dont get them back.\n {#PropertyFormat}Extra Casts: \Column 380 {#UpgradeFormat}100"
+		Description = "You have more casts, but you dont get them back.\n {#PropertyFormat}Amount of Casts: \Column 380 {#UpgradeFormat}100"
 	}
 	{
-		Id = "Fish_Asphodel_Common_01_Trait_Base"
-		DisplayName = "Slavug Escargot"
-		Description = "A slavug has stolen all your casts! \n {#PropertyFormat}Casts: \Column 380 {#UpgradeFormat}0"
-	}
-	{
-		Id = "Fish_Asphodel_Common_01_Trait_Add"
-		DisplayName = "Slavug Escargot"
-		Description = "You saved some casts in your room, but be careful not to run out. This boon gives extra casts per level.\n {#PropertyFormat}Extra Casts: \Column 380 {#UpgradeFormat}+1"
+		Id = "Fish_Elysium_Legendary_01_Trait"
+		DisplayName = "Dried Seamare"
+		Description = "Your keepsakes are more effective for one floor. Switching keepsakes extends this duration another floor. \n {#PropertyFormat}Effectivness: \Column 380 {#UpgradeFormat}200%"
 	}
 	]    
 }

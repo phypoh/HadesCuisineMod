@@ -199,7 +199,7 @@
       FilePath = "GUI\Screens\Fish\Asphodel_Common"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.15
+      Scale = 0.25
     }
     {
       Name = "SlavugEscargotIcon_Large"
@@ -207,7 +207,23 @@
       FilePath = "GUI\Screens\Fish\Asphodel_Common"
       EndFrame = 1
       StartFrame = 1
+      Scale = 0.5
+    }
+    {
+      Name = "DriedSeamareIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Elysium_Legendary"
+      EndFrame = 1
+      StartFrame = 1
       Scale = 0.25
+    }
+    {
+      Name = "DriedSeamareIcon_Small"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Elysium_Legendary"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
     } 
     ]
 }
