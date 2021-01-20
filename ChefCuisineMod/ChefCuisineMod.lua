@@ -7,9 +7,9 @@ local currentJanTrait = nil
 SaveIgnores["GodBoonAmount"] = true
 
 ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
-hasBeenUsed = false
-ChefRetaliateBufRevert()
-return baseFunc(currentRun, killer, killingUnitWeapon)
+	hasBeenUsed = false
+	ChefRetaliateBufRevert()
+	return baseFunc(currentRun, killer, killingUnitWeapon)
 end,ChefCuisineMod)
 
 OnAnyLoad{function ()
@@ -362,7 +362,7 @@ OnAnyLoad{ function()
     end)
 end}
 
-
+--TODO:Change to a wrap
 ModUtil.BaseOverride("AddTraitToHero", function (args)
 	local traitData = args.TraitData
 	if traitData == nil then
@@ -631,7 +631,6 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	end
 	if HeroHasTrait("BetterChaosGates_Trait") then
 		secretChance = secretChance + 0.5
-		
 	end
 	room.SecretChanceSuccess =  RandomChance( secretChance )
 
@@ -840,6 +839,7 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 
 end, ChefCuisineMod)
 
+--TODO: This can be wrapped
 ModUtil.BaseOverride("ChooseLoot", function ( excludeLootNames, forceLootName )
 
 	local newLootName = nil
@@ -928,6 +928,7 @@ function ChefRetaliateBufRevert()
 	end)
 end
 
+--TODO: This can be a wrap
 ModUtil.BaseOverride( "CreateBoonLootButtons", function( lootData, reroll)
 	local components = ScreenAnchors.ChoiceScreen.Components
 	local upgradeName = lootData.Name
@@ -1398,14 +1399,14 @@ ModUtil.BaseOverride( "CreateBoonLootButtons", function( lootData, reroll)
 end, ChefCuisineMod)
 
 function ChefConsumeBoon(screen, button)
-thread(CloseUpgradeChoiceScreen, screen, button )
-AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Surface_Legendary_01_Trait", Rarity = "Legendary" }) })
-ChaosBassStop()
-CurrentRun.CurrentRoom.ReplacedTraitSource = nil
-wait( 0.2 )
-UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
+	thread(CloseUpgradeChoiceScreen, screen, button )
+	AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Surface_Legendary_01_Trait", Rarity = "Legendary" }) })
+	ChaosBassStop()
+	CurrentRun.CurrentRoom.ReplacedTraitSource = nil
+	wait( 0.2 )
+	UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
 end
-
+--TODO: Change to a wrap 
 ModUtil.BaseOverride("CheckAmmoDrop", function ( currentRun, targetId, ammoDropData, numDrops )
 	if SelectedFish ~= "Fish_Asphodel_Common_01" then
 		if ammoDropData == nil then
@@ -1549,7 +1550,7 @@ function ChefResetKeepsakes(args)
 end
 
 ModUtil.WrapBaseFunction("EquipKeepsake", function(baseFunc, heroUnit, traitName, args)
-local returnValue = baseFunc(heroUnit, traitName, args)
-ChefBuffKeepsakes()
-return returnValue
+	local returnValue = baseFunc(heroUnit, traitName, args)
+	ChefBuffKeepsakes()
+	return returnValue
 end, ChefCuisineMod)
