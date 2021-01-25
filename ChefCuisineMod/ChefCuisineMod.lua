@@ -17,6 +17,11 @@ OnAnyLoad{function ()
 		CurrentRun.CurrentRoom.ShrinePointDoorCost = 1
 	end
 end}
+OnAnyLoad{"DeathArea DeathAreaBedroom RoomPreRun", function ()
+	if SelectedFish ~= "Fish_Elysium_Legendary_01" then
+		ChefResetKeepsakes()
+	end
+end}
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	local returnVal = baseFunc(prevRun, args)
 	if SelectedFish ~= nil then
@@ -49,6 +54,8 @@ end,ChefCuisineMod)
 
 
 ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
+	DebugPrint({Text = victim.ObjectId})
+	DebugPrint({Text = CurrentRun.Hero.ObjectId})
 	local damageReductionMultipliers = 1
 	local damageMultipliers = 1.0
 	local lastAddedMultiplierName = ""
@@ -56,7 +63,22 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 	if ConfigOptionCache.LogCombatMultipliers then
 		DebugPrint({Text = " SourceWeapon : " .. tostring( triggerArgs.SourceWeapon )})
 	end
-
+	if SelectedFish == "Fish_Styx_Common_01" then
+		local curHelath = CurrentRun.Hero.Health
+		local maxHealth =  CurrentRun.Hero.MaxHealth
+		local x = (maxHealth - curHelath) / maxHealth
+		if victim.ObjectId ~= CurrentRun.Hero.ObjectId and (curHelath / maxHealth > 0.5)  then
+			local m = -2
+			local b = 1
+			local healthMultiplier = (m*x) + b
+			damageMultipliers = damageMultipliers + healthMultiplier - 1
+		elseif victim.ObjectId == CurrentRun.Hero.ObjectId and (curHelath / maxHealth < 0.5) then
+			local m = 1.5625
+			local b = -0.8125
+			local healthMultiplier = (m*x) + b
+			damageMultipliers = damageMultipliers + healthMultiplier
+		end
+	end
 	local addDamageMultiplier = function( data, multiplier )
 		if multiplier >= 1.0 then
 			if data.Multiplicative then
@@ -94,7 +116,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 	end
 
 	if victim.IncomingDamageModifiers ~= nil then
-		for i, modifierData in pairs(victim.IncomingDamageModifiers) do
+		for i, modifierData in ipairs(victim.IncomingDamageModifiers) do
 			if modifierData.GlobalMultiplier ~= nil then
 				addDamageMultiplier( modifierData, modifierData.GlobalMultiplier)
 			end
@@ -151,7 +173,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 
 	if attacker ~= nil and attacker.OutgoingDamageModifiers ~= nil and ( not weaponData or not weaponData.IgnoreOutgoingDamageModifiers ) then
 		local appliedEffectTable = {}
-		for i, modifierData in pairs(attacker.OutgoingDamageModifiers) do
+		for i, modifierData in ipairs(attacker.OutgoingDamageModifiers) do
 			if modifierData.GlobalMultiplier ~= nil then
 				addDamageMultiplier( modifierData, modifierData.GlobalMultiplier)
 			end
@@ -164,7 +186,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 			if modifierData.ValidEnchantments and attacker == CurrentRun.Hero then
 				validEnchantment = false
 				if modifierData.ValidEnchantments.TraitDependentWeapons then
-					for traitName, validWeapons in pairs( modifierData.ValidEnchantments.TraitDependentWeapons ) do
+					for traitName, validWeapons in ipairs( modifierData.ValidEnchantments.TraitDependentWeapons ) do
 						if Contains( validWeapons, triggerArgs.SourceWeapon) and HeroHasTrait( traitName ) then
 							validEnchantment = true
 							break
@@ -218,7 +240,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				end
 				if modifierData.StoredAmmoMultiplier and victim.StoredAmmo ~= nil and not IsEmpty( victim.StoredAmmo ) then
 					local hasExternalStoredAmmo = false
-					for i, storedAmmo in pairs(victim.StoredAmmo) do
+					for i, storedAmmo in ipairs(victim.StoredAmmo) do
 						if storedAmmo.WeaponName ~= "SelfLoadAmmoApplicator" then
 							hasExternalStoredAmmo = true
 						end
@@ -235,7 +257,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				end
 				if modifierData.RequiredSelfEffectsMultiplier and not IsEmpty(attacker.ActiveEffects) then
 					local hasAllEffects = true
-					for _, effectName in pairs( modifierData.RequiredEffects ) do
+					for _, effectName in ipairs( modifierData.RequiredEffects ) do
 						if not attacker.ActiveEffects[ effectName ] then
 							hasAllEffects = false
 						end
@@ -247,7 +269,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 
 				if modifierData.RequiredEffectsMultiplier and victim and not IsEmpty(victim.ActiveEffects) then
 					local hasAllEffects = true
-					for _, effectName in pairs( modifierData.RequiredEffects ) do
+					for _, effectName in ipairs( modifierData.RequiredEffects ) do
 						if not victim.ActiveEffects[ effectName ] then
 							hasAllEffects = false
 						end
@@ -299,13 +321,13 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				if modifierData.EmptySlotMultiplier and modifierData.EmptySlotValidData then
 					local filledSlots = {}
 
-					for i, traitData in pairs( attacker.Traits ) do
+					for i, traitData in ipairs( attacker.Traits ) do
 						if traitData.Slot then
 							filledSlots[traitData.Slot] = true
 						end
 					end
 
-					for key, weaponList in pairs( modifierData.EmptySlotValidData ) do
+					for key, weaponList in ipairs( modifierData.EmptySlotValidData ) do
 						if not filledSlots[key] and Contains( weaponList, triggerArgs.SourceWeapon ) then
 							addDamageMultiplier( modifierData, modifierData.EmptySlotMultiplier )
 						end
@@ -321,7 +343,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 		end
 
 		if weaponData.OutgoingDamageModifiers ~= nil and not weaponData.IgnoreOutgoingDamageModifiers then
-			for i, modifierData in pairs(weaponData.OutgoingDamageModifiers) do
+			for i, modifierData in ipairs(weaponData.OutgoingDamageModifiers) do
 				if modifierData.NonPlayerMultiplier and victim ~= CurrentRun.Hero and not HeroData.DefaultHero.HeroAlliedUnits[victim.Name] then
 					addDamageMultiplier( modifierData, modifierData.NonPlayerMultiplier)
 				end
@@ -374,7 +396,7 @@ ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
 		end
 	if BoonsThisLevel ~= nil and BoonsThisLevel == 5 then
 			local leveledBoons = {}
-			for k, currentTrait in pairs( CurrentRun.Hero.Traits ) do 
+			for k, currentTrait in ipairs( CurrentRun.Hero.Traits ) do 
 				if not Contains(leveledBoons, currentTrait.Name) then
 				table.insert(leveledBoons, currentTrait.Name)
 				if IsGameStateEligible(CurrentRun, TraitData[currentTrait.Name]) and IsGodTrait(currentTrait.Name) then
@@ -388,19 +410,19 @@ ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
 
 	end
 	if SelectedFish == "RoomRewardHealDrop" then
-		for i, god in pairs(LootData) do
+		for i, god in ipairs(LootData) do
 			if ( god.GodLoot or ( args.ForShop and god.TreatAsGodLootByShops )) and not god.DebugOnly and god.TraitIndex[traitData.Name] then
 				GodBoonAmount[god.Name] = ( GodBoonAmount[god.Name] or 0 ) + 1
 			end
 			break
 		end
 		local highest = 0
-		for k,v in pairs(GodBoonAmount) do
+		for k,v in ipairs(GodBoonAmount) do
 			if v > highest then
 				highest = v
 			end
 		end
-		for i, traitData in pairs( CurrentRun.Hero.Traits ) do
+		for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
 			if traitData.Name == "RoomRewardHealDrop_Trait" then
 				traitData.AccumulatedDamageBonusFood = 1 + (highest * 0.05)
 				break
@@ -432,7 +454,7 @@ function AddTraitToHeroChef(args)
 
 	EquipSpecialWeapons( CurrentRun.Hero, traitData )
 	AddAssistWeapons( CurrentRun.Hero, traitData )
-	for weaponName, v in pairs( CurrentRun.Hero.Weapons ) do
+	for weaponName, v in ipairs( CurrentRun.Hero.Weapons ) do
 		AddWallSlamWeapons( CurrentRun.Hero, traitData )
 		AddOnDamageWeapons(CurrentRun.Hero, weaponName, traitData)
 		AddOnFireWeapons(CurrentRun.Hero, weaponName, traitData)
@@ -442,7 +464,7 @@ function AddTraitToHeroChef(args)
 	end
 
 	if ( traitData.EnemyPropertyChanges or traitData.AddEnemyOnDeathWeapons ) and ActiveEnemies ~= nil then
-		for enemyId, enemy in pairs( ActiveEnemies ) do
+		for enemyId, enemy in ipairs( ActiveEnemies ) do
 			EquipReferencedEnemyWeapons( currentRun, traitData, enemy )
 			ApplyEnemyTrait( CurrentRun, traitData, enemy )
 		end
@@ -556,7 +578,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.VoiceLinesPlayed = {}
 	room.TextLinesRecord = {}
 	if args.RoomOverrides ~= nil then
-		for key, value in pairs( args.RoomOverrides ) do
+		for key, value in ipairs( args.RoomOverrides ) do
 			room[key] = value
 		end
 	end
@@ -582,7 +604,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 
 	local secretChance = room.SecretSpawnChance or RoomData.BaseRoom.SecretSpawnChance
 
-	for k, mutator in pairs( GameState.ActiveMutators ) do
+	for k, mutator in ipairs( GameState.ActiveMutators ) do
 		if mutator.SecretSpawnChanceMultiplier ~= nil then
 			secretChance = secretChance * mutator.SecretSpawnChanceMultiplier
 		end
@@ -600,7 +622,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.ShrinePointDoorChanceSuccess =  RandomChance( shrinePointDoorChance )
 
 	local challengeChance = room.ChallengeSpawnChance or RoomData.BaseRoom.ChallengeSpawnChance
-	for k, mutator in pairs( GameState.ActiveMutators ) do
+	for k, mutator in ipairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			challengeChance = challengeChance * mutator.ChallengeSpawnChanceMultiplier
 		end
@@ -609,7 +631,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.ChallengeChanceSuccess = RandomChance( challengeChance )
 
 	local wellShopChance = room.WellShopSpawnChance or RoomData.BaseRoom.WellShopSpawnChance
-	for k, mutator in pairs( GameState.ActiveMutators ) do
+	for k, mutator in ipairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			wellShopChance = wellShopChance * mutator.WellShopSpawnChanceMultiplier
 		end
@@ -617,7 +639,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.WellShopChanceSuccess = RandomChance( wellShopChance )
 
 	local sellTraitShopChance = room.SellTraitShopChance or RoomData.BaseRoom.SellTraitShopChance
-	for k, mutator in pairs( GameState.ActiveMutators ) do
+	for k, mutator in ipairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			sellTraitShopChance = sellTraitShopChance * mutator.SellTraitShopChanceMultiplier
 		end
@@ -625,7 +647,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.SellTraitShopChanceSuccess = RandomChance( sellTraitShopChance )
 
 	local fishingPointChance = room.FishingPointChance or RoomData.BaseRoom.FishingPointChance
-	for k, mutator in pairs( GameState.ActiveMutators ) do
+	for k, mutator in ipairs( GameState.ActiveMutators ) do
 		if mutator.FishingPointChanceMultiplier ~= nil then
 			fishingPointChance = fishingPointChance * mutator.FishingPointChanceMultiplier
 		end
@@ -706,7 +728,7 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 		UseHeroTraitsWithValue("ForceChallengeSwitch", true)
 		local challengeBaseId = RemoveRandomValue( challengeBaseIds )
 		local challengeOptions = {}
-		for k, challengeName in pairs( EncounterSets.ChallengeOptions ) do
+		for k, challengeName in ipairs( EncounterSets.ChallengeOptions ) do
 			local challengeData = ObstacleData[challengeName]
 			if challengeData.Requirements == nil or IsGameStateEligible( CurrentRun, challengeData, challengeData.Requirements ) then
 				table.insert( challengeOptions, challengeName )
@@ -798,13 +820,15 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 end, ChefCuisineMod)
 
 ModUtil.WrapBaseFunction("ChooseLoot", function ( baseFunc, newLootName, excludeLootNames, forceLootName )
-	local returnValue = baseFunc(excludeLootNames, forceLootName)
+	local returnValue = baseFunc(newLootName, excludeLootNames, forceLootName)
 	local newlootData = LootData[newLootName]
-	local rewardType = CurrentRun.CurrentRoom.ChangeReward or  CurrentRun.CurrentRoom.ChosenRewardType
-	for k, trait in pairs( CurrentRun.Hero.Traits ) do
-		if trait.ChefGodToForce ~= nil and rewardType ~= "Devotion" and rewardType ~= "TrialUpgrade" then
-			if RandomChance(0.25) then
-				newlootData = LootData[trait.ChefGodToForce]
+	if CurrentRun.CurrentRoom ~= nil then
+		local rewardType = CurrentRun.CurrentRoom.ChangeReward or  CurrentRun.CurrentRoom.ChosenRewardType
+		for k, trait in ipairs( CurrentRun.Hero.Traits ) do
+			if trait.ChefGodToForce ~= nil and rewardType ~= "Devotion" and rewardType ~= "TrialUpgrade" then
+				if RandomChance(0.25) then
+					newlootData = LootData[trait.ChefGodToForce]
+				end
 			end
 		end
 	end
@@ -846,7 +870,7 @@ end, ChefCuisineMod)
 function ChefRetaliateBuffSetup()
 	thread(function()
 		local mult = 1.5
-	for k,v in pairs({"Aphrodite","Demeter","Athena"}) do
+	for k,v in ipairs({"Aphrodite","Demeter","Athena"}) do
 		local curValue = TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin
 		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin = curValue * mult
 		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMax = curValue * mult
@@ -910,7 +934,7 @@ end
 
 ModUtil.WrapBaseFunction("CheckAmmoDrop", function ( baseFunc, currentRun, targetId, ammoDropData, numDrops )
 	if SelectedFish == "Fish_Asphodel_Common_01" then
-		for k,traitData in pairs(CurrentRun.Hero.Traits) do
+		for k,traitData in ipairs(CurrentRun.Hero.Traits) do
 			if traitData.Name == "Fish_Asphodel_Common_01_Trait" then
 				traitData.PropertyChanges[1].ChangeValue = traitData.PropertyChanges[1].ChangeValue -1 
 			end
@@ -951,10 +975,10 @@ function ChefBuffKeepsakes(args)
 	"ChamberStackTrait", -- persephone
 	"HadesShoutKeepsake", -- hades
 	}
-	for k,v in pairs(keepsakeNames) do
+	for k,v in ipairs(keepsakeNames) do
 		if baseKeepsakeValues == nil or baseKeepsakeValues[v] == nil then
 			baseKeepsakeValues[v] = TraitData[v]
-			for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
+			for i, PropertyChangeData in ipairs(TraitData[v].RarityLevels) do
 				PropertyChangeData.Multiplier = PropertyChangeData.Multiplier * 2 
 			end
 		end
@@ -989,10 +1013,10 @@ function ChefResetKeepsakes(args)
 		"ChamberStackTrait", -- persephone
 		"HadesShoutKeepsake", -- hades
 		}
-		for k,v in pairs(keepsakeNames) do
+		for k,v in ipairs(keepsakeNames) do
 			if baseKeepsakeValues[v] ~= nil then
 				baseKeepsakeValues[v] = nil
-				for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
+				for i, PropertyChangeData in ipairs(TraitData[v].RarityLevels) do
 					PropertyChangeData.Multiplier = PropertyChangeData.Multiplier / 2
 				end
 			end
@@ -1001,6 +1025,8 @@ end
 
 ModUtil.WrapBaseFunction("EquipKeepsake", function(baseFunc, heroUnit, traitName, args)
 	local returnValue = baseFunc(heroUnit, traitName, args)
-	ChefBuffKeepsakes()
+	if SelectedFish == "Fish_Elysium_Legendary_01" then
+		ChefBuffKeepsakes()
+	end
 	return returnValue
 end, ChefCuisineMod)

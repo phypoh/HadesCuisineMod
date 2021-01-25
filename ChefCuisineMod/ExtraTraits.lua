@@ -334,3 +334,9 @@ TraitData["Fish_Elysium_Legendary_01_Trait"] =
 			RunOnce = true,
 		},
 }
+TraitData["Fish_Styx_Common_01_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "Fish_Styx_Common_01_Trait",
+		Icon = "SweetSourGuppIcon",
+}

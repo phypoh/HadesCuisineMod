@@ -114,5 +114,10 @@
 		DisplayName = "Dried Seamare"
 		Description = "Your keepsakes are more effective for one floor. Switching keepsakes extends this duration another floor. \n {#PropertyFormat}Effectivness: \Column 380 {#UpgradeFormat}200%"
 	}
+	{
+		Id = "Fish_Styx_Common_01_Trait"
+		DisplayName = "Sweet and Sour Gupps"
+		Description = "Deal increased damage while at max health, and take decreased damage at low health. \n {#PropertyFormat}Max Change: \Column 380 {#UpgradeFormat}{!Icons.Attack_Small}100% / {!Icons.EliteDefender}75%"
+	}
 	]    
 }

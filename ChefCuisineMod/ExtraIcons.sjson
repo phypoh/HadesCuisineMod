@@ -224,6 +224,22 @@
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
-    } 
+    }
+        {
+      Name = "SweetSourGuppIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\Fish\Styx_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "SweetSourGuppIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\Fish\Styx_Common"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }  
     ]
 }

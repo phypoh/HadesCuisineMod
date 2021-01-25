@@ -1,7 +1,7 @@
 SelectableMeals = {}
 ThisRunFish = {}
 hasBeenUsed = false
-SelectedFish = nil
+SelectedFish = ""
 SaveIgnores["SelectableMeals"] = true
 SaveIgnores["MealText"] = true
 OnAnyLoad{ "DeathArea",
@@ -24,12 +24,6 @@ function( triggerArgs )
 			AreIdsNotAlive = {40000}
 		}
 		else
-		--[[TODO: Add more fish:
-			,
-			,
-			Fish_Styx_Common_01,
-
-		]]--
 		SelectableMeals = {
 				--Tartarus
 			"Fish_Tartarus_Common_01",
@@ -44,6 +38,7 @@ function( triggerArgs )
 			"Fish_Elysium_Rare_01",
 			"Fish_Elysium_Legendary_01",
 				--Styx
+			"Fish_Styx_Common_01",
 			"Fish_Styx_Rare_01",
 			"Fish_Styx_Legendary_01",
 				--Surface
@@ -55,7 +50,7 @@ function( triggerArgs )
 			"Fish_Chaos_Rare_01",
 			"Fish_Chaos_Legendary_01",
 				--Other
-			"StackUpgrade",
+			"StackUpgrade",			
 			"RoomRewardHealDrop",
 			"GemDrop",
 		}
@@ -407,7 +402,7 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 			ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 3},
 			Justification = "Center",
 		}, LocalizationData.SellTraitScripts.FlavorText))
-
+DebugPrint({Text = "Hmm"})
 	CreateRecipeButtons(screen)
 	screen.KeepOpen = true
 	thread( HandleWASDInput, screen )
@@ -437,10 +432,13 @@ SaveIgnores["FishData"] = true
 SaveIgnores["FishCombinations"] = true
 SaveIgnores["MealRecipes"] = true
 function ChefDecompressFishCombos()
+	DebugPrint({Text = "Hmm3"})
 	for k,v in pairs(MealRecipes) do
+		DebugPrint({Text = "HI"})
 		if FishCombinations[v[1].Name] == nil then
 			FishCombinations[v[1].Name] = {}
 		end
+		DebugPrint({Text = v[1].Cost .. " " .. v[2].Cost .. " " .. k .. " " .. v[3]})
 		FishCombinations[v[1].Name][v[2].Name] = {ParentAmount = v[1].Cost, Amount = v[2].Cost, Meal = k, Boon = v[3]}
 		if FishCombinations[v[2].Name] == nil then
 			FishCombinations[v[2].Name] = {}
@@ -450,6 +448,7 @@ function ChefDecompressFishCombos()
 end
 
 function CreateRecipeButtons(screen)
+	DebugPrint({Text = "Hmm2"})
 	ChefDecompressFishCombos()
 	local itemLocationStartY = -200
 	local itemLocationYSpacer = 125
@@ -638,19 +637,22 @@ function ChefCreateRecipeChecks(screen)
 	end
 end
 function CuisineCookMealButton(screen,button)
-	MealData = FishCombinations[CurrentlySelectedMealFish[1]][CurrentlySelectedMealFish[2]]
-	if CurrentlySelectedMealFish ~= nil and #CurrentlySelectedMealFish == 2 and GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] >= MealData.ParentAmount and GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] >= MealData.Amount then
-		CuisineTurnInFish(screen, button)
-		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = MealData.Boon, Rarity = "Legendary" }) })
-		SelectedFish = MealData.Boon:gsub("_Trait", "")
-		GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.ParentAmount
-		GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.Amount
-		thread( InCombatText, CurrentRun.Hero.ObjectId, MealData.Boon, 1.8, { ShadowScale = 0.8 } )
-		hasBeenUsed = true
-		local partner = button.usee
-		partner.NextInteractLines = nil
-		StopStatusAnimation( partner, StatusAnimations.WantsToTalk )
-		RefreshUseButton( partner.ObjectId, partner )
-		UseableOff({ Id = partner.ObjectId })
+	
+	if CurrentlySelectedMealFish ~= nil and #CurrentlySelectedMealFish == 2 then
+		MealData = FishCombinations[CurrentlySelectedMealFish[1]][CurrentlySelectedMealFish[2]]
+		if GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] >= MealData.ParentAmount and GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] >= MealData.Amount  then
+			CuisineTurnInFish(screen, button)
+			AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = MealData.Boon, Rarity = "Legendary" }) })
+			SelectedFish = MealData.Boon:gsub("_Trait", "")
+			GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.ParentAmount
+			GameState.TotalCaughtFish[CurrentlySelectedMealFish[2]] = GameState.TotalCaughtFish[CurrentlySelectedMealFish[1]] - MealData.Amount
+			thread( InCombatText, CurrentRun.Hero.ObjectId, MealData.Boon, 1.8, { ShadowScale = 0.8 } )
+			hasBeenUsed = true
+			local partner = button.usee
+			partner.NextInteractLines = nil
+			StopStatusAnimation( partner, StatusAnimations.WantsToTalk )
+			RefreshUseButton( partner.ObjectId, partner )
+			UseableOff({ Id = partner.ObjectId })
+		end
 	end
 end
