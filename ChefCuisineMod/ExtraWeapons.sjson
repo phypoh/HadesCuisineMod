@@ -2,7 +2,7 @@
   Weapons = [
 	"_append"
     {
-      Name = "StrudyChef"
+      Name = "SturdyChef"
       InheritFrom = "LoadAmmoApplicator"
       Projectile = "null"
       Effects = [
@@ -20,5 +20,21 @@
           ClearOnAttack = false
         }]
     }
+    {
+      Name = "DamageBonusChef"
+      InheritFrom = "LoadAmmoApplicator"
+      Projectile = "null"
+      Effects = [
+      {
+        Name = "DamageBonus"
+        Type = "DAMAGE_OUTPUT"
+        Duration = 4
+        Modifier = 1
+        Active = true
+        FrontFx = "GrenadeSelfDamageOutputFx"
+        BackFx = "ZeusShoutBuffBackFx"
+      }]
+    }
+
 	]    
 }

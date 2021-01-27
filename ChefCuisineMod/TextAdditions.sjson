@@ -134,5 +134,25 @@
 		DisplayName = "Sweet and Sour Gupps"
 		Description = "Deal increased damage while at max health, and take decreased damage at low health. \n {#PropertyFormat}Max Change: \Column 380 {#UpgradeFormat}{!Icons.Attack_Small}100% / {!Icons.EliteDefender}75%"
 	}
+	{
+		Id = "BetterWeaponMastery_Trait"
+		DisplayName = "Tartarus Weapon Sauce"
+		Description = "Gain more exp when killng an enemy. \n {#PropertyFormat}Exp Change: \Column 380 {#UpgradeFormat}500%"
+	}
+	{
+		Id = "BetterWeaponMastery_Trait_CookingMenu"
+		DisplayName = "Tartarus Weapon Sauce"
+		Description = "Gain more exp when killng an enemy. \n {#PropertyFormat}Extra Exp Earned: \Column 275 {#UpgradeFormat}500%"
+	}
+	{
+		Id = "BetterDualWielding_Trait"
+		DisplayName = "Deathly Miracle Fruit"
+		Description = "Gain extra damage after switching weapons for 3 seconds. \n {#PropertyFormat}Bonus Damage: \Column 380 {#UpgradeFormat}+25%"
+	}
+	{
+		Id = "BetterDualWielding_Trait_CookingMenu"
+		DisplayName = "Deathly Miracle Fruit"
+		Description = "Gain extra damage after switching weapons for 3 seconds. \n {#PropertyFormat}Bonus Damage: \Column 275 {#UpgradeFormat}+25%"
+	}
 	]    
 }

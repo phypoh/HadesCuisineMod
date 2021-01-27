@@ -346,3 +346,14 @@ TraitData["BetterWeaponMastery_Trait"] =
 		RequiredFalseTrait = "BetterWeaponMastery_Trait",
 		Icon = "BetterWeaponMasteryIcon",
 }
+TraitData["BetterDualWielding_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "BetterDualWielding_Trait",
+		Icon = "BetterDualWieldingIcon",
+		AddOutgoingDamageModifiers =
+		{
+			UseTraitValue = "CurrentWeaponSwapBonus",
+		},
+		CurrentWeaponSwapBonus = 1,
+}

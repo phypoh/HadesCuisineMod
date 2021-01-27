@@ -257,5 +257,21 @@
       StartFrame = 1
       Scale = 0.5
     }
+    {
+      Name = "BetterDualWieldingIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Screens\SeasonalItem"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 1
+    }
+    {
+      Name = "BetterDualWieldingIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Screens\SeasonalItem"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 1
+    }
     ]
 }

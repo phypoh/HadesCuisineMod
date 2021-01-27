@@ -52,7 +52,6 @@ ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	return returnVal
 end,ChefCuisineMod) 
 
-
 ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
 	local damageReductionMultipliers = 1
 	local damageMultipliers = 1.0
@@ -91,15 +90,15 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 		else
 			if data.Additive then
 				if GetTotalHeroTraitValue("DefenseBoostMultiplier") > 0 then
-				damageReductionMultipliers = damageReductionMultipliers + (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier")) - 1
+					damageReductionMultipliers = damageReductionMultipliers + (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier")) - 1
 				else
-				damageMultipliers = damageMultipliers + multiplier - 1
+					damageMultipliers = damageMultipliers + multiplier - 1
 				end
 			else
 				if GetTotalHeroTraitValue("DefenseBoostMultiplier") > 0 then
-				damageReductionMultipliers = damageReductionMultipliers * (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier"))
+					damageReductionMultipliers = damageReductionMultipliers * (multiplier * GetTotalHeroTraitValue("DefenseBoostMultiplier"))
 				else
-				damageReductionMultipliers = damageReductionMultipliers * multiplier
+					damageReductionMultipliers = damageReductionMultipliers * multiplier
 				end
 			end
 			if ConfigOptionCache.LogCombatMultipliers then
@@ -114,7 +113,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 	end
 
 	if victim.IncomingDamageModifiers ~= nil then
-		for i, modifierData in ipairs(victim.IncomingDamageModifiers) do
+		for i, modifierData in pairs(victim.IncomingDamageModifiers) do
 			if modifierData.GlobalMultiplier ~= nil then
 				addDamageMultiplier( modifierData, modifierData.GlobalMultiplier)
 			end
@@ -171,7 +170,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 
 	if attacker ~= nil and attacker.OutgoingDamageModifiers ~= nil and ( not weaponData or not weaponData.IgnoreOutgoingDamageModifiers ) then
 		local appliedEffectTable = {}
-		for i, modifierData in ipairs(attacker.OutgoingDamageModifiers) do
+		for i, modifierData in pairs(attacker.OutgoingDamageModifiers) do
 			if modifierData.GlobalMultiplier ~= nil then
 				addDamageMultiplier( modifierData, modifierData.GlobalMultiplier)
 			end
@@ -184,7 +183,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 			if modifierData.ValidEnchantments and attacker == CurrentRun.Hero then
 				validEnchantment = false
 				if modifierData.ValidEnchantments.TraitDependentWeapons then
-					for traitName, validWeapons in ipairs( modifierData.ValidEnchantments.TraitDependentWeapons ) do
+					for traitName, validWeapons in pairs( modifierData.ValidEnchantments.TraitDependentWeapons ) do
 						if Contains( validWeapons, triggerArgs.SourceWeapon) and HeroHasTrait( traitName ) then
 							validEnchantment = true
 							break
@@ -238,7 +237,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				end
 				if modifierData.StoredAmmoMultiplier and victim.StoredAmmo ~= nil and not IsEmpty( victim.StoredAmmo ) then
 					local hasExternalStoredAmmo = false
-					for i, storedAmmo in ipairs(victim.StoredAmmo) do
+					for i, storedAmmo in pairs(victim.StoredAmmo) do
 						if storedAmmo.WeaponName ~= "SelfLoadAmmoApplicator" then
 							hasExternalStoredAmmo = true
 						end
@@ -255,7 +254,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				end
 				if modifierData.RequiredSelfEffectsMultiplier and not IsEmpty(attacker.ActiveEffects) then
 					local hasAllEffects = true
-					for _, effectName in ipairs( modifierData.RequiredEffects ) do
+					for _, effectName in pairs( modifierData.RequiredEffects ) do
 						if not attacker.ActiveEffects[ effectName ] then
 							hasAllEffects = false
 						end
@@ -267,7 +266,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 
 				if modifierData.RequiredEffectsMultiplier and victim and not IsEmpty(victim.ActiveEffects) then
 					local hasAllEffects = true
-					for _, effectName in ipairs( modifierData.RequiredEffects ) do
+					for _, effectName in pairs( modifierData.RequiredEffects ) do
 						if not victim.ActiveEffects[ effectName ] then
 							hasAllEffects = false
 						end
@@ -319,13 +318,13 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 				if modifierData.EmptySlotMultiplier and modifierData.EmptySlotValidData then
 					local filledSlots = {}
 
-					for i, traitData in ipairs( attacker.Traits ) do
+					for i, traitData in pairs( attacker.Traits ) do
 						if traitData.Slot then
 							filledSlots[traitData.Slot] = true
 						end
 					end
 
-					for key, weaponList in ipairs( modifierData.EmptySlotValidData ) do
+					for key, weaponList in pairs( modifierData.EmptySlotValidData ) do
 						if not filledSlots[key] and Contains( weaponList, triggerArgs.SourceWeapon ) then
 							addDamageMultiplier( modifierData, modifierData.EmptySlotMultiplier )
 						end
@@ -341,7 +340,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 		end
 
 		if weaponData.OutgoingDamageModifiers ~= nil and not weaponData.IgnoreOutgoingDamageModifiers then
-			for i, modifierData in ipairs(weaponData.OutgoingDamageModifiers) do
+			for i, modifierData in pairs(weaponData.OutgoingDamageModifiers) do
 				if modifierData.NonPlayerMultiplier and victim ~= CurrentRun.Hero and not HeroData.DefaultHero.HeroAlliedUnits[victim.Name] then
 					addDamageMultiplier( modifierData, modifierData.NonPlayerMultiplier)
 				end
@@ -375,7 +374,7 @@ OnAnyLoad{ function()
 		end
 		if elapsedTime >= 1.5 then
 		
-		ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "StrudyChef", EffectName = "AspectHyperArmor" , AutoEquip = true})
+		ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "SturdyChef", EffectName = "AspectHyperArmor" , AutoEquip = true})
 		end
             wait(0.2)
         end
@@ -407,20 +406,19 @@ ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
 		end
 
 	end
-	if SelectedFish == "RoomRewardHealDrop" then
-		for i, god in ipairs(LootData) do
-			if ( god.GodLoot or ( args.ForShop and god.TreatAsGodLootByShops )) and not god.DebugOnly and god.TraitIndex[traitData.Name] then
+	if SelectedFish == "RoomRewardHealDrop" and traitData ~= nil then
+		for i, god in pairs(LootData) do
+			if ( god.GodLoot or ( args.ForShop and god.TreatAsGodLootByShops )) and (not god.DebugOnly or god  .DebugOnly == nil) and god.TraitIndex[traitData.Name] then
 				GodBoonAmount[god.Name] = ( GodBoonAmount[god.Name] or 0 ) + 1
 			end
-			break
 		end
 		local highest = 0
-		for k,v in ipairs(GodBoonAmount) do
+		for k,v in pairs(GodBoonAmount) do
 			if v > highest then
 				highest = v
 			end
 		end
-		for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
+		for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 			if traitData.Name == "RoomRewardHealDrop_Trait" then
 				traitData.AccumulatedDamageBonusFood = 1 + (highest * 0.05)
 				break
@@ -615,7 +613,6 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	local shrinePointDoorChance = room.ShrinePointDoorSpawnChance or RoomData.BaseRoom.ShrinePointDoorSpawnChance
 	if HeroHasTrait("BetterShrinePoints_Trait") then
 		shrinePointDoorChance = shrinePointDoorChance + 1
-		DebugPrint({Text = shrinePointDoorChance})
 	end
 	room.ShrinePointDoorChanceSuccess =  RandomChance( shrinePointDoorChance )
 
@@ -849,7 +846,6 @@ function ChefChangeJanBoon()
 	
 	local n = #ChefJanTraitData
 	local currentTrait = ChefJanTraitData[RandomInt(1,n)]
-	DebugPrint({Text = currentTrait.Name or "Nil"})
 	local processedData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = currentTrait.Name, Rarity ="Common" }) 
 	AddTraitToHero({ TraitData = processedData })
 	currentJanTrait = processedData.Name
@@ -1035,7 +1031,34 @@ if _G["GetExpMultiplier"] then
 		local returnValue = baseFunc(victim, triggerArgs)
 		if SelectedFish == "BetterWeaponMastery" then
 			local multiplier = GetTotalSpentShrinePoints() + 1
-			tempExp = tempExp + (1 * multiplier * 0.5)
+			tempExp = tempExp + (1 * multiplier * 5)
+		end
+		return returnValue
+	end, ChefCuisineMod)
+end
+
+if _G["SwitchWeapon"] then
+	DebugPrint({Text = "Chef Mod able to interact with DualWielding_PonyWarrior"})
+	ModUtil.WrapBaseFunction("SwitchWeapon", function(baseFunc)
+		local returnValue = baseFunc()
+		if SelectedFish == "BetterDualWielding" then
+			thread(function ()
+				for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
+					if traitData.Name == "BetterDualWielding_Trait" then
+						traitData.CurrentWeaponSwapBonus = 1.25
+						break
+					end
+				end
+				wait(3)
+				for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
+					if traitData.Name == "BetterDualWielding_Trait" then
+						traitData.CurrentWeaponSwapBonus = 1
+						break
+					end
+				end
+			end)
+			--Only visual
+			ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "DamageBonusChef", EffectName = "DamageBonus" , AutoEquip = true})
 		end
 		return returnValue
 	end, ChefCuisineMod)

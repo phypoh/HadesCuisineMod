@@ -429,11 +429,18 @@ MealRecipes = {
 		{Name = "BetterChaosGatesIcon_Large", Scale = 0.5},
 	},
 	["Tartarus Weapon Sauce"] ={
-		{Name = "Fish_Tartarus_Common_01", Cost = 5},
-		{Name = "Fish_Asphodel_Common_01", Cost = 5},
+		{Name = "Fish_Tartarus_Common_01", Cost = 3},
+		{Name = "Fish_Asphodel_Common_01", Cost = 3},
 		"BetterWeaponMastery_Trait",
 		{Name = "BetterWeaponMasteryIcon_Large", Scale = 0.5},
 		"GetExpMultiplier"
+	},
+	["Deathly Miracle Fruit"] ={
+		{Name = "Fish_Styx_Legendary_01", Cost = 1},
+		{Name = "Fish_Styx_Rare_01", Cost = 2},
+		"BetterDualWielding_Trait",
+		{Name = "BetterDualWieldingIcon_Large", Scale = 0.5},
+		"SwitchWeapon"
 	}
 }
 
