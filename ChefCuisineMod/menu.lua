@@ -394,7 +394,7 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 
 	CreateTextBox({ Id = components.ShopBackground.Id, Text = "The chef has allowed Zagreus into his kitchen, to experiment and cook.",FontSize = 14, OffsetX = 0, OffsetY = 380, Width = 840, Color = Color.Gray, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" })
 	
-	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "Make a recipe. Recipes will show with (Amount of selected fish) + (Amount of other fish) needed to make the meal",
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "Make a recipe. To make a recipe select 2 fish. When they are selected you will see what you are making, and the red numbers on the right are how much the meal costs to make.",
 			FontSize = 16,
 			OffsetY = -385, Width = 840,
 			Color = {0.698, 0.702, 0.514, 1.0},
@@ -775,19 +775,15 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			components.MiddleFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX, Y = itemLocationY })
 		
 			components.MiddleFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
-			--[[CreateTextBoxWithFormat({
-				Id = components.MiddleFishRecipeTextBacking.Id,
-				OffsetX = -260,
-				OffsetY = 0,
-				Width = 665,
+			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.ParentAmount,
+				FontSize = 25,
+				OffsetX = 0, OffsetY = -75,
+				Width = 720,
+				Color = Color.Red,
+				Font = "AlegreyaSansSCBold",
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-				VerticalJustification = "Top",
-				LineSpacingBottom = 8,
-				UseDescription = true,
-				Format = "BaseFormat",
-				VariableAutoFormat = "BoldFormatGraft",
-				TextSymbolScale = 0.8,
-			})]]--
+			})
 		
 			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Meal,
 				FontSize = 25,
@@ -816,6 +812,15 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				VerticalJustification = "Top",
 				Format = "MarketScreenDescriptionFormat",
 			})
+			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Amount,
+			FontSize = 25,
+			OffsetX = 0, OffsetY = 80,
+			Width = 720,
+			Color = Color.Red,
+			Font = "AlegreyaSansSCBold",
+			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+			Justification = "Left",
+		})
 			--#endregion
 		end
 	end
