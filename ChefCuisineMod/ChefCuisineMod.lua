@@ -54,8 +54,6 @@ end,ChefCuisineMod)
 
 
 ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
-	DebugPrint({Text = victim.ObjectId})
-	DebugPrint({Text = CurrentRun.Hero.ObjectId})
 	local damageReductionMultipliers = 1
 	local damageMultipliers = 1.0
 	local lastAddedMultiplierName = ""
@@ -1030,3 +1028,15 @@ ModUtil.WrapBaseFunction("EquipKeepsake", function(baseFunc, heroUnit, traitName
 	end
 	return returnValue
 end, ChefCuisineMod)
+
+if _G["GetExpMultiplier"] then
+	DebugPrint({Text = "Chef Mod able to interact with Mastery_PonyWarrior"})
+	ModUtil.WrapBaseFunction("Kill", function(baseFunc, victim, triggerArgs)
+		local returnValue = baseFunc(victim, triggerArgs)
+		if SelectedFish == "BetterWeaponMastery" then
+			local multiplier = GetTotalSpentShrinePoints() + 1
+			tempExp = tempExp + (1 * multiplier * 0.5)
+		end
+		return returnValue
+	end, ChefCuisineMod)
+end

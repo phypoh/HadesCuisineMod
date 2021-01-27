@@ -1,3 +1,4 @@
+Load Priority 101
 To "Scripts/RoomManager.lua"
 Import "ChefCuisineMod.lua"
 To "Scripts/DeathLoopData.lua"

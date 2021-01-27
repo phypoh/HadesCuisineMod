@@ -1,7 +1,7 @@
 SelectableMeals = {}
 ThisRunFish = {}
 hasBeenUsed = false
-SelectedFish = ""
+SelectedFish = nil
 SaveIgnores["SelectableMeals"] = true
 SaveIgnores["MealText"] = true
 OnAnyLoad{ "DeathArea",
@@ -364,7 +364,7 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	components.CloseButton = CreateScreenComponent({ Name = "ButtonClose", Group = "Combat_UI_Backing", Scale = 0.7 })
 	Attach({ Id = components.CloseButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 0, OffsetY = 440 })
 	components.CloseButton.OnPressedFunctionName = "CloseCuisineScreen"
-	components.CloseButton.ControlHotkey = "Cancel"
+
 	
 	components.cookMealButton = 
 	CreateScreenComponent({ 
@@ -402,7 +402,11 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 			ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 3},
 			Justification = "Center",
 		}, LocalizationData.SellTraitScripts.FlavorText))
-DebugPrint({Text = "Hmm"})
+
+	components.DescriptorBG = CreateScreenComponent({ Name = "EndPanelBox",Scale = 0.7 })
+	SetScaleX({ Id = components.DescriptorBG.Id, Fraction = 1.3})
+	Attach({ Id = components.DescriptorBG.Id, DestinationId = components.ShopBackground.Id, OffsetX = 550, OffsetY = 0 })
+	SetAnimation({ Name = "EndPanelBox_Heat", DestinationId = components.DescriptorBG.Id})
 	CreateRecipeButtons(screen)
 	screen.KeepOpen = true
 	thread( HandleWASDInput, screen )
@@ -416,59 +420,80 @@ MealRecipes = {
 		{Name = "Fish_Tartarus_Legendary_01", Cost = 1},
 		{Name = "Fish_Tartarus_Rare_01", Cost = 5},
 		"BetterShrinePoints_Trait",
+		{Name = "BetterShrinePointsIcon_Large", Scale = 0.33},
     },
     ["Cthulu Buffet"] = {
         {Name = "Fish_Tartarus_Legendary_01", Cost = 1},
 		{Name = "Fish_Chaos_Rare_01", Cost = 1},
 		"BetterChaosGates_Trait",
-    },
+		{Name = "BetterChaosGatesIcon_Large", Scale = 0.5},
+	},
+	["Tartarus Weapon Sauce"] ={
+		{Name = "Fish_Tartarus_Common_01", Cost = 5},
+		{Name = "Fish_Asphodel_Common_01", Cost = 5},
+		"BetterWeaponMastery_Trait",
+		{Name = "BetterWeaponMasteryIcon_Large", Scale = 0.5},
+		"GetExpMultiplier"
+	}
 }
 
 --to
 FishCombinations = {
+	
 }
 
 SaveIgnores["FishData"] = true
 SaveIgnores["FishCombinations"] = true
 SaveIgnores["MealRecipes"] = true
 function ChefDecompressFishCombos()
-	DebugPrint({Text = "Hmm3"})
 	for k,v in pairs(MealRecipes) do
-		DebugPrint({Text = "HI"})
-		if FishCombinations[v[1].Name] == nil then
-			FishCombinations[v[1].Name] = {}
+		if v[5] ~= nil then
+			if _G[v[5]] then
+				if FishCombinations[v[1].Name] == nil then
+					FishCombinations[v[1].Name] = {}
+				end
+				local iconData = {Name = v[4].Name, Scale = v[4].Scale}
+				FishCombinations[v[1].Name][v[2].Name] = {ParentAmount = v[1].Cost, Amount = v[2].Cost, Meal = k, Boon = v[3], Icon = iconData}
+				if FishCombinations[v[2].Name] == nil then
+					FishCombinations[v[2].Name] = {}
+				end
+				FishCombinations[v[2].Name][v[1].Name] = {ParentAmount = v[2].Cost, Amount = v[1].Cost, Meal = k, Boon = v[3], Icon = iconData}
+			end
+		else
+			if FishCombinations[v[1].Name] == nil then
+				FishCombinations[v[1].Name] = {}
+			end
+			local iconData = {Name = v[4].Name, Scale = v[4].Scale}
+			FishCombinations[v[1].Name][v[2].Name] = {ParentAmount = v[1].Cost, Amount = v[2].Cost, Meal = k, Boon = v[3], Icon = iconData}
+			if FishCombinations[v[2].Name] == nil then
+				FishCombinations[v[2].Name] = {}
+			end
+			FishCombinations[v[2].Name][v[1].Name] = {ParentAmount = v[2].Cost, Amount = v[1].Cost, Meal = k, Boon = v[3], Icon = iconData}
 		end
-		DebugPrint({Text = v[1].Cost .. " " .. v[2].Cost .. " " .. k .. " " .. v[3]})
-		FishCombinations[v[1].Name][v[2].Name] = {ParentAmount = v[1].Cost, Amount = v[2].Cost, Meal = k, Boon = v[3]}
-		if FishCombinations[v[2].Name] == nil then
-			FishCombinations[v[2].Name] = {}
-		end
-		FishCombinations[v[2].Name][v[1].Name] = {ParentAmount = v[2].Cost, Amount = v[1].Cost, Meal = k, Boon = v[3]}
 	end
 end
 
 function CreateRecipeButtons(screen)
-	DebugPrint({Text = "Hmm2"})
 	ChefDecompressFishCombos()
-	local itemLocationStartY = -200
-	local itemLocationYSpacer = 125
+	local itemLocationStartY = -125
+	local itemLocationYSpacer = 320
 
-	local itemLocationStartX = -675
-	local itemLocationXSpacer = 455
-	local itemLocationMaxX = 875
+	local itemLocationStartX = -775
+	local itemLocationXSpacer = 105
+	local itemLocationMaxX = 70
 
 	local itemLocationX = itemLocationStartX
 	local itemLocationY = itemLocationStartY
 
 	local components = screen.Components
-
+--[[
 	for k,v in pairs(GameState.TotalCaughtFish) do
 		local itemBackingKey = "Backing"..k
 		components[itemBackingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
 		Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
 
 		local purchaseButtonKey = "PurchaseButton".. k
-		components[purchaseButtonKey] = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu", Scale = 1 * 0.5, X = itemLocationX, Y = itemLocationY })
+		components[purchaseButtonKey] = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu", Scale = 1 * 0.52, X = itemLocationX, Y = itemLocationY })
 		components[purchaseButtonKey].OnPressedFunctionName = "ChefFishSelected"
 		components[purchaseButtonKey].FishName = k
 
@@ -520,15 +545,58 @@ function CreateRecipeButtons(screen)
 			itemLocationY = itemLocationY + itemLocationYSpacer
 		end
 	end
+	]]--
+
+	for k,v in pairs(GameState.TotalCaughtFish) do
+		if FishCombinations[k] ~= nil then
+			local itemBackingKey = "Backing"..k
+			components[itemBackingKey] = CreateScreenComponent({ Name = "BoonSlot1", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
+			components[itemBackingKey].OnPressedFunctionName = "ChefFishSelected"
+			components[itemBackingKey].FishName = k
+
+			local scale = 0.65
+			SetScaleX({ Id = components[itemBackingKey].Id, Fraction = 0.22 * (scale / 1.2)})
+			SetScaleY({ Id = components[itemBackingKey].Id, Fraction = 2.8 * (scale / 1.2)})
+			local purchaseButtonKey = "PurchaseButton".. k
+			local imageName = "Codex_Portrait_"..k
+			
+			components[purchaseButtonKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu",Ambient = 0,Scale = scale, X = itemLocationX, Y = itemLocationY })
+			SetAnimation({ DestinationId = components[purchaseButtonKey].Id, Name = imageName })
+			Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
+			Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
+			
+			CreateTextBox({ Id = components[itemBackingKey].Id, Text = v,
+				FontSize = 20,
+				OffsetX = -25, OffsetY = -100,
+				Width = 60,
+				Color = {1,0,0,1},
+				Font = "AlegreyaSansSCBold",
+				Ambient = 0,
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+				Justification = "Left",
+			})
+			
+			FishData[k] = {
+				Name = k,
+				Amount = v,
+				Position = {X = itemLocationX, Y = itemLocationY}
+			}
+			itemLocationX = itemLocationX + itemLocationXSpacer
+			if itemLocationX >= itemLocationMaxX then
+				itemLocationX = itemLocationStartX
+				itemLocationY = itemLocationY + itemLocationYSpacer
+			end
+		end
+	end
 end
-CurrentlySelectedMealFish = {}
+CurrentlySelectedMealFish = nil
 CreatedCheckMarksIds = {}
 SaveIgnores["CreatedCheckMarksIds"] = true
 SaveIgnores["CurrentlySelectedMealFish"] = true
 function ChefFishSelected(screen, button)
 	local components = screen.Components
 	local FishName = button.FishName
-	if CurrentlySelectedMealFish == nil or #CurrentlySelectedMealFish == 0 then
+	if (CurrentlySelectedMealFish == nil or #CurrentlySelectedMealFish == 0) and FishCombinations[FishName] ~= nil then
 		table.insert(CurrentlySelectedMealFish, FishName)
 		for k,v in pairs(components) do
 			if string.match(k, "RecipeText") then
@@ -536,7 +604,7 @@ function ChefFishSelected(screen, button)
 			end
 		end
 		ChefCreateRecipeText(screen, false)
-		ChefCreateRecipeChecks(screen)
+		ChefCreateRecipeChecks(screen, false)
 	elseif  CurrentlySelectedMealFish ~= nil and not Contains(CurrentlySelectedMealFish, FishName) and #CurrentlySelectedMealFish == 1 then
 		local compatibleFish = {}
 		for k,v in pairs(FishCombinations[CurrentlySelectedMealFish[1]]) do
@@ -550,7 +618,7 @@ function ChefFishSelected(screen, button)
 				end
 			end
 			ChefCreateRecipeText(screen, true)
-			ChefCreateRecipeChecks(screen)
+			ChefCreateRecipeChecks(screen, true)
 		end
 	elseif CurrentlySelectedMealFish ~= nil and Contains(CurrentlySelectedMealFish, FishName) and CurrentlySelectedMealFish ~= 2 then
 		for i = 1, #CurrentlySelectedMealFish do
@@ -569,7 +637,7 @@ function ChefFishSelected(screen, button)
 			end
 		end
 		ChefCreateRecipeText(screen, false)
-		ChefCreateRecipeChecks(screen)
+		ChefCreateRecipeChecks(screen, false)
 
 	end
 end
@@ -577,63 +645,219 @@ end
 function ChefCreateRecipeText(screen, showOnlyOneRecipe) 
 	local components = screen.Components
 	for i = 1, #CurrentlySelectedMealFish do
-		local CurCombination = FishCombinations[CurrentlySelectedMealFish[i]]
-		if CurCombination ~= nil then
-				for k,v in pairs(CurCombination) do
-					if showOnlyOneRecipe then
-						if  Contains(CurrentlySelectedMealFish, k) then
-							local itemLocationX = FishData[k].Position.X
-							local itemLocationY = FishData[k].Position.Y
-							
-							local itemBackingKey = "Backing" ..k .. "RecipeText"
-							components[itemBackingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
-							Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
-							
-							CreateTextBox({ Id = components[itemBackingKey].Id, Text = "("..v.ParentAmount..") + ("..v.Amount.."): ".. v.Meal,
-							FontSize = 20,
-							OffsetX = -120, OffsetY = 30,
-							Width = 720,
-							Color = Color.White,
-							Font = "AlegreyaSansSCBold",
-							ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-							Justification = "Left",
-							})
-						end
-					else
-						local itemLocationX = FishData[k].Position.X
-						local itemLocationY = FishData[k].Position.Y
-						
-						local itemBackingKey = "Backing" ..k .. "RecipeText"
-						components[itemBackingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
-						Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
-						
-						CreateTextBox({ Id = components[itemBackingKey].Id, Text = "("..v.ParentAmount..") + ("..v.Amount.."): ".. v.Meal,
-						FontSize = 20,
-						OffsetX = -120, OffsetY = 30,
-						Width = 720,
-						Color = Color.White,
-						Font = "AlegreyaSansSCBold",
-						ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-						Justification = "Left",
-						})
-					end
+		if i == 1 then
+			local itemLocationX = 1515
+			local itemLocationY = 390
+			local curFish = CurrentlySelectedMealFish[1]
 
-			end
+			components.topFishRecipeTextBackground = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu_CheftopFishRecipeText", Scale = 1, X = itemLocationX , Y = itemLocationY })
+			
+			SetScaleY({ Id = components.topFishRecipeTextBackground.Id , Fraction = 1.33 })
+			SetScaleX({ Id = components.topFishRecipeTextBackground.Id , Fraction = 0.56 })
+				
+			components.topFishRecipeTextIcon = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Group = "Combat_Menu_CheftopFishRecipeText" })
+	
+			components.topFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX, Y = itemLocationY })
+	
+			components.topFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
+			--[[CreateTextBoxWithFormat({
+				Id = components.topFishRecipeTextBacking.Id,
+				OffsetX = -260,
+				OffsetY = 0,
+				Width = 665,
+				Justification = "Left",
+				VerticalJustification = "Top",
+				LineSpacingBottom = 8,
+				UseDescription = true,
+				Format = "BaseFormat",
+				VariableAutoFormat = "BoldFormatGraft",
+				TextSymbolScale = 0.8,
+			})]]--
+	
+			CreateTextBox({ Id = components.topFishRecipeTextBacking.Id, Text = curFish,
+				FontSize = 25,
+				OffsetX = -125, OffsetY = -40,
+				Width = 720,
+				Color = {0.988, 0.792, 0.247, 1},
+				Font = "AlegreyaSansSCBold",
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+				Justification = "Left",
+			})
+	
+			
+			components.topFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", Scale = 1 })
+			SetAnimation({ Name = curFish, DestinationId = components.topFishRecipeTextKey.Id, Scale = 0.17 })
+			Attach({ Id = components.topFishRecipeTextKey.Id, DestinationId = components.topFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
+			
+			components.topFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			SetScale({ Id = components.topFishRecipeTextFrame.Id, Fraction = 0.55 })
+			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
+			CreateTextBoxWithFormat({ Id = components.topFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
+				FontSize = 15,
+				OffsetX = -115, OffsetY = -15,
+				Width = 350,
+				Color = Color.White,
+				Justification = "Left",
+				VerticalJustification = "Top",
+				Format = "MarketScreenDescriptionFormat",
+			})
+		elseif i == 2 then
+			--#region Bottom Text creator
+			local itemLocationX = 1515
+			local itemLocationY = 785
+			local curFish = CurrentlySelectedMealFish[2]
+
+			components.bottomFishRecipeTextBackground = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu_ChefbottomFishRecipeText", Scale = 1, X = itemLocationX , Y = itemLocationY })
+			
+			SetScaleY({ Id = components.bottomFishRecipeTextBackground.Id , Fraction = 1.33 })
+			SetScaleX({ Id = components.bottomFishRecipeTextBackground.Id , Fraction = 0.56 })
+				
+			components.bottomFishRecipeTextIcon = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Group = "Combat_Menu_ChefbottomFishRecipeText" })
+		
+			components.bottomFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", X = itemLocationX, Y = itemLocationY })
+		
+			components.bottomFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
+			--[[CreateTextBoxWithFormat({
+				Id = components.bottomFishRecipeTextBacking.Id,
+				OffsetX = -260,
+				OffsetY = 0,
+				Width = 665,
+				Justification = "Left",
+				VerticalJustification = "Top",
+				LineSpacingBottom = 8,
+				UseDescription = true,
+				Format = "BaseFormat",
+				VariableAutoFormat = "BoldFormatGraft",
+				TextSymbolScale = 0.8,
+			})]]--
+		
+			CreateTextBox({ Id = components.bottomFishRecipeTextBacking.Id, Text = curFish,
+				FontSize = 25,
+				OffsetX = -125, OffsetY = -40,
+				Width = 720,
+				Color = {0.988, 0.792, 0.247, 1},
+				Font = "AlegreyaSansSCBold",
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+				Justification = "Left",
+			})
+		
+			
+			components.bottomFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", Scale = 1 })
+			SetAnimation({ Name = curFish, DestinationId = components.bottomFishRecipeTextKey.Id, Scale = 0.17 })
+			Attach({ Id = components.bottomFishRecipeTextKey.Id, DestinationId = components.bottomFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
+			
+			components.bottomFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefbottomFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			SetScale({ Id = components.bottomFishRecipeTextFrame.Id, Fraction = 0.55 })
+			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
+
+			CreateTextBoxWithFormat({ Id = components.bottomFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
+				FontSize = 15,
+				OffsetX = -115, OffsetY = -15,
+				Width = 350,
+				Color = Color.White,
+				Justification = "Left",
+				VerticalJustification = "Top",
+				Format = "MarketScreenDescriptionFormat",
+			})
+			--#endregion
+			--#region Middle Text creator
+			itemLocationX = 1515
+			itemLocationY = 590
+			curFish = FishCombinations[CurrentlySelectedMealFish[1]][CurrentlySelectedMealFish[2]]
+
+			components.MiddleFishRecipeTextBackground = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1, X = itemLocationX , Y = itemLocationY })
+			
+			SetScaleY({ Id = components.MiddleFishRecipeTextBackground.Id , Fraction = 2.3 })
+			SetScaleX({ Id = components.MiddleFishRecipeTextBackground.Id , Fraction = 0.56 })
+				
+			components.MiddleFishRecipeTextIcon = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Group = "Combat_Menu_ChefMiddleFishRecipeText" })
+		
+			components.MiddleFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX, Y = itemLocationY })
+		
+			components.MiddleFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
+			--[[CreateTextBoxWithFormat({
+				Id = components.MiddleFishRecipeTextBacking.Id,
+				OffsetX = -260,
+				OffsetY = 0,
+				Width = 665,
+				Justification = "Left",
+				VerticalJustification = "Top",
+				LineSpacingBottom = 8,
+				UseDescription = true,
+				Format = "BaseFormat",
+				VariableAutoFormat = "BoldFormatGraft",
+				TextSymbolScale = 0.8,
+			})]]--
+		
+			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Meal,
+				FontSize = 25,
+				OffsetX = -125, OffsetY = -40,
+				Width = 720,
+				Color = {0.988, 0.792, 0.247, 1},
+				Font = "AlegreyaSansSCBold",
+				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
+				Justification = "Left",
+			})
+		
+			
+			components.MiddleFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1 })
+			SetAnimation({ Name = curFish.Icon.Name, DestinationId = components.MiddleFishRecipeTextKey.Id, Scale = curFish.Icon.Scale })
+			Attach({ Id = components.MiddleFishRecipeTextKey.Id, DestinationId = components.MiddleFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
+			
+			components.MiddleFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			SetScale({ Id = components.MiddleFishRecipeTextFrame.Id, Fraction = 0.55 })
+			CreateTextBoxWithFormat({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Boon .. "_CookingMenu",
+				FontSize = 15,
+				OffsetX = -115, OffsetY = -15,
+				Width = 360,
+				Color = Color.White,
+				Justification = "Left",
+				UseDescription = true,
+				VerticalJustification = "Top",
+				Format = "MarketScreenDescriptionFormat",
+			})
+			--#endregion
 		end
 	end
 end
 
-function ChefCreateRecipeChecks(screen)
+function ChefCreateRecipeChecks(screen, showOnlyOneRecipe)
 	local components = screen.Components
-	for i = 1, #CurrentlySelectedMealFish do
-		local FishName = CurrentlySelectedMealFish[i]
+	if #CurrentlySelectedMealFish > 0 then
+		local FishName = CurrentlySelectedMealFish[1]
 		local itemLocationX = FishData[FishName].Position.X
 		local itemLocationY = FishData[FishName].Position.Y
 		local itemBackingKeyBaseItem = "Backing" .. FishName .. "RecipeTextBaseItem"
 		components[itemBackingKeyBaseItem] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
 		Attach({ Id = components[itemBackingKeyBaseItem].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
 		components["Backing" .. FishName .. "RecipeTextCheckMarkIcon"] = CreateScreenComponent({ Name = "ButtonConfirm", Group = "Combat_UI_Backing_CheckMark", Scale = 0.525 })
-		Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon"].Id, DestinationId = components[itemBackingKeyBaseItem].Id, OffsetX = 150, OffsetY = -20 })
+		Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon"].Id, DestinationId = components[itemBackingKeyBaseItem].Id, OffsetX = 0 , OffsetY = 100 })
+		local CurCombination = FishCombinations[FishName]
+		if CurCombination ~= nil then
+			for k,v in pairs(CurCombination) do
+				if showOnlyOneRecipe then
+					if  Contains(CurrentlySelectedMealFish, k) then
+						local itemLocationX = FishData[k].Position.X
+						local itemLocationY = FishData[k].Position.Y
+						local checkMarkBacking = "Backing" .. FishName .. "RecipeTextBaseItem2"
+						components[checkMarkBacking] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
+						Attach({ Id = components[checkMarkBacking].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
+						components["Backing" .. FishName .. "RecipeTextCheckMarkIcon2"] = CreateScreenComponent({ Name = "ButtonConfirm", Group = "Combat_UI_Backing_CheckMark", Scale = 0.525 })
+						Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon2"].Id, DestinationId = components[checkMarkBacking].Id, OffsetX = 0 , OffsetY = 100 })
+					end
+				else
+					local itemLocationX = FishData[k].Position.X
+					local itemLocationY = FishData[k].Position.Y
+					
+					local checkMarkBacking = "Backing" .. FishName .. "RecipeTextBaseItem" .. k
+					components[checkMarkBacking] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
+					Attach({ Id = components[checkMarkBacking].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
+					components["Backing" .. FishName .. "RecipeTextCheckMarkIcon" .. k] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_UI_Backing_CheckMark",Ambient = 0,Scale = 0.525})
+					SetAnimation({ DestinationId = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon" .. k].Id, Name = "StatusIconWantsToTalk", })
+					Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon" .. k].Id, DestinationId =components[checkMarkBacking].Id, OffsetY = 100 })
+				end
+			end
+		end
 	end
 end
 function CuisineCookMealButton(screen,button)
@@ -655,4 +879,16 @@ function CuisineCookMealButton(screen,button)
 			UseableOff({ Id = partner.ObjectId })
 		end
 	end
+end
+
+function ChefCreateNiceEllipses(originalString, endPoint)
+	local afterEndString = string.sub(originalString, endPoint, #originalString)
+	local endIndex = endPoint
+	for i = 1, #originalString - endPoint do
+		if string.sub(afterEndString,i,i) == " " then
+			break
+		end
+	endIndex = endIndex + 1
+	end
+	return string.sub(originalString, 1, endIndex)
 end

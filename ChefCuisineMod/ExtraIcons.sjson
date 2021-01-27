@@ -7,7 +7,7 @@
       FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.75
+      Scale = 0.65
     }
     {
       Name = "KidsMealIcon_Large"
@@ -15,7 +15,7 @@
       FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.75
+      Scale = 0.65
     }
     {
       Name = "TroutSoupIcon_Small"
@@ -225,7 +225,7 @@
       StartFrame = 1
       Scale = 0.5
     }
-        {
+    {
       Name = "SweetSourGuppIcon_Small"
       InheritFrom = "BoonTrayIcon"
       FilePath = "GUI\Screens\Fish\Styx_Common"
@@ -240,6 +240,22 @@
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
-    }  
+    } 
+    {
+      Name = "BetterWeaponMasteryIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\Epilogue\Olympus_Ares"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.25
+    }
+    {
+      Name = "BetterWeaponMasteryIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\Epilogue\Olympus_Ares"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }
     ]
 }
