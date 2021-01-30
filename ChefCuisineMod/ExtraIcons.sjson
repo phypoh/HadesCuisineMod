@@ -273,5 +273,21 @@
       StartFrame = 1
       Scale = 1
     }
+    {
+      Name = "BetterWeaponAspectReworkIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "GUI\HUD\HealthBar_1upStyx"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 1
+    }
+    {
+      Name = "BetterWeaponAspectReworkIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "GUI\HUD\HealthBar_1upStyx"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 1
+    }
     ]
 }

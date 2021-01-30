@@ -21,6 +21,9 @@ OnAnyLoad{"DeathArea DeathAreaBedroom RoomPreRun", function ()
 	if SelectedFish ~= "Fish_Elysium_Legendary_01" then
 		ChefResetKeepsakes()
 	end
+	if SelectedFish ~= "BetterWeaponAspectRework" then
+		ChefResetAspects()
+	end
 end}
 ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	local returnVal = baseFunc(prevRun, args)
@@ -29,7 +32,7 @@ ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	end
 	if SelectedFish == "Fish_Chaos_Legendary_01" then
 		local traitData = CollapseTable( TraitData ) -- no mutation
-		for i, trait in ipairs( traitData ) do
+		for i, trait in pairs( traitData ) do
   			if trait.Slot ~= nil or not IsGodTrait(trait.Name) or (trait.RarityLevels == nil or trait.RarityLevels.Common == nil) or RequiredWeapon ~= nil then
     			traitData[ i ] = nil
   			end
@@ -393,7 +396,7 @@ ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
 		end
 	if BoonsThisLevel ~= nil and BoonsThisLevel == 5 then
 			local leveledBoons = {}
-			for k, currentTrait in ipairs( CurrentRun.Hero.Traits ) do 
+			for k, currentTrait in pairs( CurrentRun.Hero.Traits ) do 
 				if not Contains(leveledBoons, currentTrait.Name) then
 				table.insert(leveledBoons, currentTrait.Name)
 				if IsGameStateEligible(CurrentRun, TraitData[currentTrait.Name]) and IsGodTrait(currentTrait.Name) then
@@ -450,7 +453,7 @@ function AddTraitToHeroChef(args)
 
 	EquipSpecialWeapons( CurrentRun.Hero, traitData )
 	AddAssistWeapons( CurrentRun.Hero, traitData )
-	for weaponName, v in ipairs( CurrentRun.Hero.Weapons ) do
+	for weaponName, v in pairs( CurrentRun.Hero.Weapons ) do
 		AddWallSlamWeapons( CurrentRun.Hero, traitData )
 		AddOnDamageWeapons(CurrentRun.Hero, weaponName, traitData)
 		AddOnFireWeapons(CurrentRun.Hero, weaponName, traitData)
@@ -460,7 +463,7 @@ function AddTraitToHeroChef(args)
 	end
 
 	if ( traitData.EnemyPropertyChanges or traitData.AddEnemyOnDeathWeapons ) and ActiveEnemies ~= nil then
-		for enemyId, enemy in ipairs( ActiveEnemies ) do
+		for enemyId, enemy in pairs( ActiveEnemies ) do
 			EquipReferencedEnemyWeapons( currentRun, traitData, enemy )
 			ApplyEnemyTrait( CurrentRun, traitData, enemy )
 		end
@@ -574,7 +577,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.VoiceLinesPlayed = {}
 	room.TextLinesRecord = {}
 	if args.RoomOverrides ~= nil then
-		for key, value in ipairs( args.RoomOverrides ) do
+		for key, value in pairs( args.RoomOverrides ) do
 			room[key] = value
 		end
 	end
@@ -600,7 +603,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 
 	local secretChance = room.SecretSpawnChance or RoomData.BaseRoom.SecretSpawnChance
 
-	for k, mutator in ipairs( GameState.ActiveMutators ) do
+	for k, mutator in pairs( GameState.ActiveMutators ) do
 		if mutator.SecretSpawnChanceMultiplier ~= nil then
 			secretChance = secretChance * mutator.SecretSpawnChanceMultiplier
 		end
@@ -617,7 +620,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.ShrinePointDoorChanceSuccess =  RandomChance( shrinePointDoorChance )
 
 	local challengeChance = room.ChallengeSpawnChance or RoomData.BaseRoom.ChallengeSpawnChance
-	for k, mutator in ipairs( GameState.ActiveMutators ) do
+	for k, mutator in pairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			challengeChance = challengeChance * mutator.ChallengeSpawnChanceMultiplier
 		end
@@ -626,7 +629,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.ChallengeChanceSuccess = RandomChance( challengeChance )
 
 	local wellShopChance = room.WellShopSpawnChance or RoomData.BaseRoom.WellShopSpawnChance
-	for k, mutator in ipairs( GameState.ActiveMutators ) do
+	for k, mutator in pairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			wellShopChance = wellShopChance * mutator.WellShopSpawnChanceMultiplier
 		end
@@ -634,7 +637,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.WellShopChanceSuccess = RandomChance( wellShopChance )
 
 	local sellTraitShopChance = room.SellTraitShopChance or RoomData.BaseRoom.SellTraitShopChance
-	for k, mutator in ipairs( GameState.ActiveMutators ) do
+	for k, mutator in pairs( GameState.ActiveMutators ) do
 		if mutator.ChallengeSpawnChanceMultiplier ~= nil then
 			sellTraitShopChance = sellTraitShopChance * mutator.SellTraitShopChanceMultiplier
 		end
@@ -642,7 +645,7 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	room.SellTraitShopChanceSuccess = RandomChance( sellTraitShopChance )
 
 	local fishingPointChance = room.FishingPointChance or RoomData.BaseRoom.FishingPointChance
-	for k, mutator in ipairs( GameState.ActiveMutators ) do
+	for k, mutator in pairs( GameState.ActiveMutators ) do
 		if mutator.FishingPointChanceMultiplier ~= nil then
 			fishingPointChance = fishingPointChance * mutator.FishingPointChanceMultiplier
 		end
@@ -723,7 +726,7 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 		UseHeroTraitsWithValue("ForceChallengeSwitch", true)
 		local challengeBaseId = RemoveRandomValue( challengeBaseIds )
 		local challengeOptions = {}
-		for k, challengeName in ipairs( EncounterSets.ChallengeOptions ) do
+		for k, challengeName in pairs( EncounterSets.ChallengeOptions ) do
 			local challengeData = ObstacleData[challengeName]
 			if challengeData.Requirements == nil or IsGameStateEligible( CurrentRun, challengeData, challengeData.Requirements ) then
 				table.insert( challengeOptions, challengeName )
@@ -819,7 +822,7 @@ ModUtil.WrapBaseFunction("ChooseLoot", function ( baseFunc, newLootName, exclude
 	local newlootData = LootData[newLootName]
 	if CurrentRun.CurrentRoom ~= nil then
 		local rewardType = CurrentRun.CurrentRoom.ChangeReward or  CurrentRun.CurrentRoom.ChosenRewardType
-		for k, trait in ipairs( CurrentRun.Hero.Traits ) do
+		for k, trait in pairs( CurrentRun.Hero.Traits ) do
 			if trait.ChefGodToForce ~= nil and rewardType ~= "Devotion" and rewardType ~= "TrialUpgrade" then
 				if RandomChance(0.25) then
 					newlootData = LootData[trait.ChefGodToForce]
@@ -864,7 +867,7 @@ end, ChefCuisineMod)
 function ChefRetaliateBuffSetup()
 	thread(function()
 		local mult = 1.5
-	for k,v in ipairs({"Aphrodite","Demeter","Athena"}) do
+	for k,v in pairs({"Aphrodite","Demeter","Athena"}) do
 		local curValue = TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin
 		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMin = curValue * mult
 		TraitData[v.. "RetaliateTrait"].PropertyChanges[1].BaseMax = curValue * mult
@@ -928,7 +931,7 @@ end
 
 ModUtil.WrapBaseFunction("CheckAmmoDrop", function ( baseFunc, currentRun, targetId, ammoDropData, numDrops )
 	if SelectedFish == "Fish_Asphodel_Common_01" then
-		for k,traitData in ipairs(CurrentRun.Hero.Traits) do
+		for k,traitData in pairs(CurrentRun.Hero.Traits) do
 			if traitData.Name == "Fish_Asphodel_Common_01_Trait" then
 				traitData.PropertyChanges[1].ChangeValue = traitData.PropertyChanges[1].ChangeValue -1 
 			end
@@ -969,10 +972,10 @@ function ChefBuffKeepsakes(args)
 	"ChamberStackTrait", -- persephone
 	"HadesShoutKeepsake", -- hades
 	}
-	for k,v in ipairs(keepsakeNames) do
+	for k,v in pairs(keepsakeNames) do
 		if baseKeepsakeValues == nil or baseKeepsakeValues[v] == nil then
 			baseKeepsakeValues[v] = TraitData[v]
-			for i, PropertyChangeData in ipairs(TraitData[v].RarityLevels) do
+			for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
 				PropertyChangeData.Multiplier = PropertyChangeData.Multiplier * 2 
 			end
 		end
@@ -1007,10 +1010,10 @@ function ChefResetKeepsakes(args)
 		"ChamberStackTrait", -- persephone
 		"HadesShoutKeepsake", -- hades
 		}
-		for k,v in ipairs(keepsakeNames) do
+		for k,v in pairs(keepsakeNames) do
 			if baseKeepsakeValues[v] ~= nil then
 				baseKeepsakeValues[v] = nil
-				for i, PropertyChangeData in ipairs(TraitData[v].RarityLevels) do
+				for i, PropertyChangeData in pairs(TraitData[v].RarityLevels) do
 					PropertyChangeData.Multiplier = PropertyChangeData.Multiplier / 2
 				end
 			end
@@ -1043,14 +1046,14 @@ if _G["SwitchWeapon"] then
 		local returnValue = baseFunc()
 		if SelectedFish == "BetterDualWielding" then
 			thread(function ()
-				for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
+				for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 					if traitData.Name == "BetterDualWielding_Trait" then
 						traitData.CurrentWeaponSwapBonus = 1.25
 						break
 					end
 				end
 				wait(3)
-				for i, traitData in ipairs( CurrentRun.Hero.Traits ) do
+				for i, traitData in pairs( CurrentRun.Hero.Traits ) do
 					if traitData.Name == "BetterDualWielding_Trait" then
 						traitData.CurrentWeaponSwapBonus = 1
 						break
@@ -1062,4 +1065,115 @@ if _G["SwitchWeapon"] then
 		end
 		return returnValue
 	end, ChefCuisineMod)
+end
+
+if _G["SetupSpearAmmoLoad"] then
+	DebugPrint({Text = "Chef Mod able to interact with AspectsRework"})
+	
+	function ChefBuffAspects(args)
+		DebugPrint({Text = "Buffing Aspects"})
+		--Hades
+		TraitData.SpearWeaveTrait.RarityLevels.Common.MinMultiplier = 1.2
+		TraitData.SpearWeaveTrait.RarityLevels.Common.MaxMultiplier = 1.2
+		TraitData.SpearWeaveTrait.RarityLevels.Rare.MinMultiplier = 1.15
+		TraitData.SpearWeaveTrait.RarityLevels.Rare.MaxMultiplier = 1.15
+		TraitData.SpearWeaveTrait.RarityLevels.Epic.MinMultiplier = 1.1
+		TraitData.SpearWeaveTrait.RarityLevels.Epic.MaxMultiplier = 1.1
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MinMultiplier = 1.05
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MaxMultiplier = 1.05
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MinMultiplier = 1
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MaxMultiplier = 1
+		TraitData.SpearWeaveTrait.RarityLevels.Legendary.MinMultiplier = 0.95
+		TraitData.SpearWeaveTrait.RarityLevels.Legendary.MaxMultiplier = 0.95
+		
+		--Poseidon
+		TraitData.DislodgeAmmoTrait.RarityLevels.Common.MinMultiplier = 2
+		TraitData.DislodgeAmmoTrait.RarityLevels.Common.MaxMultiplier = 2
+		TraitData.DislodgeAmmoTrait.RarityLevels.Rare.MinMultiplier = 3
+		TraitData.DislodgeAmmoTrait.RarityLevels.Rare.MaxMultiplier = 3
+		TraitData.DislodgeAmmoTrait.RarityLevels.Epic.MinMultiplier = 4
+		TraitData.DislodgeAmmoTrait.RarityLevels.Epic.MaxMultiplier = 4
+		TraitData.DislodgeAmmoTrait.RarityLevels.Heroic.MinMultiplier = 5
+		TraitData.DislodgeAmmoTrait.RarityLevels.Heroic.MaxMultiplier = 5
+		TraitData.DislodgeAmmoTrait.RarityLevels.Legendary.MinMultiplier = 6
+		TraitData.DislodgeAmmoTrait.RarityLevels.Legendary.MaxMultiplier = 6
+
+		--Nemesis
+		TraitData.SwordCriticalParryTrait.RarityLevels.Common.MinMultiplier = 1.25
+		TraitData.SwordCriticalParryTrait.RarityLevels.Common.MaxMultiplier = 1.25
+		TraitData.SwordCriticalParryTrait.RarityLevels.Rare.MinMultiplier = 1.5
+		TraitData.SwordCriticalParryTrait.RarityLevels.Rare.MaxMultiplier = 1.5
+		TraitData.SwordCriticalParryTrait.RarityLevels.Epic.MinMultiplier = 1.75
+		TraitData.SwordCriticalParryTrait.RarityLevels.Epic.MaxMultiplier = 1.75
+		TraitData.SwordCriticalParryTrait.RarityLevels.Heroic.MinMultiplier = 2
+		TraitData.SwordCriticalParryTrait.RarityLevels.Heroic.MaxMultiplier = 2
+		TraitData.SwordCriticalParryTrait.RarityLevels.Legendary.MinMultiplier = 2.25
+		TraitData.SwordCriticalParryTrait.RarityLevels.Legendary.MaxMultiplier = 2.25
+		
+		--Achilles
+		TraitData.SpearTeleportTrait.RarityLevels.Common.MinMultiplier = 1.5
+		TraitData.SpearTeleportTrait.RarityLevels.Common.MaxMultiplier = 1.5
+		TraitData.SpearTeleportTrait.RarityLevels.Rare.MinMultiplier = 2
+		TraitData.SpearTeleportTrait.RarityLevels.Rare.MaxMultiplier = 2
+		TraitData.SpearTeleportTrait.RarityLevels.Epic.MinMultiplier = 2.5
+		TraitData.SpearTeleportTrait.RarityLevels.Epic.MaxMultiplier = 2.5
+		TraitData.SpearTeleportTrait.RarityLevels.Heroic.MinMultiplier = 3
+		TraitData.SpearTeleportTrait.RarityLevels.Heroic.MaxMultiplier = 3
+		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MinMultiplier = 3.5
+		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MaxMultiplier = 3.5
+	end
+	
+	function ChefResetAspects(args)
+		DebugPrint({Text = "Resetting Aspects"})
+		
+		--Hades
+		TraitData.SpearWeaveTrait.RarityLevels.Common.MinMultiplier = 1.25
+		TraitData.SpearWeaveTrait.RarityLevels.Common.MaxMultiplier = 1.25
+		TraitData.SpearWeaveTrait.RarityLevels.Rare.MinMultiplier = 1.2
+		TraitData.SpearWeaveTrait.RarityLevels.Rare.MaxMultiplier = 1.2
+		TraitData.SpearWeaveTrait.RarityLevels.Epic.MinMultiplier = 1.15
+		TraitData.SpearWeaveTrait.RarityLevels.Epic.MaxMultiplier = 1.15
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MinMultiplier = 1.1
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MaxMultiplier = 1.1
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MinMultiplier = 1.05
+		TraitData.SpearWeaveTrait.RarityLevels.Heroic.MaxMultiplier = 1.05
+		TraitData.SpearWeaveTrait.RarityLevels.Legendary.MinMultiplier = 1
+		TraitData.SpearWeaveTrait.RarityLevels.Legendary.MaxMultiplier = 1
+		
+		--Poseidon
+		TraitData.DislodgeAmmoTrait.RarityLevels.Common.MinMultiplier = 1
+		TraitData.DislodgeAmmoTrait.RarityLevels.Common.MaxMultiplier = 1
+		TraitData.DislodgeAmmoTrait.RarityLevels.Rare.MinMultiplier = 2
+		TraitData.DislodgeAmmoTrait.RarityLevels.Rare.MaxMultiplier = 2
+		TraitData.DislodgeAmmoTrait.RarityLevels.Epic.MinMultiplier = 3
+		TraitData.DislodgeAmmoTrait.RarityLevels.Epic.MaxMultiplier = 3
+		TraitData.DislodgeAmmoTrait.RarityLevels.Heroic.MinMultiplier = 4
+		TraitData.DislodgeAmmoTrait.RarityLevels.Heroic.MaxMultiplier = 4
+		TraitData.DislodgeAmmoTrait.RarityLevels.Legendary.MinMultiplier = 5
+		TraitData.DislodgeAmmoTrait.RarityLevels.Legendary.MaxMultiplier = 5
+
+		--Nemesis
+		TraitData.SwordCriticalParryTrait.RarityLevels.Common.MinMultiplier = 1
+		TraitData.SwordCriticalParryTrait.RarityLevels.Common.MaxMultiplier = 1
+		TraitData.SwordCriticalParryTrait.RarityLevels.Rare.MinMultiplier = 1.25
+		TraitData.SwordCriticalParryTrait.RarityLevels.Rare.MaxMultiplier = 1.25
+		TraitData.SwordCriticalParryTrait.RarityLevels.Epic.MinMultiplier = 1.5
+		TraitData.SwordCriticalParryTrait.RarityLevels.Epic.MaxMultiplier = 1.5
+		TraitData.SwordCriticalParryTrait.RarityLevels.Heroic.MinMultiplier = 1.75
+		TraitData.SwordCriticalParryTrait.RarityLevels.Heroic.MaxMultiplier = 1.75
+		TraitData.SwordCriticalParryTrait.RarityLevels.Legendary.MinMultiplier = 2
+		TraitData.SwordCriticalParryTrait.RarityLevels.Legendary.MaxMultiplier = 2
+		
+		--Achilles
+		TraitData.SpearTeleportTrait.RarityLevels.Common.MinMultiplier = 1
+		TraitData.SpearTeleportTrait.RarityLevels.Common.MaxMultiplier = 1
+		TraitData.SpearTeleportTrait.RarityLevels.Rare.MinMultiplier = 1.5
+		TraitData.SpearTeleportTrait.RarityLevels.Rare.MaxMultiplier = 1.5
+		TraitData.SpearTeleportTrait.RarityLevels.Epic.MinMultiplier = 2
+		TraitData.SpearTeleportTrait.RarityLevels.Epic.MaxMultiplier = 2
+		TraitData.SpearTeleportTrait.RarityLevels.Heroic.MinMultiplier = 2.5
+		TraitData.SpearTeleportTrait.RarityLevels.Heroic.MaxMultiplier = 2.5
+		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MinMultiplier = 3
+		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MaxMultiplier = 3
+	end
 end

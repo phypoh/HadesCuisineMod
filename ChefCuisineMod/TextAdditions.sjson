@@ -154,5 +154,15 @@
 		DisplayName = "Deathly Miracle Fruit"
 		Description = "Gain extra damage after switching weapons for 3 seconds. \n {#PropertyFormat}Bonus Damage: \Column 275 {#UpgradeFormat}+25%"
 	}
+	{
+		Id = "BetterWeaponAspectRework_Trait"
+		DisplayName = "Titan Plasma"
+		Description = "Re-worked aspects are a higher level, increasing above 5 if neccesary. \n {#PropertyFormat}Increased Level: \Column 380 {#UpgradeFormat}+1"
+	}
+	{
+		Id = "BetterWeaponAspectRework_Trait_CookingMenu"
+		DisplayName = "Titan Plasma"
+		Description = "Re-worked aspects are a higher level, increasing above 5 if neccesary. \n {#PropertyFormat}Increased Level: \Column 275 {#UpgradeFormat}+1"
+	}
 	]    
 }

@@ -441,6 +441,13 @@ MealRecipes = {
 		"BetterDualWielding_Trait",
 		{Name = "BetterDualWieldingIcon_Large", Scale = 0.5},
 		"SwitchWeapon"
+	},
+	["Titan Plasma"] ={
+		{Name = "Fish_Styx_Common_01", Cost = 4},
+		{Name = "Fish_Elysium_Common_01", Cost = 4},
+		"BetterWeaponAspectRework_Trait",
+		{Name = "BetterWeaponAspectReworkIcon_Large", Scale = 1.5},
+		"SetupSpearAmmoLoad"
 	}
 }
 

@@ -357,3 +357,15 @@ TraitData["BetterDualWielding_Trait"] =
 		},
 		CurrentWeaponSwapBonus = 1,
 }
+TraitData["BetterWeaponAspectRework_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "BetterWeaponAspectRework_Trait",
+		Icon = "BetterWeaponAspectReworkIcon",
+		SetupFunction =
+		{
+			Name = "ChefBuffAspects",
+			Args ={},
+			RunOnce = true,
+		},
+}
