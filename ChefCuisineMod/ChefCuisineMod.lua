@@ -21,7 +21,7 @@ OnAnyLoad{"DeathArea DeathAreaBedroom RoomPreRun", function ()
 	if SelectedFish ~= "Fish_Elysium_Legendary_01" then
 		ChefResetKeepsakes()
 	end
-	if SelectedFish ~= "BetterWeaponAspectRework" then
+	if SelectedFish ~= "BetterWeaponAspectRework" and _G["SetUpSpearAmmoLoad"] then
 		ChefResetAspects()
 	end
 end}
@@ -1069,7 +1069,7 @@ end
 
 if _G["SetupSpearAmmoLoad"] then
 	DebugPrint({Text = "Chef Mod able to interact with AspectsRework"})
-	
+end
 	function ChefBuffAspects(args)
 		DebugPrint({Text = "Buffing Aspects"})
 		--Hades
@@ -1176,4 +1176,3 @@ if _G["SetupSpearAmmoLoad"] then
 		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MinMultiplier = 3
 		TraitData.SpearTeleportTrait.RarityLevels.Legendary.MaxMultiplier = 3
 	end
-end
