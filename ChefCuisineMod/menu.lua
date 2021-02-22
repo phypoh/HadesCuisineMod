@@ -1,9 +1,8 @@
-SelectableMeals = {}
+local SelectableMeals = {}
 ThisRunFish = {}
 hasBeenUsed = false
 SelectedFish = nil
-SaveIgnores["SelectableMeals"] = true
-SaveIgnores["MealText"] = true
+
 OnAnyLoad{ "DeathArea",
 function( triggerArgs )
 
@@ -169,6 +168,7 @@ function CloseCuisineScreen( screen, button )
 	OnScreenClosed({ Flag = screen.Name })
 
 end
+
 function CreateCuisineButtons(screen, usee)
 	
 	local itemLocationStartY = 340
@@ -194,6 +194,7 @@ function CreateCuisineButtons(screen, usee)
 		end
 	end
 
+	
 	local firstUseable = false
 	for itemIndex = 1, numButtons do
 		local curFish = ThisRunFish[itemIndex]
@@ -316,9 +317,9 @@ function CuisineTurnInFish( screen, button )
 		PlaySound({ Name = "/Leftovers/SFX/BallLandWet" })
 		wait(0.75)
 		for i = 1, fishNum do
-			local fishData = FishingData.FishValues[fishName]
-			if fishData and fishData.Award then
-				local reward = GetRandomValue( fishData.Award )
+			local ChefFishPositionTable = FishingData.FishValues[fishName]
+			if ChefFishPositionTable and ChefFishPositionTable.Award then
+				local reward = GetRandomValue( ChefFishPositionTable.Award )
 				for resourceName, resourceAmount in pairs( reward ) do
 					IncrementTableValue( earnedResources, resourceName, resourceAmount )
 				end
@@ -413,9 +414,9 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	HandleScreenInput( screen )
 
 end
-FishData = {}
+local ChefFishPositionTable = {}
 
-MealRecipes = {
+local MealRecipes = {
     ["King's Yellow Shake"] = {
 		{Name = "Fish_Tartarus_Legendary_01", Cost = 1},
 		{Name = "Fish_Tartarus_Rare_01", Cost = 5},
@@ -452,13 +453,10 @@ MealRecipes = {
 }
 
 --to
-FishCombinations = {
+local FishCombinations = {
 	
 }
 
-SaveIgnores["FishData"] = true
-SaveIgnores["FishCombinations"] = true
-SaveIgnores["MealRecipes"] = true
 function ChefDecompressFishCombos()
 	for k,v in pairs(MealRecipes) do
 		if v[5] ~= nil then
@@ -500,66 +498,6 @@ function CreateRecipeButtons(screen)
 	local itemLocationY = itemLocationStartY
 
 	local components = screen.Components
---[[
-	for k,v in pairs(GameState.TotalCaughtFish) do
-		local itemBackingKey = "Backing"..k
-		components[itemBackingKey] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
-		Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
-
-		local purchaseButtonKey = "PurchaseButton".. k
-		components[purchaseButtonKey] = CreateScreenComponent({ Name = "MarketSlot", Group = "Combat_Menu", Scale = 1 * 0.52, X = itemLocationX, Y = itemLocationY })
-		components[purchaseButtonKey].OnPressedFunctionName = "ChefFishSelected"
-		components[purchaseButtonKey].FishName = k
-
-		SetScaleY({ Id = components[purchaseButtonKey].Id , Fraction = 2.5 })
-		--SetScaleX({ Id = components[purchaseButtonKey].Id , Fraction = 1.05 })
-		Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
-
-		local iconKey = "Icon"..k
-		components[iconKey] = CreateScreenComponent({ Name = "BlankObstacle", X = itemLocationX, Y = itemLocationY, Group = "Combat_Menu" })
-		SetAnimation({ Name = k, DestinationId = components[iconKey].Id, Scale = 0.2 })
-		Attach({ Id = components[iconKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX - 175, OffsetY = itemLocationY })
-
-		components[itemBackingKey .. "FishName"] = CreateTextBox({ Id = components[itemBackingKey].Id, Text = k,
-			FontSize = 25,
-			OffsetX = -130, OffsetY = -25,
-			Width = 720,
-			Color = {0.988, 0.792, 0.247, 1},
-			Font = "AlegreyaSansSCBold",
-			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-			Justification = "Left",
-		})
-		components[itemBackingKey .. "StorageName"] = CreateTextBox({ Id = components[itemBackingKey].Id, Text = "In Storage: ",
-			FontSize = 20,
-			OffsetX = -130, OffsetY = 0,
-			Width = 720,
-			Color = Color.White,
-			Font = "AlegreyaSansSCBold",
-			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-			Justification = "Left",
-		})
-		components[itemBackingKey .. "StorageAmount"] = CreateTextBox({ Id = components[itemBackingKey].Id, Text = v,
-			FontSize = 20,
-			OffsetX = 10, OffsetY = 0,
-			Width = 720,
-			Color = {0,1,0,1},
-			Font = "AlegreyaSansSCBold",
-			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
-			Justification = "Left",
-		})
-		Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
-		FishData[k] = {
-			Name = k,
-			Amount = v,
-			Position = {X = itemLocationX, Y = itemLocationY}
-		}
-		itemLocationX = itemLocationX + itemLocationXSpacer
-		if itemLocationX >= itemLocationMaxX then
-			itemLocationX = itemLocationStartX
-			itemLocationY = itemLocationY + itemLocationYSpacer
-		end
-	end
-	]]--
 
 	for k,v in pairs(GameState.TotalCaughtFish) do
 		if FishCombinations[k] ~= nil then
@@ -590,7 +528,7 @@ function CreateRecipeButtons(screen)
 				Justification = "Left",
 			})
 			
-			FishData[k] = {
+			ChefFishPositionTable[k] = {
 				Name = k,
 				Amount = v,
 				Position = {X = itemLocationX, Y = itemLocationY}
@@ -603,10 +541,9 @@ function CreateRecipeButtons(screen)
 		end
 	end
 end
-CurrentlySelectedMealFish = nil
-CreatedCheckMarksIds = {}
-SaveIgnores["CreatedCheckMarksIds"] = true
-SaveIgnores["CurrentlySelectedMealFish"] = true
+local CurrentlySelectedMealFish = {}
+local CreatedCheckMarksIds = {}
+
 function ChefFishSelected(screen, button)
 	local components = screen.Components
 	local FishName = button.FishName
@@ -844,8 +781,8 @@ function ChefCreateRecipeChecks(screen, showOnlyOneRecipe)
 	local components = screen.Components
 	if #CurrentlySelectedMealFish > 0 then
 		local FishName = CurrentlySelectedMealFish[1]
-		local itemLocationX = FishData[FishName].Position.X
-		local itemLocationY = FishData[FishName].Position.Y
+		local itemLocationX = ChefFishPositionTable[FishName].Position.X
+		local itemLocationY = ChefFishPositionTable[FishName].Position.Y
 		local itemBackingKeyBaseItem = "Backing" .. FishName .. "RecipeTextBaseItem"
 		components[itemBackingKeyBaseItem] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
 		Attach({ Id = components[itemBackingKeyBaseItem].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
@@ -856,8 +793,8 @@ function ChefCreateRecipeChecks(screen, showOnlyOneRecipe)
 			for k,v in pairs(CurCombination) do
 				if showOnlyOneRecipe then
 					if  Contains(CurrentlySelectedMealFish, k) then
-						local itemLocationX = FishData[k].Position.X
-						local itemLocationY = FishData[k].Position.Y
+						local itemLocationX = ChefFishPositionTable[k].Position.X
+						local itemLocationY = ChefFishPositionTable[k].Position.Y
 						local checkMarkBacking = "Backing" .. FishName .. "RecipeTextBaseItem2"
 						components[checkMarkBacking] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
 						Attach({ Id = components[checkMarkBacking].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
@@ -865,8 +802,8 @@ function ChefCreateRecipeChecks(screen, showOnlyOneRecipe)
 						Attach({ Id = components["Backing" .. FishName .. "RecipeTextCheckMarkIcon2"].Id, DestinationId = components[checkMarkBacking].Id, OffsetX = 0 , OffsetY = 100 })
 					end
 				else
-					local itemLocationX = FishData[k].Position.X
-					local itemLocationY = FishData[k].Position.Y
+					local itemLocationX = ChefFishPositionTable[k].Position.X
+					local itemLocationY = ChefFishPositionTable[k].Position.Y
 					
 					local checkMarkBacking = "Backing" .. FishName .. "RecipeTextBaseItem" .. k
 					components[checkMarkBacking] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", X = itemLocationX, Y = itemLocationY })
