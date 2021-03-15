@@ -108,10 +108,10 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	components.fishingTurnInButton.X = 0
 	components.fishingTurnInButton.Y = 0
 	Attach({ Id = components.fishingTurnInButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 600, OffsetY = 0 })
-	CreateTextBox({ Id = components.fishingTurnInButton.Id, Text = "Turn In Fish",
+	CreateTextBox(MergeTables({ Id = components.fishingTurnInButton.Id, Text = "ChefCuisineModTurnInFish",
 		FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 		ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-	})
+	}, LocalizationData.SellTraitScripts.ShopButton))
 	
 	components.recipeScreenButton = 
 	CreateScreenComponent({ 
@@ -125,28 +125,28 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	components.recipeScreenButton.X = 0
 	components.recipeScreenButton.Y = 0
 	Attach({ Id = components.recipeScreenButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = -600, OffsetY = 0 })
-	CreateTextBox({ Id = components.recipeScreenButton.Id, Text = "Cook a Custom Meal",
+	CreateTextBox(MergeTables({ Id = components.recipeScreenButton.Id, Text = "ChefCuisineModOpenCustomMealText",
 	FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-	})
+	}, LocalizationData.SellTraitScripts.ShopButton))
 	wait(0.25)
 
 	-- Title
-	CreateTextBox({ Id = components.ShopBackground.Id, Text = "Meal Selector", FontSize = 32, OffsetX = 0, OffsetY = -445, Color = Color.White, Font = "SpectralSCLightTitling", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 3}, Justification = "Center" })
-	local flavorTextOptions = { "Salivating", "A Wonderful Aroma", "1 Dish is Not Nearly Enough", "The Prince Realizes How Lucky he is to Taste This Food Forever"}
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "ChefCuisineModMainMenuTitle", FontSize = 32, OffsetX = 0, OffsetY = -445, Color = Color.White, Font = "SpectralSCLightTitling", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 3}, Justification = "Center" }, LocalizationData.SellTraitScripts.ShopButton))
+	local flavorTextOptions = { "ChefCuisineModMainMenuFlavorText1", "ChefCuisineModMainMenuFlavorText2", "ChefCuisineModMainMenuFlavorText3", "ChefCuisineModMainMenuFlavorText4"}
 	local flavorText = GetRandomValue( flavorTextOptions )
-	CreateTextBox({ Id = components.ShopBackground.Id, Text = flavorText,FontSize = 14, OffsetX = 0, OffsetY = 380, Width = 840, Color = Color.Gray, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" })
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = flavorText,FontSize = 14, OffsetX = 0, OffsetY = 380, Width = 840, Color = Color.Gray, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" }, LocalizationData.SellTraitScripts.ShopButton))
 
 	-- Flavor Text
 
-	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "One of the many meals that the Chef has made. There are many mouths,but,you may take one.",
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "ChefCuisineModMainMenuSubheader",
 			FontSize = 16,
 			OffsetY = -385, Width = 840,
 			Color = {0.698, 0.702, 0.514, 1.0},
 			Font = "AlegreyaSansSCRegular",
 			ShadowBlur = 0, ShadowColor = {0,0,0,0}, ShadowOffset={0, 3},
 			Justification = "Center",
-		}, LocalizationData.SellTraitScripts.FlavorText))
+		}, LocalizationData.SellTraitScripts.ShopButton))
 	CreateCuisineButtons(screen, usee)
 		
 	screen.KeepOpen = true
@@ -228,7 +228,7 @@ function CreateCuisineButtons(screen, usee)
 					Format = "BaseFormat",
 					VariableAutoFormat = "BoldFormatGraft",
 					TextSymbolScale = 0.8,
-				}, LocalizationData.TraitTrayScripts.DetailsBacking ))
+				},LocalizationData.SellTraitScripts.ShopButton ))
 
 		CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = curFish .. "_Trait",
 			FontSize = 25,
@@ -238,7 +238,7 @@ function CreateCuisineButtons(screen, usee)
 			Font = "AlegreyaSansSCBold",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 			Justification = "Left",
-		},LocalizationData.SellTraitScripts.FlavorText))
+		},LocalizationData.SellTraitScripts.ShopButton))
 
 		
 		components[purchaseButtonTitleKey .. "Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
@@ -255,7 +255,7 @@ function CreateCuisineButtons(screen, usee)
 		
 		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
 		SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
-				CreateTextBoxWithFormat({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
+				CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
 					FontSize = 20,
 					OffsetX = -275, OffsetY = -25,
 					Width = 720,
@@ -264,7 +264,7 @@ function CreateCuisineButtons(screen, usee)
 					VerticalJustification = "Top",
 					UseDescription = true,
 					Format = "MarketScreenDescriptionFormat",
-				})
+				}, LocalizationData.SellTraitScripts.ShopButton))
 		itemLocationX = itemLocationX + itemLocationXSpacer
 		if itemLocationX >= itemLocationMaxX then
 			itemLocationX = itemLocationStartX
@@ -378,10 +378,10 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	components.cookMealButton.X = 0
 	components.cookMealButton.Y = 0
 	Attach({ Id = components.cookMealButton.Id, DestinationId = components.ShopBackground.Id, OffsetX = 350, OffsetY = 440 })
-	CreateTextBox({ Id = components.cookMealButton.Id, Text = "Cook the Meal",
+	CreateTextBox(MergeTables({ Id = components.cookMealButton.Id, Text = "ChefCuisineModRecipeMenuCookButton",
 	FontSize = 22, OffsetX = 0, OffsetY = 0, Width = 720, Color = color, Font = "AlegreyaSansSCLight",
 	ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center"
-	})
+	}, LocalizationData.SellTraitScripts.ShopButton))
 
 	SetAlpha({ Id = components.ShopBackground.Id, Fraction = 1, Duration = 0 })
 	SetScale({ Id = components.ShopBackground.Id, Fraction = 2 })
@@ -391,11 +391,11 @@ OnScreenOpened({ Flag = screen.Name, PersistCombatUI = true })
 	wait(0.25)
 
 	-- Title
-	CreateTextBox({ Id = components.ShopBackground.Id, Text = "Recipe Selector", FontSize = 32, OffsetX = 0, OffsetY = -445, Color = Color.White, Font = "SpectralSCLightTitling", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 3}, Justification = "Center" })
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "ChefCuisineModRecipeMenuTitle", FontSize = 32, OffsetX = 0, OffsetY = -445, Color = Color.White, Font = "SpectralSCLightTitling", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 3}, Justification = "Center" }, LocalizationData.SellTraitScripts.ShopButton))
 
-	CreateTextBox({ Id = components.ShopBackground.Id, Text = "The chef has allowed Zagreus into his kitchen, to experiment and cook.",FontSize = 14, OffsetX = 0, OffsetY = 380, Width = 840, Color = Color.Gray, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" })
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "ChefCuisineModRecipeMenuFlavorText1",FontSize = 14, OffsetX = 0, OffsetY = 380, Width = 840, Color = Color.Gray, Font = "AlegreyaSansSCBold", ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2}, Justification = "Center" }, LocalizationData.SellTraitScripts.ShopButton))
 	
-	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "Make a recipe. To make a recipe select 2 fish. When they are selected you will see what you are making, and the red numbers on the right are how much the meal costs to make.",
+	CreateTextBox(MergeTables({ Id = components.ShopBackground.Id, Text = "ChefCuisineModRecipeMenuSubheader",
 			FontSize = 16,
 			OffsetY = -385, Width = 840,
 			Color = {0.698, 0.702, 0.514, 1.0},
@@ -517,7 +517,7 @@ function CreateRecipeButtons(screen)
 			Attach({ Id = components[purchaseButtonKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
 			Attach({ Id = components[itemBackingKey].Id, DestinationId = components.ShopBackground.Id, OffsetX = itemLocationX, OffsetY = itemLocationY })
 			
-			CreateTextBox({ Id = components[itemBackingKey].Id, Text = v,
+			CreateTextBox(MergeTables({ Id = components[itemBackingKey].Id, Text = v,
 				FontSize = 20,
 				OffsetX = -25, OffsetY = -100,
 				Width = 60,
@@ -526,7 +526,7 @@ function CreateRecipeButtons(screen)
 				Ambient = 0,
 				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 			
 			ChefFishPositionTable[k] = {
 				Name = k,
@@ -611,21 +611,8 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			components.topFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX, Y = itemLocationY })
 	
 			components.topFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
-			--[[CreateTextBoxWithFormat({
-				Id = components.topFishRecipeTextBacking.Id,
-				OffsetX = -260,
-				OffsetY = 0,
-				Width = 665,
-				Justification = "Left",
-				VerticalJustification = "Top",
-				LineSpacingBottom = 8,
-				UseDescription = true,
-				Format = "BaseFormat",
-				VariableAutoFormat = "BoldFormatGraft",
-				TextSymbolScale = 0.8,
-			})]]--
 	
-			CreateTextBox({ Id = components.topFishRecipeTextBacking.Id, Text = curFish,
+			CreateTextBox(MergeTables({ Id = components.topFishRecipeTextBacking.Id, Text = curFish,
 				FontSize = 25,
 				OffsetX = -125, OffsetY = -40,
 				Width = 720,
@@ -633,7 +620,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Font = "AlegreyaSansSCBold",
 				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 	
 			
 			components.topFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_CheftopFishRecipeText", Scale = 1 })
@@ -643,7 +630,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			components.topFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
 			SetScale({ Id = components.topFishRecipeTextFrame.Id, Fraction = 0.55 })
 			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
-			CreateTextBoxWithFormat({ Id = components.topFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
+			CreateTextBoxWithFormat(MergeTables({ Id = components.topFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
 				FontSize = 15,
 				OffsetX = -115, OffsetY = -15,
 				Width = 350,
@@ -651,7 +638,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Justification = "Left",
 				VerticalJustification = "Top",
 				Format = "MarketScreenDescriptionFormat",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 		elseif i == 2 then
 			--#region Bottom Text creator
 			local itemLocationX = 1515
@@ -668,21 +655,8 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			components.bottomFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", X = itemLocationX, Y = itemLocationY })
 		
 			components.bottomFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
-			--[[CreateTextBoxWithFormat({
-				Id = components.bottomFishRecipeTextBacking.Id,
-				OffsetX = -260,
-				OffsetY = 0,
-				Width = 665,
-				Justification = "Left",
-				VerticalJustification = "Top",
-				LineSpacingBottom = 8,
-				UseDescription = true,
-				Format = "BaseFormat",
-				VariableAutoFormat = "BoldFormatGraft",
-				TextSymbolScale = 0.8,
-			})]]--
 		
-			CreateTextBox({ Id = components.bottomFishRecipeTextBacking.Id, Text = curFish,
+			CreateTextBox(MergeTables({ Id = components.bottomFishRecipeTextBacking.Id, Text = curFish,
 				FontSize = 25,
 				OffsetX = -125, OffsetY = -40,
 				Width = 720,
@@ -690,7 +664,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Font = "AlegreyaSansSCBold",
 				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 		
 			
 			components.bottomFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefbottomFishRecipeText", Scale = 1 })
@@ -701,7 +675,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			SetScale({ Id = components.bottomFishRecipeTextFrame.Id, Fraction = 0.55 })
 			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
 
-			CreateTextBoxWithFormat({ Id = components.bottomFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
+			CreateTextBoxWithFormat(MergeTables({ Id = components.bottomFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
 				FontSize = 15,
 				OffsetX = -115, OffsetY = -15,
 				Width = 350,
@@ -709,7 +683,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Justification = "Left",
 				VerticalJustification = "Top",
 				Format = "MarketScreenDescriptionFormat",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 			--#endregion
 			--#region Middle Text creator
 			itemLocationX = 1515
@@ -726,7 +700,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			components.MiddleFishRecipeTextBacking = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX, Y = itemLocationY })
 		
 			components.MiddleFishRecipeTextTitleKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1, X = itemLocationX, Y = itemLocationY })
-			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.ParentAmount,
+			CreateTextBox(MergeTables({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.ParentAmount,
 				FontSize = 25,
 				OffsetX = 0, OffsetY = -75,
 				Width = 720,
@@ -734,9 +708,9 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Font = "AlegreyaSansSCBold",
 				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 		
-			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Meal,
+			CreateTextBox(MergeTables({ Id = components.MiddleFishRecipeTextBacking.Id, Text = "ChefCuisineModRecipeMeal" .. curFish.Meal,
 				FontSize = 25,
 				OffsetX = -125, OffsetY = -40,
 				Width = 720,
@@ -744,7 +718,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				Font = "AlegreyaSansSCBold",
 				ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 				Justification = "Left",
-			})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 		
 			
 			components.MiddleFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1 })
@@ -753,7 +727,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			
 			components.MiddleFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
 			SetScale({ Id = components.MiddleFishRecipeTextFrame.Id, Fraction = 0.55 })
-			CreateTextBoxWithFormat({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Boon .. "_CookingMenu",
+			CreateTextBoxWithFormat(MergeTables({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Boon .. "_CookingMenu",
 				FontSize = 15,
 				OffsetX = -115, OffsetY = -15,
 				Width = 360,
@@ -762,8 +736,8 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 				UseDescription = true,
 				VerticalJustification = "Top",
 				Format = "MarketScreenDescriptionFormat",
-			})
-			CreateTextBox({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Amount,
+			}, LocalizationData.SellTraitScripts.ShopButton))
+			CreateTextBox(MergeTables({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Amount,
 			FontSize = 25,
 			OffsetX = 0, OffsetY = 80,
 			Width = 720,
@@ -771,7 +745,7 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			Font = "AlegreyaSansSCBold",
 			ShadowBlur = 0, ShadowColor = {0,0,0,1}, ShadowOffset={0, 2},
 			Justification = "Left",
-		})
+			}, LocalizationData.SellTraitScripts.ShopButton))
 			--#endregion
 		end
 	end

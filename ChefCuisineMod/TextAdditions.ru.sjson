@@ -1,0 +1,236 @@
+{
+  Texts = [
+	"_append"
+    {
+		Id = "Fish_Surface_Common_01_Trait"
+		DisplayName = "Форелевый суп"
+		Description= "Получите шанс улучшить любую рыбу до следующей редкости. \n {#PropertyFormat}Шанс улучшения: \Column 380 {#UpgradeFormat}+25%"
+    }
+	{
+		Id = "Fish_Elysium_Common_01_Trait"
+		DisplayName = "Приготовленные на пару моллюски"
+		Description = "Все дары, уменьшающие количество получаемого урона, уменьшаются на большее (умноженное). \n {#PropertyFormat}Multiplied Сумма уменьшения: \Column 380 {#UpgradeFormat}2x"
+	}
+	{
+		Id = "Fish_Tartarus_Common_01_Trait"
+		DisplayName = "Черпак с адской рыбой"
+		Description = "Постояв на месте в течение 1,5 секунд, получите Стойкость. \n {#PropertyFormat} Снижение урона: \Column 380 {#UpgradeFormat}70%"
+	}	
+	{
+		Id = "StackUpgrade_Trait"
+		DisplayName = "Салат из Помовых Семян"
+		Description = "За нексколько полученных даров, все дары имеющие уровни получают +1. \n {#PropertyFormat}Дары за уровень: \Column 380 {#UpgradeFormat}5"
+	}
+	{
+		Id = "RoomRewardHealDrop_Trait"
+		DisplayName = "Детское питание"
+		Description = "Получайте урон за каждыйдар, принадлежащее богу, у которого есть наибольшее количество даров. \n {#PropertyFormat} Бонусный урон за дар: \Column 380 {#UpgradeFormat}5%"
+	}
+	{
+		Id = "GemDrop_Trait"
+		DisplayName = "Камнефеты"
+		Description = "Когда ваш бросок поражает врага, на него падает камень. У вас также есть больше бросков для каждого очищаемого вами этажа (включая этот). \n {#PropertyFormat}Бонусные касты на этаж: \Column 380 {#UpgradeFormat}1"
+	}
+	{
+		Id = "BetterChaosGates_Trait"
+		DisplayName = "Удар Ктулху"
+		Description = "У вас больше шансов найти Врата Хаоса, и вход стоит всего 1 здоровье. \n {#PropertyFormat} Увеличение шанса: \Column 380 {#UpgradeFormat}+50%"
+	}
+	{
+		Id = "BetterShrinePoints_Trait"
+		DisplayName = "Королевский желтый коктейль"
+		Description = "Получите более высокий шанс найти Врата Эребуса, а вход стоит всего 1 очко. \n {#PropertyFormat} Увеличение шанса: \Column 380 {#UpgradeFormat}+50%"
+	}
+	{
+		Id = "BetterChaosGates_Trait_CookingMenu"
+		DisplayName = "Удар Ктулху"
+		Description = "У вас больше шансов найти Врата Хаоса, и вход стоит всего 1 здоровье. \n {#PropertyFormat} Увеличение шанса: \Column 275 {#UpgradeFormat}+50%"
+	}
+	{
+		Id = "BetterShrinePoints_Trait_CookingMenu"
+		DisplayName = "Королевский желтый коктейль"
+		Description = "Получите более высокий шанс найти Врата Эребуса, а вход стоит всего 1 очко. \n {#PropertyFormat} Увеличение шанса: \Column 380 {#UpgradeFormat}+50%"
+	}
+	{
+		Id = "Fish_Asphodel_Legendary_01_Trait"
+		DisplayName = "Ребра аккумулированные адским пламенем "
+		Description = "Повышенный шанс столкнуться с Зевсом, его дары имеют 15%  шанс стать редкими или лучше.\n {#PropertyFormat}Повышенный шанс найти Зевса: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Странно восхитительная закуска из ребер, приготовленная из адского пламени. Сам Зевс очень любит этот рецепт."
+	}
+	{
+		Id = "Fish_Elysium_Rare_01_Trait"
+		DisplayName = "Lover's Koi"
+		Description = "Повышенный шанс столкнуться с Афродитой её дары имеют 15% шанс стать редкими или лучше.\n {#PropertyFormat}Повышенный шанс найти Афродиту: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Менее известный рецепт, больше того, что можно сделать из Charp. Несмотря на свой внешний вид, Афродита любит это."
+	}
+	{
+		Id = "Fish_Asphodel_Rare_01_Trait"
+		DisplayName = "Когти прощения"
+		Description = "Повышенный шанс столкнуться с Деметрой, её дары имеют 15%  шанс стать редкими или лучше. \n {#PropertyFormat}Повышенный шанс найти Деметру: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Как бы она ни хотела это признать, Деметра все же любит немного иронии. Этот рецепт должен был показать эту иронию."
+	}
+	{
+		Id = "Fish_Chaos_Common_01_Trait"
+		DisplayName = "Коктейль змеиный глаз"
+		Description = "Повышенный шанс столкнуться с Аресом, его дары имеют 15% шанс стать редкимм или лучше. \n {#PropertyFormat}Повышенный шанс найти Ареса: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Бог войны наблюдает за всеми, кто готов сражаться. Арес предпочитает тех, кто оглядывается назад, как и этот рецепт."
+	}
+	{
+		Id = "Fish_Styx_Rare_01_Trait"
+		DisplayName = "Баррикадный пуховик"
+		Description = "Повышенный шанс столкнуться с Афиной, её дары имеют 15% шанс стать редкими или лучше. \n {#PropertyFormat}Повышенный шанс найти Афину: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Афина редко ест дары моря, но, как и сами боги, даже ей не удается устоять перед вызовом поглотить их."
+	}
+	{
+		Id = "Fish_Tartarus_Legendary_01_Trait"
+		DisplayName = "Суши 10-ая стрела"
+		Description = "Повышенный шанс столкнуться с Артемидой, её дары имеют 15% шанс стать редкими или лучше.\n {#PropertyFormat}Повышенный шанс найти Артемиду: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Артемида всегда любила этот рецепт и часто выслеживала множество Scyllascion... к большому разочарованию Посейдона."
+	}
+	{
+		Id = "Fish_Chaos_Rare_01_Trait"
+		DisplayName = "Любопытный эликсир"
+		Description = "Повышенный шанс столкнуться с Посейдоном, его дары имеют 15% шанс стать редкими или лучше. \n {#PropertyFormat}Повышенный шанс найти Посейдона: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Бог моря правит многими рыбами, но есть и те, кого он предпочитает больше других."
+	}
+	{
+		Id = "Fish_Tartarus_Rare_01_Trait"
+		DisplayName = "Изумительный собутыльник"
+		Description = "Повышенный шанс столкнуться с Дионисом, его дары имеют 15% шанс стать редкими или лучше.\n {#PropertyFormat}Повышенный шанс найти Диониса: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "Бог вина знал о некоторых неизвестных напитках и хорошо разбирался в рыбалке на Knuckleheads. При употреблении алкоголя рекомендуется соблюдать осторожность."
+	}
+	{
+		Id = "Fish_Chaos_Legendary_01_Trait"
+		DisplayName = "Тайна Яна"
+		Description = "Получите случайный дар. Каждые несколько схваток, он становитсся другим случайным даром.\n {#PropertyFormat}Этажей до смены: \Column 380 {#UpgradeFormat}3"
+	}
+	{
+		Id = "Fish_Styx_Legendary_01_Trait"
+		DisplayName = "Пырсент духа"
+		Description = "Все твои черты мести более эффективны.\n {#PropertyFormat}Процент урона от мести: \Column 380 {#UpgradeFormat}150%"
+	}
+	{
+		Id = "Fish_Surface_Rare_01_Trait"
+		DisplayName = "Филе Слурха"
+		Description = "Ваш каст создает ауру. У вас только одно применение, но оно наносит дополнительный урон и пронзает врагов.\n {#PropertyFormat}Экстра урон: \Column 380 {#UpgradeFormat}100"
+	}
+	{
+		Id = "Fish_Surface_Legendary_01_Trait"
+		DisplayName = "Рагу Машеномак "
+		Description = "Когда вы получаете новый дар, вы можете съесть его, а не получить. Если вы съедите дар, это повысит уровень. Эта еда дает дополнительные {!Icons.Health_Small_Tooltip} каждый уровень.\n {#PropertyFormat}Экстра здоровье: \Column 380 {#UpgradeFormat}{!Icons.Health_Small_Tooltip}+30"
+	}
+	{
+		Id = "Fish_Asphodel_Common_01_Trait"
+		DisplayName = "Славугская улитка"
+		Description = "У вас больше бросков, но вы их не вернете.\n {#PropertyFormat}Количество бросков: \Column 380 {#UpgradeFormat}100"
+	}
+	{
+		Id = "Fish_Elysium_Legendary_01_Trait"
+		DisplayName = "Сушеная морская кобыла"
+		Description = "Ваши сувениры более эффектны для одного этажа. Переключение сувениров продлевает это время еще на один этаж. \n {#PropertyFormat}Эффективность: \Column 380 {#UpgradeFormat}200%"
+	}
+	{
+		Id = "Fish_Styx_Common_01_Trait"
+		DisplayName = "Кисло-сладкие гуппы"
+		Description = "Наносит повышенный урон при максимальном здоровье и снижает урон при низком уровне здоровья. \n {#PropertyFormat}Максимальное заряд: \Column 380 {#UpgradeFormat}{!Icons.Attack_Small}100% / {!Icons.EliteDefender}75%"
+	}
+	{
+		Id = "BetterWeaponMastery_Trait"
+		DisplayName = "Соус оружие преисподней"
+		Description = "Получайте больше опыта при убийстве врага. \n {#PropertyFormat}Дополнительный опыт: \Column 380 {#UpgradeFormat}500%"
+	}
+	{
+		Id = "BetterWeaponMastery_Trait_CookingMenu"
+		DisplayName = "Соус оружие преисподней"
+		Description = "Получайте больше опыта при убийстве врага. \n {#PropertyFormat}Дополнительный опыт: \Column 275 {#UpgradeFormat}500%"
+	}
+	{
+		Id = "BetterDualWielding_Trait"
+		DisplayName = "Смертельный чудо-плод"
+		Description = "Получите дополнительный урон после смены оружия в течение 3 секунд. \n {#PropertyFormat} Бонусный урон: \Column 380 {#UpgradeFormat}+25%"
+	}
+	{
+		Id = "BetterDualWielding_Trait_CookingMenu"
+		DisplayName = "Смертельный чудо-плод"
+		Description = "Получите дополнительный урон после смены оружия в течение 3 секунд. \n {#PropertyFormat} Бонусный урон: \Column 275 {#UpgradeFormat}+25%"
+	}
+	{
+		Id = "BetterWeaponAspectRework_Trait"
+		DisplayName = "Плазма Титана"
+		Description = "Переработанные аспекты относятся к более высокому уровню, при необходимости повышая его до 5. \n {#PropertyFormat} Увеличение уровня: \Column 380 {#UpgradeFormat}+1"
+	}
+	{
+		Id = "BetterWeaponAspectRework_Trait_CookingMenu"
+		DisplayName = "Плазма Титана"
+		Description = "Переработанные аспекты относятся к более высокому уровню, при необходимости повышая его до 5. \n {#PropertyFormat} Увеличение уровня: \Column 275 {#UpgradeFormat}+1"
+	}
+	{
+		Id = "ChefCuisineModTurnInFish"
+		DisplayName = "Дайте пойманную рыбу"
+	}
+	{
+		Id = "ChefCuisineModOpenCustomMealText"
+		DisplayName = "Приготовьте индивидуальное блюдо"
+	}
+	{
+		Id = "ChefCuisineModMainMenuTitle"
+		DisplayName = "Выбери блюдо"
+	}
+	{
+		Id = "ChefCuisineModMainMenuFlavorText1"
+		DisplayName = "Слюноотделение"
+	}
+	{
+		Id = "ChefCuisineModMainMenuFlavorText2"
+		DisplayName = "Чудесный аромат"
+	}
+	{
+		Id = "ChefCuisineModMainMenuFlavorText3"
+		DisplayName = "Одного блюда мало"
+	}
+	{
+		Id = "ChefCuisineModMainMenuFlavorText4"
+		DisplayName = "Принц понимает, как ему повезло, что он вечно пробует эту еду"
+	}
+	{
+		Id = "ChefCuisineModMainMenuSubheader"
+		DisplayName = "Одно из многих блюд, которые приготовил шеф-повар. Есть много ртов, но вы можете взять один."
+	}
+	{
+		Id = "ChefCuisineModRecipeMenuCookButton"
+		DisplayName = "Приготовить еду"
+	}
+	{
+		Id = "ChefCuisineModRecipeMenuTitle"
+		DisplayName = "Селектор рецептов"
+	}
+	{
+		Id = "ChefCuisineModRecipeMenuFlavorText1"
+		DisplayName = "Шеф-повар пустил Загреуса на свою кухню, чтобы экспериментировать и готовить."
+	}
+	{
+		Id = "ChefCuisineModRecipeMenuSubheader"
+		DisplayName = "Сделайте рецепт. Для приготовления рецепта выберите 2 рыбы. Когда они будут выбраны, вы увидите, что вы готовите, а красные цифры справа показывают, сколько стоит приготовить еду."
+	}
+		{
+		Id = "ChefCuisineModRecipeMealKing's Yellow Shake"
+		DisplayName = "Королевский желтый коктейль"
+	}
+	{
+		Id = "ChefCuisineModRecipeMealCthulu Buffet"
+		DisplayName = "Ктулху Буфет"
+	}
+	{
+		Id = "ChefCuisineModRecipeMealTartarus Weapon Sauce"
+		DisplayName = "преисподняя Покрытие оружия"
+	}
+	{
+		Id = "Deathly Miracle Fruit"
+		DisplayName = "Смертельный чудо-плод"
+	}
+	{
+		Id = "ChefCuisineModRecipeMealTitan Plasma"
+		DisplayName = "Плазма Титана"
+	}
+	]    
+}
