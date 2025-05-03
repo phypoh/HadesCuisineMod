@@ -1,4 +1,4 @@
-ModUtil.BaseOverride("FishingEndPresentation", function(fishingAnimationPointId)
+ModUtil.Path.Override("FishingEndPresentation", function(fishingAnimationPointId)
 	CreateAnimation({ Name = "FishingSplashB", DestinationId = fishingAnimationPointId })
 	SetAlpha({ Id = fishingAnimationPointId, Fraction = 0, Duration = 0 })
 
@@ -107,5 +107,5 @@ ModUtil.BaseOverride("FishingEndPresentation", function(fishingAnimationPointId)
 	else
 		AdjustZoom({ Fraction = 1.0, LerpTime = 1.5 })
 	end
-end, ChefCuisineMod)
+end)
 

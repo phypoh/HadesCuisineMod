@@ -1,11 +1,4 @@
-ModUtil.RegisterMod("ChefCuisineMod")
-
-if ModUtil ~= nil then
-    ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
-        LoadPackages({Name = "ChefCuisine"})
-        return baseFunc()
-    end)
-
+ModUtil.Mod.Register("ChefCuisineMod")
 GodBoonAmount = {}
 BoonsThisLevel = 0
 CompletedLevels = 0
@@ -13,11 +6,11 @@ local ChefJanTraitData = {}
 local currentJanTrait = nil
 SaveIgnores["GodBoonAmount"] = true
 
-ModUtil.WrapBaseFunction("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
+ModUtil.Path.Wrap("HandleDeath", function(baseFunc, currentRun, killer, killingUnitWeapon)
 	hasBeenUsed = false
 	ChefRetaliateBufRevert()
 	return baseFunc(currentRun, killer, killingUnitWeapon)
-end,ChefCuisineMod)
+end)
 
 OnAnyLoad{function ()
 	if CurrentRun.CurrentRoom ~= nil and SelectedFish == "BetterShrinePoints" then
@@ -32,7 +25,7 @@ OnAnyLoad{"DeathArea DeathAreaBedroom RoomPreRun", function ()
 		ChefResetAspects()
 	end
 end}
-ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
+ModUtil.Path.Wrap("StartNewRun", function(baseFunc, prevRun, args)
 	local returnVal = baseFunc(prevRun, args)
 	if SelectedFish ~= nil then
 		AddTraitToHero({ TraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = SelectedFish .. "_Trait", Rarity = "Legendary" }) })
@@ -60,9 +53,9 @@ ModUtil.WrapBaseFunction("StartNewRun", function(baseFunc, prevRun, args)
 	CompletedLevels = 0
 	GodBoonAmount = {}
 	return returnVal
-end,ChefCuisineMod) 
+end) 
 
-ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
+ModUtil.Path.Override("CalculateDamageMultipliers", function ( attacker, victim, weaponData, triggerArgs )
 	local damageReductionMultipliers = 1
 	local damageMultipliers = 1.0
 	local lastAddedMultiplierName = ""
@@ -368,7 +361,7 @@ ModUtil.BaseOverride("CalculateDamageMultipliers", function ( attacker, victim, 
 		DebugPrint({Text = triggerArgs.AttackerName .. ": Base Damage : " .. triggerArgs.DamageAmount .. " Damage Bonus: " .. damageMultipliers .. ", Damage Reduction: " .. damageReductionMultipliers })
 	end
 	return damageMultipliers * damageReductionMultipliers
-end, ChefCuisineMod)
+end)
 
 
 OnAnyLoad{ function()
@@ -391,7 +384,7 @@ OnAnyLoad{ function()
     end)
 end}
 
-ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
+ModUtil.Path.Wrap("AddTraitToHero", function (baseFunc, args)
 	local returnValue = baseFunc(args)
 	local traitData = args.TraitData
 	if BoonsThisLevel == nil then
@@ -436,7 +429,7 @@ ModUtil.WrapBaseFunction("AddTraitToHero", function (baseFunc, args)
 		end
 	end
 	return returnValue
-end, ChefCuisineMod)
+end)
 
 
 function AddTraitToHeroChef(args)
@@ -572,7 +565,7 @@ OnAnyLoad{"C_PostBoss01", function ()
 	end
 end}
 
-ModUtil.BaseOverride("CreateRoom", function( roomData, args )
+ModUtil.Path.Override("CreateRoom", function( roomData, args )
 	if args == nil then
 		args = {}
 	end
@@ -664,9 +657,9 @@ ModUtil.BaseOverride("CreateRoom", function( roomData, args )
 	CurrentRun.RoomCreations[room.Name] = CurrentRun.RoomCreations[room.Name] + 1
 
 	return room
-end, ChefCuisineMod)
+end)
 
-ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
+ModUtil.Path.Override( "HandleSecretSpawns", function( currentRun )
 
 	local currentRoom = currentRun.CurrentRoom
 
@@ -822,9 +815,9 @@ ModUtil.BaseOverride( "HandleSecretSpawns", function( currentRun )
 		currentRun.LastFishingPointDepth = GetRunDepth( currentRun )
 	end
 
-end, ChefCuisineMod)
+end)
 
-ModUtil.WrapBaseFunction("ChooseLoot", function ( baseFunc, newLootName, excludeLootNames, forceLootName )
+ModUtil.Path.Wrap("ChooseLoot", function ( baseFunc, newLootName, excludeLootNames, forceLootName )
 	local returnValue = baseFunc(newLootName, excludeLootNames, forceLootName)
 	local newlootData = LootData[newLootName]
 	if CurrentRun.CurrentRoom ~= nil then
@@ -839,7 +832,7 @@ ModUtil.WrapBaseFunction("ChooseLoot", function ( baseFunc, newLootName, exclude
 	end
 	return returnValue
 
-end, ChefCuisineMod)
+end)
 
 function ChefChangeJanBoon()
 	local janTraitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = "Fish_Chaos_Legendary_01_Trait", Rarity = "Legendary" })
@@ -863,13 +856,13 @@ function ChefChangeJanBoon()
 		AddTraitToHero({ TraitName = currentTrait.Name })
 	end
 end
-ModUtil.WrapBaseFunction("EndEncounterEffects", function(baseFunc, currentRun, currentRoom, currentEncounter)
+ModUtil.Path.Wrap("EndEncounterEffects", function(baseFunc, currentRun, currentRoom, currentEncounter)
 	local returnValue = baseFunc(currentRun, currentRoom, currentEncounter)
 	if SelectedFish == "Fish_Chaos_Legendary_01" then
 		ChefChangeJanBoon()
 	end
 	return returnValue
-end, ChefCuisineMod)
+end)
 
 function ChefRetaliateBuffSetup()
 	thread(function()
@@ -906,7 +899,7 @@ function ChefRetaliateBufRevert()
 	end)
 end
 
-ModUtil.WrapBaseFunction( "CreateBoonLootButtons", function( baseFunc, lootData, reroll)
+ModUtil.Path.Wrap( "CreateBoonLootButtons", function( baseFunc, lootData, reroll)
 	local components = ScreenAnchors.ChoiceScreen.Components
 	if SelectedFish == "Fish_Surface_Legendary_01" and lootData.GodLoot then
 		components["SelectorConsumeButton"] = 
@@ -925,7 +918,7 @@ ModUtil.WrapBaseFunction( "CreateBoonLootButtons", function( baseFunc, lootData,
 	end
 	local returnValue = baseFunc( lootData, reroll)
 	return returnValue
-end, ChefCuisineMod)
+end)
 
 function ChefConsumeBoon(screen, button)
 	thread(CloseUpgradeChoiceScreen, screen, button )
@@ -936,7 +929,7 @@ function ChefConsumeBoon(screen, button)
 	UnlockRoomExits( CurrentRun, CurrentRun.CurrentRoom )
 end
 
-ModUtil.WrapBaseFunction("CheckAmmoDrop", function ( baseFunc, currentRun, targetId, ammoDropData, numDrops )
+ModUtil.Path.Wrap("CheckAmmoDrop", function ( baseFunc, currentRun, targetId, ammoDropData, numDrops )
 	if SelectedFish == "Fish_Asphodel_Common_01" then
 		for k,traitData in pairs(CurrentRun.Hero.Traits) do
 			if traitData.Name == "Fish_Asphodel_Common_01_Trait" then
@@ -947,7 +940,7 @@ ModUtil.WrapBaseFunction("CheckAmmoDrop", function ( baseFunc, currentRun, targe
 	else
 		return baseFunc(currentRun, targetId, ammoDropData, numDrops)
 	end
-end, ChefCuisineMod)
+end)
 
 local baseKeepsakeValues = {}
 
@@ -1027,29 +1020,29 @@ function ChefResetKeepsakes(args)
 		end
 end
 
-ModUtil.WrapBaseFunction("EquipKeepsake", function(baseFunc, heroUnit, traitName, args)
+ModUtil.Path.Wrap("EquipKeepsake", function(baseFunc, heroUnit, traitName, args)
 	local returnValue = baseFunc(heroUnit, traitName, args)
 	if SelectedFish == "Fish_Elysium_Legendary_01" then
 		ChefBuffKeepsakes()
 	end
 	return returnValue
-end, ChefCuisineMod)
+end)
 
 if _G["GetExpMultiplier"] then
 	DebugPrint({Text = "Chef Mod able to interact with Mastery_PonyWarrior"})
-	ModUtil.WrapBaseFunction("Kill", function(baseFunc, victim, triggerArgs)
+	ModUtil.Path.Wrap("Kill", function(baseFunc, victim, triggerArgs)
 		local returnValue = baseFunc(victim, triggerArgs)
 		if SelectedFish == "BetterWeaponMastery" then
 			local multiplier = GetTotalSpentShrinePoints() + 1
 			tempExp = tempExp + (1 * multiplier * 5)
 		end
 		return returnValue
-	end, ChefCuisineMod)
+	end)
 end
 
 if _G["SwitchWeapon"] then
 	DebugPrint({Text = "Chef Mod able to interact with DualWielding_PonyWarrior"})
-	ModUtil.WrapBaseFunction("SwitchWeapon", function(baseFunc)
+	ModUtil.Path.Wrap("SwitchWeapon", function(baseFunc)
 		local returnValue = baseFunc()
 		if SelectedFish == "BetterDualWielding" then
 			thread(function ()
@@ -1071,7 +1064,7 @@ if _G["SwitchWeapon"] then
 			ApplyEffectFromWeapon({ Id = CurrentRun.Hero.ObjectId, DestinationId = CurrentRun.Hero.ObjectId, WeaponName = "DamageBonusChef", EffectName = "DamageBonus" , AutoEquip = true})
 		end
 		return returnValue
-	end, ChefCuisineMod)
+	end)
 end
 
 if _G["SetupSpearAmmoLoad"] then
