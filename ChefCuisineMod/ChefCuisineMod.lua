@@ -1,4 +1,10 @@
 ModUtil.Mod.Register("ChefCuisineMod")
+
+ModUtil.Path.Wrap( "SetupMap", function(baseFunc)
+	LoadPackages({Name = "ChefCuisine"})
+	return baseFunc()
+end)
+
 GodBoonAmount = {}
 BoonsThisLevel = 0
 CompletedLevels = 0

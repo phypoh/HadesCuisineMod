@@ -421,26 +421,26 @@ local MealRecipes = {
 		{Name = "Fish_Tartarus_Legendary_01", Cost = 1},
 		{Name = "Fish_Tartarus_Rare_01", Cost = 5},
 		"BetterShrinePoints_Trait",
-		{Name = "BetterShrinePointsIcon_Large", Scale = 0.33},
+		{Name = "BetterShrinePointsIcon_Large", Scale = 0.2},
     },
     ["Cthulu Buffet"] = {
         {Name = "Fish_Tartarus_Legendary_01", Cost = 1},
 		{Name = "Fish_Chaos_Rare_01", Cost = 1},
 		"BetterChaosGates_Trait",
-		{Name = "BetterChaosGatesIcon_Large", Scale = 0.5},
+		{Name = "BetterChaosGatesIcon_Large", Scale = 0.2},
 	},
 	["Tartarus Weapon Sauce"] ={
 		{Name = "Fish_Tartarus_Common_01", Cost = 3},
 		{Name = "Fish_Asphodel_Common_01", Cost = 3},
 		"BetterWeaponMastery_Trait",
-		{Name = "BetterWeaponMasteryIcon_Large", Scale = 0.5},
+		{Name = "BetterWeaponMasteryIcon_Large", Scale = 0.2},
 		"GetExpMultiplier"
 	},
 	["Deathly Miracle Fruit"] ={
 		{Name = "Fish_Styx_Legendary_01", Cost = 1},
 		{Name = "Fish_Styx_Rare_01", Cost = 2},
 		"BetterDualWielding_Trait",
-		{Name = "BetterDualWieldingIcon_Large", Scale = 0.5},
+		{Name = "BetterDualWieldingIcon_Large", Scale = 0.2},
 		"SwitchWeapon"
 	},
 	["Titan Plasma"] ={

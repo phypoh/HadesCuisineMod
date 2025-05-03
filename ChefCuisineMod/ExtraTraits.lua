@@ -1,3 +1,23 @@
+-- local ChefTraitData = ModUtil.Entangled.ModData(TraitData)
+
+
+-- ChefTraitData["Fish_Surface_Common_01_Trait"] =
+-- {
+-- 		InheritFrom = { "ShopTier3Trait" },
+-- 		RequiredFalseTrait = "Fish_Surface_Common_01_Trait",
+-- 		Icon = "TroutSoup",
+-- 		HigherFishLootChance = 0.25,
+-- 		ExtractValues =
+-- 		{
+-- 			{
+-- 				Key = "HigherFishLootChance",
+-- 				ExtractAs = "TooltipBonus",
+-- 				Format = "Percent",
+-- 			}
+-- 		}
+-- }
+
+
 TraitData["Fish_Surface_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
@@ -17,26 +37,26 @@ TraitData["Fish_Elysium_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Elysium_Common_01_Trait",
-		Icon = "SteamedChlamsIcon",
+		Icon = "SteamedChlams",
 		DefenseBoostMultiplier = 2,
 }
 TraitData["Fish_Tartarus_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Tartarus_Common_01_Trait",
-		Icon = "HellfishScoopIcon",
+		Icon = "HellfishScoop",
 }
 TraitData["StackUpgrade_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "StackUpgrade_Trait",
-		Icon = "PomSaladIcon",
+		Icon = "PomSalad",
 }
 TraitData["RoomRewardHealDrop_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "RoomRewardHealDrop_Trait",
-		Icon = "KidsMealIcon",
+		Icon = "KidsMeal",
 		AddOutgoingDamageModifiers =
 		{
 			UseTraitValue = "AccumulatedDamageBonusFood",
@@ -338,7 +358,7 @@ TraitData["Fish_Styx_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Styx_Common_01_Trait",
-		Icon = "SweetSourGuppIcon",
+		Icon = "SweetandSourGupps",
 }
 TraitData["BetterWeaponMastery_Trait"] =
 {

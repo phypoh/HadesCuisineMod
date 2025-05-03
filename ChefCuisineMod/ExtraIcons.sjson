@@ -20,10 +20,10 @@
     {
       Name = "TroutSoupIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Common"
+      FilePath = "ChefCuisine\Trout_Soup"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "TroutSoupIcon_Large"
@@ -31,7 +31,7 @@
       FilePath = "GUI\Screens\Fish\Surface_Common"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 1
     }
     {
       Name = "SteamedChlamsIcon_Small"
@@ -100,34 +100,34 @@
     {
       Name = "BetterChaosGatesIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\LockIconRelease\LockIconRelease0008"
+      FilePath = "ChefCuisine\Cthulu_Buffet"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 0.2
     }
     {
       Name = "BetterChaosGatesIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\LockIconRelease\LockIconRelease0008"
-      EndFrame = 1
-      StartFrame = 1
-      Scale = 0.8
-    }
-        {
-      Name = "BetterShrinePointsIcon_Small"
-      InheritFrom = "BoonTrayIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_GiftDrop_02"
+      FilePath = "ChefCuisine\Cthulu_Buffet"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
     }
+        {
+      Name = "BetterShrinePointsIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Kings_Yellow_Shake"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
     {
       Name = "BetterShrinePointsIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_GiftDrop_02"
+      FilePath = "ChefCuisine\Kings_Yellow_Shake"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.8
+      Scale = 0.5
     }
     {
       Name = "MysteryJansIcon_Small"
@@ -231,7 +231,7 @@
       FilePath = "GUI\Screens\Fish\Styx_Common"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "SweetSourGuppIcon_Large"
@@ -239,20 +239,20 @@
       FilePath = "GUI\Screens\Fish\Styx_Common"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 1
     } 
     {
       Name = "BetterWeaponMasteryIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Epilogue\Olympus_Ares"
+      FilePath = "ChefCuisine\Tartarus_Weapon_Sauce"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.2
     }
     {
       Name = "BetterWeaponMasteryIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Epilogue\Olympus_Ares"
+      FilePath = "ChefCuisine\Tartarus_Weapon_Sauce"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -260,34 +260,34 @@
     {
       Name = "BetterDualWieldingIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\SeasonalItem"
+      FilePath = "ChefCuisine\Deathly_Miracle_Fruit"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.2
     }
     {
       Name = "BetterDualWieldingIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\SeasonalItem"
+      FilePath = "ChefCuisine\Deathly_Miracle_Fruit"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.5
     }
     {
       Name = "BetterWeaponAspectReworkIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\HUD\HealthBar_1upStyx"
+      FilePath = "ChefCuisine\Titan_Plasma"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.2
     }
     {
       Name = "BetterWeaponAspectReworkIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\HUD\HealthBar_1upStyx"
+      FilePath = "ChefCuisine\Titan_Plasma"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.5
     }
     ]
 }
