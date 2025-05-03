@@ -37,26 +37,26 @@ TraitData["Fish_Elysium_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Elysium_Common_01_Trait",
-		Icon = "SteamedChlams",
+		Icon = "SteamedChlamsIcon",
 		DefenseBoostMultiplier = 2,
 }
 TraitData["Fish_Tartarus_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Tartarus_Common_01_Trait",
-		Icon = "HellfishScoop",
+		Icon = "HellfishScoopIcon",
 }
 TraitData["StackUpgrade_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "StackUpgrade_Trait",
-		Icon = "PomSalad",
+		Icon = "PomSaladIcon",
 }
 TraitData["RoomRewardHealDrop_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "RoomRewardHealDrop_Trait",
-		Icon = "KidsMeal",
+		Icon = "KidsMealIcon",
 		AddOutgoingDamageModifiers =
 		{
 			UseTraitValue = "AccumulatedDamageBonusFood",
@@ -99,7 +99,7 @@ TraitData["Fish_Asphodel_Legendary_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Asphodel_Legendary_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "HellfireEnergyRibsIcon",
 		ChefGodToForce = "ZuesUpgrade",
 		RarityBonus =
 		{
@@ -113,7 +113,7 @@ TraitData["Fish_Elysium_Rare_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Elysium_Rare_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "LoversKoiIcon",
 		ChefGodToForce = "AphroditeUpgrade",
 		RarityBonus =
 		{
@@ -127,7 +127,7 @@ TraitData["Fish_Asphodel_Rare_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Asphodel_Rare_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "ForgivenessClawsIcon",
 		ChefGodToForce = "DemeterUpgrade",
 		RarityBonus =
 		{
@@ -141,7 +141,7 @@ TraitData["Fish_Chaos_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Chaos_Common_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "SnakeEyeShakeIcon",
 		ChefGodToForce = "AresUpgrade",
 		RarityBonus =
 		{
@@ -155,7 +155,7 @@ TraitData["Fish_Styx_Rare_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Styx_Rare_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "BarricadePufferIcon",
 		ChefGodToForce = "AthenaUpgrade",
 		RarityBonus =
 		{
@@ -169,7 +169,7 @@ TraitData["Fish_Tartarus_Legendary_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Tartarus_Legendary_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "TenArrowSushiIcon",
 		ChefGodToForce = "ArtemisUpgrade",
 		RarityBonus =
 		{
@@ -183,7 +183,7 @@ TraitData["Fish_Chaos_Rare_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Chaos_Rare_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "CuriousElixirIcon",
 		ChefGodToForce = "PoseidonUpgrade",
 		RarityBonus =
 		{
@@ -197,7 +197,7 @@ TraitData["Fish_Tartarus_Rare_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Tartarus_Rare_01_Trait",
-		Icon = "BetterShrinePointsIcon",
+		Icon = "DazingKnuckledrinkIcon",
 		ChefGodToForce = "DionysusUpgrade",
 		RarityBonus =
 		{

@@ -4,18 +4,18 @@
    {
       Name = "KidsMealIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
+      FilePath = "ChefCuisine\Kids_Meal"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.65
+      Scale = 0.2
     }
     {
       Name = "KidsMealIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_HealthItem_02"
+      FilePath = "ChefCuisine\Kids_Meal"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.65
+      Scale = 0.5
     }
     {
       Name = "TroutSoupIcon_Small"
@@ -23,28 +23,28 @@
       FilePath = "ChefCuisine\Trout_Soup"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 0.2
     }
     {
       Name = "TroutSoupIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Common"
+      FilePath = "ChefCuisine\Trout_Soup"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.5
     }
     {
       Name = "SteamedChlamsIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Elysium_Common"
+      FilePath = "ChefCuisine\Steamed_Chlams"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.2
     }
     {
       Name = "SteamedChlamsIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Elysium_Common"
+      FilePath = "ChefCuisine\Steamed_Chlams"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -52,15 +52,15 @@
     {
       Name = "HellfishScoopIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Tartarus_Common"
+      FilePath = "ChefCuisine\Hellfish_Scoop"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.2
     }
     {
       Name = "HellfishScoopIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Tartarus_Common"
+      FilePath = "ChefCuisine\Hellfish_Scoop"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -68,34 +68,34 @@
     {
       Name = "PomSaladIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_StackUpgrade_01"
+      FilePath = "ChefCuisine\Pom_Seed_Salad"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 0.2
     }
     {
       Name = "PomSaladIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_StackUpgrade_01"
+      FilePath = "ChefCuisine\Pom_Salad"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.8
+      Scale = 0.5
     }  
     {
       Name = "RockCandyIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_Gemstones_01"
+      FilePath = "ChefCuisine\Rock_Candy"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 0.2
     }
     {
       Name = "RockCandyIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "Tilesets\Gameplay\Gameplay_Gemstones_01"
+      FilePath = "ChefCuisine\Rock_Candy"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.8
+      Scale = 0.5
     }  
     {
       Name = "BetterChaosGatesIcon_Small"
@@ -113,7 +113,7 @@
       StartFrame = 1
       Scale = 0.5
     }
-        {
+    {
       Name = "BetterShrinePointsIcon_Small"
       InheritFrom = "BoonTrayIcon"
       FilePath = "ChefCuisine\Kings_Yellow_Shake"
@@ -132,79 +132,79 @@
     {
       Name = "MysteryJansIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Chaos_Legendary"
+      FilePath = "ChefCuisine\Mystery_Jans"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.15
+      Scale = 0.2
     }
     {
       Name = "MysteryJansIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Chaos_Legendary"
+      FilePath = "ChefCuisine\Mystery_Jans"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "StabsintheIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Styx_Legendary"
+      FilePath = "ChefCuisine\Stabsinthe_Spirit"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.15
+      Scale = 0.2
     }
     {
       Name = "StabsintheIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Styx_Legendary"
+      FilePath = "ChefCuisine\Stabsinthe_Spirit"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "SlurghIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Rare"
+      FilePath = "ChefCuisine\Fillet_of_Slurgh"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.15
+      Scale = 0.2
     }
     {
       Name = "SlurghIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Rare"
+      FilePath = "ChefCuisine\Fillet_of_Slurgh"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "EatingMealIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Legendary"
+      FilePath = "ChefCuisine\Mashenomak_Stew"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.15
+      Scale = 0.2
     }
     {
       Name = "EatingMealIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Surface_Legendary"
+      FilePath = "ChefCuisine\Mashenomak_Stew"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.5
     }
     {
       Name = "SlavugEscargotIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Asphodel_Common"
+      FilePath = "ChefCuisine\Slavug_Escargot"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.2
     }
     {
       Name = "SlavugEscargotIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Asphodel_Common"
+      FilePath = "ChefCuisine\Slavug_Escargot"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -212,15 +212,15 @@
     {
       Name = "DriedSeamareIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Elysium_Legendary"
+      FilePath = "ChefCuisine\Dried_Seamare"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.25
+      Scale = 0.2
     }
     {
       Name = "DriedSeamareIcon_Small"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Elysium_Legendary"
+      FilePath = "ChefCuisine\Dried_Seamare"
       EndFrame = 1
       StartFrame = 1
       Scale = 0.5
@@ -228,18 +228,18 @@
     {
       Name = "SweetSourGuppIcon_Small"
       InheritFrom = "BoonTrayIcon"
-      FilePath = "GUI\Screens\Fish\Styx_Common"
+      FilePath = "ChefCuisine\Sweet_and_Sour_Gupps"
       EndFrame = 1
       StartFrame = 1
-      Scale = 0.5
+      Scale = 0.2
     }
     {
       Name = "SweetSourGuppIcon_Large"
       InheritFrom = "BoonIcon"
-      FilePath = "GUI\Screens\Fish\Styx_Common"
+      FilePath = "ChefCuisine\Sweet_and_Sour_Gupps"
       EndFrame = 1
       StartFrame = 1
-      Scale = 1
+      Scale = 0.5
     } 
     {
       Name = "BetterWeaponMasteryIcon_Small"
@@ -289,5 +289,133 @@
       StartFrame = 1
       Scale = 0.5
     }
+    {
+      Name = "CuriousElixirIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Curious_Elixir"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "CuriousElixirIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Curious_Elixir"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }  
+    {
+      Name = "TenArrowSushiIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Ten_Arrow_Sushi"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "TenArrowSushiIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Ten_Arrow_Sushi"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }  
+    {
+      Name = "HellFireEnergyRibsIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Hellfire_Energy_Ribs"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "HellFireEnergyRibsIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Hellfire_Energy_Ribs"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }  
+    {
+      Name = "LoversKoiIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Lovers_Koi"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "LoversKoiIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Lovers_Koi"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    }  
+    {
+      Name = "ForgivenessClawsIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Forgiveness_Claws"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "ForgivenessClawsIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Forgiveness_Claws"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "SnakeEyeShakeIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Snake_Eye_Shake"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "SnakeEyeShakeIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Snake_Eye_Shake"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "BarricadePufferIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Barricade_Puffer"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "BarricadePufferIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Barricade_Puffer"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "DazingKnuckleDrinkIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Dazing_Knuckledrink"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "DazingKnuckleDrinkIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Dazing_Knuckledrink"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
     ]
 }

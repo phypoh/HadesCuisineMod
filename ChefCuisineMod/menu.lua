@@ -241,16 +241,9 @@ function CreateCuisineButtons(screen, usee)
 		},LocalizationData.SellTraitScripts.ShopButton))
 
 		
+		local traitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = curFish .. "_Trait" , Rarity = "Legendary"})
 		components[purchaseButtonTitleKey .. "Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
-		if curFish == "StackUpgrade" then
-		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_StackUpgrade_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
-		elseif curFish == "RoomRewardHealDrop" then
-		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_HealthItem_02", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
-		elseif curFish == "GemDrop" then
-		SetAnimation({ Name = "Tilesets\\Gameplay\\Gameplay_Gemstones_01", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.7 })
-		else
-		SetAnimation({ Name = curFish, DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.2 })
-		end
+		SetAnimation({ Name = traitData.Icon .. "_Large", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.3 })
 		Attach({ Id = components[purchaseButtonTitleKey .. "Icon"].Id, DestinationId = components[purchaseButtonTitleKey].Id, OffsetX = -375, OffsetY = 0})
 		
 		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
