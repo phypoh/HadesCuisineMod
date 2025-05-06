@@ -240,24 +240,26 @@ function CreateCuisineButtons(screen, usee)
 			Justification = "Left",
 		},LocalizationData.SellTraitScripts.ShopButton))
 
-		
+		-- Boon Icons are done here
 		local traitData = GetProcessedTraitData({ Unit = CurrentRun.Hero, TraitName = curFish .. "_Trait" , Rarity = "Legendary"})
 		components[purchaseButtonTitleKey .. "Icon"] = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu", Scale = 1 })
-		SetAnimation({ Name = traitData.Icon .. "_Large", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.3 })
+		SetAnimation({ Name = traitData.Icon .. "_Large", DestinationId = components[purchaseButtonTitleKey .. "Icon"].Id, Scale = 0.4 })
 		Attach({ Id = components[purchaseButtonTitleKey .. "Icon"].Id, DestinationId = components[purchaseButtonTitleKey].Id, OffsetX = -375, OffsetY = 0})
 		
-		components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
-		SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
-				CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
-					FontSize = 20,
-					OffsetX = -275, OffsetY = -25,
-					Width = 720,
-					Color = Color.White,
-					Justification = "Left",
-					VerticalJustification = "Top",
-					UseDescription = true,
-					Format = "MarketScreenDescriptionFormat",
-				}, LocalizationData.SellTraitScripts.ShopButton))
+		-- Boon Info trait frame
+		--components[purchaseButtonKey.."Frame"] = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_TraitTray", X = itemLocationX - 375, Y = itemLocationY, Scale = 0.8 })
+		--SetScale({ Id = components[purchaseButtonKey.."Frame"].Id, Fraction = 0.85 })
+		CreateTextBoxWithFormat(MergeTables({ Id = components[purchaseButtonKey].Id, Text = curFish .. "_Trait",
+			FontSize = 20,
+			OffsetX = -275, OffsetY = -25,
+			Width = 720,
+			Color = Color.White,
+			Justification = "Left",
+			VerticalJustification = "Top",
+			UseDescription = true,
+			Format = "MarketScreenDescriptionFormat",
+		}, LocalizationData.SellTraitScripts.ShopButton))
+
 		itemLocationX = itemLocationX + itemLocationXSpacer
 		if itemLocationX >= itemLocationMaxX then
 			itemLocationX = itemLocationStartX
@@ -620,8 +622,8 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			SetAnimation({ Name = curFish, DestinationId = components.topFishRecipeTextKey.Id, Scale = 0.17 })
 			Attach({ Id = components.topFishRecipeTextKey.Id, DestinationId = components.topFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
 			
-			components.topFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
-			SetScale({ Id = components.topFishRecipeTextFrame.Id, Fraction = 0.55 })
+			--components.topFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_CheftopFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			--SetScale({ Id = components.topFishRecipeTextFrame.Id, Fraction = 0.55 })
 			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
 			CreateTextBoxWithFormat(MergeTables({ Id = components.topFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
 				FontSize = 15,
@@ -664,8 +666,8 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 			SetAnimation({ Name = curFish, DestinationId = components.bottomFishRecipeTextKey.Id, Scale = 0.17 })
 			Attach({ Id = components.bottomFishRecipeTextKey.Id, DestinationId = components.bottomFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
 			
-			components.bottomFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefbottomFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
-			SetScale({ Id = components.bottomFishRecipeTextFrame.Id, Fraction = 0.55 })
+			--components.bottomFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefbottomFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			--SetScale({ Id = components.bottomFishRecipeTextFrame.Id, Fraction = 0.55 })
 			local descriptionText = GetDisplayName({ Text = "CodexData_"..curFish:gsub("_", "").."_01" })
 
 			CreateTextBoxWithFormat(MergeTables({ Id = components.bottomFishRecipeTextBacking.Id, Text = ChefCreateNiceEllipses(descriptionText, 133) .. "...",
@@ -715,11 +717,11 @@ function ChefCreateRecipeText(screen, showOnlyOneRecipe)
 		
 			
 			components.MiddleFishRecipeTextKey = CreateScreenComponent({ Name = "BlankObstacle", Group = "Combat_Menu_ChefMiddleFishRecipeText", Scale = 1 })
-			SetAnimation({ Name = curFish.Icon.Name, DestinationId = components.MiddleFishRecipeTextKey.Id, Scale = curFish.Icon.Scale })
+			SetAnimation({ Name = curFish.Icon.Name, DestinationId = components.MiddleFishRecipeTextKey.Id, Scale = 0.3 })
 			Attach({ Id = components.MiddleFishRecipeTextKey.Id, DestinationId = components.MiddleFishRecipeTextTitleKey.Id, OffsetX = -175, OffsetY = 0})
 			
-			components.MiddleFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
-			SetScale({ Id = components.MiddleFishRecipeTextFrame.Id, Fraction = 0.55 })
+			--components.MiddleFishRecipeTextFrame = CreateScreenComponent({ Name = "BoonInfoTraitFrame", Group = "Combat_Menu_ChefMiddleFishRecipeText", X = itemLocationX - 175, Y = itemLocationY, Scale = 0.8 })
+			--SetScale({ Id = components.MiddleFishRecipeTextFrame.Id, Fraction = 0.55 })
 			CreateTextBoxWithFormat(MergeTables({ Id = components.MiddleFishRecipeTextBacking.Id, Text = curFish.Boon .. "_CookingMenu",
 				FontSize = 15,
 				OffsetX = -115, OffsetY = -15,
