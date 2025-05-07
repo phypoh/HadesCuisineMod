@@ -358,7 +358,7 @@ TraitData["Fish_Styx_Common_01_Trait"] =
 {
 		InheritFrom = { "ShopTier3Trait" },
 		RequiredFalseTrait = "Fish_Styx_Common_01_Trait",
-		Icon = "SweetandSourGupps",
+		Icon = "SweetSourGuppIcon",
 }
 TraitData["BetterWeaponMastery_Trait"] =
 {
