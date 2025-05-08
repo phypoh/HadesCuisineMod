@@ -18,7 +18,7 @@ You will need [modimporter.exe](https://www.nexusmods.com/hades/mods/26) to be p
 You'll also need [Mod Utility](https://github.com/SGG-Modding/ModUtil/releases). Place the unzipped contents in the Hades\Content\Mods folder. (If the Mods folder does not yet exist, it should be created.)
 
 ## Installation
-1. Place the `ChefCuisine` folder into the aforementioned `Mods` folder in your Hades directory. 
+1. Place the `HadesChefCuisine` folder into the aforementioned `Mods` folder in your Hades directory. 
 2. Run modimporter. 
 
 ---

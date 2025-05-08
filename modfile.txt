@@ -1,25 +1,25 @@
 Load Priority 101
 
 To "Scripts/RoomManager.lua"
-Import "ChefCuisine/ChefCuisineMod.lua"
+Import "ChefCuisineScripts/ChefCuisineMod.lua"
 To "Scripts/DeathLoopData.lua"
-Import "ChefCuisine/menu.lua"
+Import "ChefCuisineScripts/menu.lua"
 To "Scripts/TraitData.lua"
-Import "ChefCuisine/ExtraTraits.lua"
+Import "ChefCuisineScripts/ExtraTraits.lua"
 To "Scripts/RoomPresentation.lua"
-Import "ChefCuisine/ExtraFishing.lua"
+Import "ChefCuisineScripts/ExtraFishing.lua"
 
 To "Game/Animations/GUIAnimations.sjson"
-SJSON "ChefCuisine/ExtraIcons.sjson"
+SJSON "ChefCuisineScripts/ExtraIcons.sjson"
 To "Game/Weapons/PlayerWeapons.sjson"
-SJSON "ChefCuisine/ExtraWeapons.sjson"
+SJSON "ChefCuisineScripts/ExtraWeapons.sjson"
 To "Game/Projectiles/PlayerProjectiles.sjson"
-SJSON "ChefCuisine/customProjectiles.sjson"
+SJSON "ChefCuisineScripts/customProjectiles.sjson"
 
 To "Game/Text/en/HelpText.en.sjson"
-SJSON "ChefCuisine/Text/TextAdditions.en.sjson"
+SJSON "ChefCuisineScripts/Text/TextAdditions.en.sjson"
 To "Game/Text/ru/HelpText.ru.sjson"
-SJSON "ChefCuisine/Text/TextAdditions.ru.sjson"
+SJSON "ChefCuisineScripts/Text/TextAdditions.ru.sjson"
 
 
 To "Win/Packages/ChefCuisine.pkg"
