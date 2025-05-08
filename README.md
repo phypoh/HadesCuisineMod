@@ -1,4 +1,4 @@
-# ChefCuisine Mod (Remastered)
+# Hades ChefCuisine Mod (Remastered)
 This is a remastered version of Erumi's ChefCuisine Mod for Hades 1, with shiny new graphics for boons and the chef foods. Also updated for compatibility with ModUtil 2.9 and beyond. 
 
 Credits to @burn for the new graphics!
