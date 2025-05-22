@@ -417,5 +417,53 @@
       StartFrame = 1
       Scale = 0.5
     } 
+    {
+      Name = "GrecianBreakfastIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Grecian_Breakfast"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "GrecianBreakfastIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Grecian_Breakfast"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "HotCocoaIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Hot_Cocoa"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "HotCocoaIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Hot_Cocoa"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "QueensPlatterIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Queens_Platter"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "QueensPlatterIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Queens_Platter"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
     ]
 }

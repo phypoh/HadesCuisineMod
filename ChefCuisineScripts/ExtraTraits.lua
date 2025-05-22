@@ -389,3 +389,51 @@ TraitData["BetterWeaponAspectRework_Trait"] =
 			RunOnce = true,
 		},
 }
+if ModUtil.Entangled.ModData("ApolloExtra") ~= nil then
+	TraitData["OlympusExtra_Apollo_Trait"] =
+	{
+			InheritFrom = { "ShopTier3Trait" },
+			RequiredFalseTrait = "OlympusExtra_Apollo_Trait",
+			Icon = "GrecianBreakfastIcon",
+			ChefGodToForce = "ApolloUpgrade",
+			RarityBonus =
+			{
+				RequiredGod = "ApolloUpgrade",
+				RareBonus = { BaseValue = 0.15},
+				EpicBonus = 0.15,
+				LegendaryBonus = 0.15,
+			},
+	}
+end
+if ModUtil.Entangled.ModData("HestiaExtra") ~= nil then
+	TraitData["OlympusExtra_Hestia_Trait"] =
+	{
+			InheritFrom = { "ShopTier3Trait" },
+			RequiredFalseTrait = "OlympusExtra_Hestia_Trait",
+			Icon = "HotCocoaIcon",
+			ChefGodToForce = "HestiaUpgrade",
+			RarityBonus =
+			{
+				RequiredGod = "HestiaUpgrade",
+				RareBonus = { BaseValue = 0.15},
+				EpicBonus = 0.15,
+				LegendaryBonus = 0.15,
+			},
+	}
+end
+if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
+	TraitData["OlympusExtra_Hera_Trait"] =
+	{
+			InheritFrom = { "ShopTier3Trait" },
+			RequiredFalseTrait = "OlympusExtra_Hera_Trait",
+			Icon = "QueensPlatterIcon",
+			ChefGodToForce = "HeraUpgrade",
+			RarityBonus =
+			{
+				RequiredGod = "HeraUpgrade",
+				RareBonus = { BaseValue = 0.15},
+				EpicBonus = 0.15,
+				LegendaryBonus = 0.15,
+			},
+	}
+end

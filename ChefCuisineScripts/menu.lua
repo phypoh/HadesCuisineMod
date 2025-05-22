@@ -53,6 +53,18 @@ function( triggerArgs )
 			"RoomRewardHealDrop",
 			"GemDrop",
 		}
+			-- Conditionally include OlympusExtra foods if Mod is present
+		if ModUtil.Entangled.ModData("ApolloExtra") ~= nil then
+			table.insert(SelectableMeals, "OlympusExtra_Apollo")
+		end
+		if ModUtil.Entangled.ModData("HestiaExtra") ~= nil then
+			table.insert(SelectableMeals, "OlympusExtra_Hestia")
+		end
+				if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
+			table.insert(SelectableMeals, "OlympusExtra_Hera")
+		end
+
+
 		ThisRunFish = {}
 		for i = 1, 3 do
 		table.insert(ThisRunFish, RemoveRandomValue(SelectableMeals))

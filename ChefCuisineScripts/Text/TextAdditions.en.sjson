@@ -100,6 +100,24 @@
 		Lore = "The God of Wine knew of some unknown drinks, and knew his way around fishing for Knuckleheads. Caution is advised when drinking"
 	}
 	{
+		Id = "OlympusExtra_Apollo_Trait"
+		DisplayName = "Grecian Breakfast"
+		Description = "Increased Chance of running into Apollo, and Apollo Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Apollo: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of Light prefers his breakfast hearty; the long journey across the sky with the Sun offers no breaks, and demands strength from the start."
+	}
+	{
+		Id = "OlympusExtra_Hestia_Trait"
+		DisplayName = "Hot Cocoa"
+		Description = "Increased Chance of running into Hestia, and Hestia Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Hestia: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The Goddess of the Hearth brewed this steaming cup with eternal love and warmth. The comfort and embrace of home—on-the-go."
+	}
+	{
+		Id = "OlympusExtra_Hera_Trait"
+		DisplayName = "Queen's Platter"
+		Description = "Increased Chance of running into Hera, and Hera Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Hera: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The Queen of Olympus demands elegance—a regal arrangement prepared with divine precision. A feast not just fit for a queen, but for Hera herself."
+	}
+	{
 		Id = "Fish_Chaos_Legendary_01_Trait"
 		DisplayName = "Mystery Jan's"
 		Description = "Gain a random boon. Every few stages it becomes another random boon.\n {#PropertyFormat}Stages to Change Boon: \Column 380 {#UpgradeFormat}3"
