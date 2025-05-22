@@ -465,5 +465,37 @@
       StartFrame = 1
       Scale = 0.5
     } 
+    {
+      Name = "GoldfishCrakersIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Goldfish_Crackers"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "GoldfishCrakersIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Goldfish_Crackers"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
+    {
+      Name = "ForgeBakedPizzaIcon_Small"
+      InheritFrom = "BoonTrayIcon"
+      FilePath = "ChefCuisine\Forge_Baked_Pizza"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.2
+    }
+    {
+      Name = "ForgeBakedPizzaIcon_Large"
+      InheritFrom = "BoonIcon"
+      FilePath = "ChefCuisine\Forge_Baked_Pizza"
+      EndFrame = 1
+      StartFrame = 1
+      Scale = 0.5
+    } 
     ]
 }

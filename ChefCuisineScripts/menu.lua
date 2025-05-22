@@ -52,6 +52,7 @@ function( triggerArgs )
 			"StackUpgrade",			
 			"RoomRewardHealDrop",
 			"GemDrop",
+			"ChefCuisine_Hermes",
 		}
 			-- Conditionally include OlympusExtra foods if Mod is present
 		if ModUtil.Entangled.ModData("ApolloExtra") ~= nil then
@@ -60,8 +61,11 @@ function( triggerArgs )
 		if ModUtil.Entangled.ModData("HestiaExtra") ~= nil then
 			table.insert(SelectableMeals, "OlympusExtra_Hestia")
 		end
-				if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
+		if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
 			table.insert(SelectableMeals, "OlympusExtra_Hera")
+		end
+		if ModUtil.Entangled.ModData("HephaestusExtra") ~= nil then
+			table.insert(SelectableMeals, "OlympusExtra_Hephaestus")
 		end
 
 

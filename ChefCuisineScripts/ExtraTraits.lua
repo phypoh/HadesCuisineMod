@@ -389,6 +389,20 @@ TraitData["BetterWeaponAspectRework_Trait"] =
 			RunOnce = true,
 		},
 }
+TraitData["ChefCuisine_Hermes_Trait"] =
+{
+		InheritFrom = { "ShopTier3Trait" },
+		RequiredFalseTrait = "ChefCuisine_Hermes_Trait",
+		Icon = "GoldfishCrackersIcon",
+			ChefGodToForce = "HermesUpgrade",
+			RarityBonus =
+			{
+				RequiredGod = "HermesUpgrade",
+				RareBonus = { BaseValue = 0.15},
+				EpicBonus = 0.15,
+				LegendaryBonus = 0.15,
+			},
+}
 if ModUtil.Entangled.ModData("ApolloExtra") ~= nil then
 	TraitData["OlympusExtra_Apollo_Trait"] =
 	{
@@ -431,6 +445,22 @@ if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
 			RarityBonus =
 			{
 				RequiredGod = "HeraUpgrade",
+				RareBonus = { BaseValue = 0.15},
+				EpicBonus = 0.15,
+				LegendaryBonus = 0.15,
+			},
+	}
+end
+if ModUtil.Entangled.ModData("HephaestusExtra") ~= nil then
+	TraitData["OlympusExtra_Heph_Trait"] =
+	{
+			InheritFrom = { "ShopTier3Trait" },
+			RequiredFalseTrait = "OlympusExtra_Heph_Trait",
+			Icon = "ForgeBakedPizzaIcon",
+			ChefGodToForce = "HephaestusUpgrade",
+			RarityBonus =
+			{
+				RequiredGod = "HephaestusUpgrade",
 				RareBonus = { BaseValue = 0.15},
 				EpicBonus = 0.15,
 				LegendaryBonus = 0.15,
