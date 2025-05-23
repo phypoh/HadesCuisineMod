@@ -118,6 +118,18 @@
 		Lore = "The Queen of Olympus demands elegance—a regal arrangement prepared with divine precision. A feast not just fit for a queen, but for Hera herself."
 	}
 	{
+		Id = "OlympusExtra_Hephaestus_Trait"
+		DisplayName = "Forge-Baked Pizza"
+		Description = "Increased Chance of running into Hephaestus, and Hephaestus Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Hephaestus: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of the Forge does not waste heat—he crisps this fiery pie on an anvil, topped with scorched olives and flame-melted cheese. Hot, hearty, and divine."
+	}
+	{
+		Id = "ChefCuisine_Hermes_Trait"
+		DisplayName = "Goldfish Crackers"
+		Description = "Increased Chance of running into Hermes, and Hermes Boons have 15% Increased chance to be Rare or better.\n {#PropertyFormat}Increased Chance to Find Hermes: \Column 380 {#UpgradeFormat}+25%"
+		Lore = "The God of Swiftness has no time to slow down and sit for a meal. Crunchy, golden, and gone in a flash—perfect for the quickest eater."
+	}
+	{
 		Id = "Fish_Chaos_Legendary_01_Trait"
 		DisplayName = "Mystery Jan's"
 		Description = "Gain a random boon. Every few stages it becomes another random boon.\n {#PropertyFormat}Stages to Change Boon: \Column 380 {#UpgradeFormat}3"
