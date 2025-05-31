@@ -452,7 +452,7 @@ if ModUtil.Entangled.ModData("HeraExtra") ~= nil then
 	}
 end
 if ModUtil.Entangled.ModData("HephaestusExtra") ~= nil then
-	TraitData["OlympusExtra_Heph_Trait"] =
+	TraitData["OlympusExtra_Hephaestus_Trait"] =
 	{
 			InheritFrom = { "ShopTier3Trait" },
 			RequiredFalseTrait = "OlympusExtra_Heph_Trait",
