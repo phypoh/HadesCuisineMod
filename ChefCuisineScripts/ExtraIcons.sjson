@@ -474,7 +474,7 @@
       Scale = 0.2
     }
     {
-      Name = "GoldfishCrcakersIcon_Large"
+      Name = "GoldfishCrackersIcon_Large"
       InheritFrom = "BoonIcon"
       FilePath = "ChefCuisine\Goldfish_Crackers"
       EndFrame = 1
