@@ -74,6 +74,23 @@ Talk to the head chef once per run, and choose among 3 delicious meals. These wi
 ### Dazing Knuckledrink
 - 25% Increased Chance of running into Dionysus, and Dionysus Boons have 15% Increased chance to be Rare or better.
 
+### Grecian Breakfast
+- 25% Increased Chance of running into Apollo, and Apollo Boons have 15% Increased chance to be Rare or better.
+
+### Hot Cocoa
+- 25% Increased Chance of running into Hestia, and Hestia Boons have 15% Increased chance to be Rare or better.
+
+### Queen's Platter
+- 25% Increased Chance of running into Hera, and Hera Boons have 15% Increased chance to be Rare or better.
+
+### Forge-Baked Pizza
+- 25% Increased Chance of running into Hepheastus, and Hepheastus Boons have 15% Increased chance to be Rare or better.
+
+
+### Goldfish Crackers
+- 25% Increased Chance of running into Apollo, and Apollo Boons have 15% Increased chance to be Rare or better.
+
+
 ### Mystery Jan's
 - Gain a random boon. Every 3 stages it becomes another random boon. These boons are always common and always non-slot boons.
 
