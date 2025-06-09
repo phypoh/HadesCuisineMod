@@ -51,44 +51,43 @@ Talk to the head chef once per run, and choose among 3 delicious meals. These wi
 - When your cast hits a enemy, a rock falls on them. You also have 1 more casts for each floor you clear(including this one). 
 
 ### Hellfire Energy Ribs:
-- 25% Increased Chance of running into Zeus, and Zeus Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Zeus, and Zeus Boons have +15% chance to be Rare or better.
 
 ### Lover's Koi
-- 25% Increased Chance of running into Aphrodite, and Aphrodite Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Aphrodite, and Aphrodite Boons have +15% chance to be Rare or better.
 
 ### Forgiveness Claws
-- 25% Increased Chance of running into Demeter, and Demeter Boons have 15% Increased chance to be Rare or better. 
+- 25% increased chance of running into Demeter, and Demeter Boons have +15% chance to be Rare or better. 
  
 ### Snake-Eye Shake
-- 25% Increased Chance of running into Ares, and Ares Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Ares, and Ares Boons have +15% chance to be Rare or better.
 
 ### Barricade Puffer
-- 25% Increased Chance of running into Athena, and Athena Boons have 15% Increased chance to be Rare or better. 
+- 25% increased chance of running into Athena, and Athena Boons have +15% chance to be Rare or better. 
 
 ### 10-Arrow Sushi
-- 25% Increased Chance of running into Artemis, and Artemis Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Artemis, and Artemis Boons have +15% chance to be Rare or better.
 
 ### Curious Elixir
-- 25% Increased Chance of running into Poseidon, and Poseidon Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Poseidon, and Poseidon Boons have +15% chance to be Rare or better.
 
 ### Dazing Knuckledrink
-- 25% Increased Chance of running into Dionysus, and Dionysus Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Dionysus, and Dionysus Boons have +15% chance to be Rare or better.
 
 ### Grecian Breakfast
-- 25% Increased Chance of running into Apollo, and Apollo Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Apollo, and Apollo Boons have +15% chance to be Rare or better.
 
 ### Hot Cocoa
-- 25% Increased Chance of running into Hestia, and Hestia Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Hestia, and Hestia Boons have +15% chance to be Rare or better.
 
 ### Queen's Platter
-- 25% Increased Chance of running into Hera, and Hera Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Hera, and Hera Boons have +15% chance to be Rare or better.
 
 ### Forge-Baked Pizza
-- 25% Increased Chance of running into Hepheastus, and Hepheastus Boons have 15% Increased chance to be Rare or better.
-
+- 25% increased chance of running into Hepheastus, and Hepheastus Boons have +15% chance to be Rare or better.
 
 ### Goldfish Crackers
-- 25% Increased Chance of running into Apollo, and Apollo Boons have 15% Increased chance to be Rare or better.
+- 25% increased chance of running into Hermes, and Hermes Boons have +15% chance to be Rare or better.
 
 
 ### Mystery Jan's
